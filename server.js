@@ -1,3 +1,4 @@
+const getReviews = require('fetchReviews.js') 
 const express = require('express');
 const app = express();
 
@@ -15,6 +16,14 @@ app.get('/api/message', (req, res) => {
 	res.json({ message:
 			'Hello from the Express server!' });
 });
+
+// route to fetching review data from api for a certain query
+app.put('/api/fetch/reviews', (req, res) => {
+	var query = req.query
+	fetch_response = getReviews(query)
+
+	res.send(fetch_response)
+})
 
 app.listen(3000, () => {
 	console.log('Server listening on port 3000');
