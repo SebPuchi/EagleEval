@@ -1,6 +1,7 @@
 {
   "name": "eagle-eval",
   "version": "0.0.0",
+  "type": "module",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -18,6 +19,11 @@
     "@angular/platform-browser": "^16.2.4",
     "@angular/platform-browser-dynamic": "^16.2.4",
     "@angular/router": "^16.2.4",
+    "body-parser": "^1.20.2",
+    "console-stamp": "^3.1.2",
+    "express-validator": "^7.0.1",
+    "html-table-to-json": "^1.0.0",
+    "log-timestamp": "^0.3.0",
     "node-fetch": "^3.3.2",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
