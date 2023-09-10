@@ -7,6 +7,14 @@ import { AppComponent } from './app.component';
 import { HttpClientModule }
 	from '@angular/common/http';
 
+// Primeng angular module imports
+
+import { MenubarModule } from 'primeng/menubar';
+
+import { ButtonModule } from 'primeng/button';
+
+import { ImageModule } from 'primeng/image';
+
 @NgModule({
 	declarations: [
 		AppComponent
@@ -14,6 +22,9 @@ import { HttpClientModule }
 	imports: [
 		BrowserModule,
 		AppRoutingModule,
+		ButtonModule,
+		MenubarModule,
+		ImageModule,
 		HttpClientModule
 	],
 	providers: [],
