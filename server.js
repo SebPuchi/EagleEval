@@ -1,4 +1,5 @@
 import { getReviews } from "./fetchReviews.js";
+import { getDrillDown } from "./fetchDrillDown.js";
 import "log-timestamp";
 import express from "express";
 import bodyParser from "body-parser";
@@ -30,21 +31,21 @@ app.post(
   "/api/fetch/reviews",
   body("fetch_query").trim().notEmpty().escape(),
   async (req, res) => {
-    const result = validationResult(req);
+    let result = validationResult(req);
 
     // Validate input has no errors
     if (result.isEmpty()) {
-      const data = matchedData(req);
+      let data = matchedData(req);
 
       // Query string from body (Class code or professor name)
       let query = data.fetch_query;
       console.log("Processing response for query: " + query);
 
       // Wait for response from bc reviews
-      let [fetch_response, row_ids] = await getReviews(query);
+      let fetch_response = await getReviews(query);
 
       console.log("Successfully fetched reviews for: " + data.fetch_query);
-      return res.send({ fetch_response, row_ids });
+      return res.send(fetch_response);
     }
 
     console.error(
@@ -53,6 +54,38 @@ app.post(
         : "Error: empty fetch query"
     );
     res.send("Invalid body params: fetch_query must not be empty");
+  }
+);
+
+app.post(
+  "/api/fetch/drilldown",
+  body("code").trim().notEmpty().escape(),
+  body("prof").trim().notEmpty().escape(),
+  async (req, res) => {
+    let result = validationResult(req);
+
+    // Validate input has no errors
+    if (result.isEmpty()) {
+      let data = matchedData(req);
+
+      // Query params from body (Class code or professor name)
+      let code = data.code;
+      let prof = data.prof;
+      console.log(`Processing response for query: ${code}, ${prof}`);
+
+      // Wait for response from bc reviews
+      let fetch_response = await getDrillDown(code, prof);
+
+      console.log(`Successfully fetched drilldown data for: ${code}, ${prof}`);
+      return res.send(fetch_response);
+    }
+
+    console.error(
+      req.body.code && req.body.prof
+        ? `Error for query: ${req.body.code}, ${req.body.prof}`
+        : "Error: empty body params"
+    );
+    res.send("Invalid body params: code and prof must not be empty");
   }
 );
 

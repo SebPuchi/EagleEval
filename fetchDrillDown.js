@@ -1,47 +1,58 @@
 /*
-  Fetch course review data from past BC (Boston College) course evaluations.
+ Fetch more detailed data for each review entry
 */
 
-// Import the 'node-fetch' library for making HTTP requests.
-import fetch from "node-fetch";
-// Import to convert html table to json
 import HtmlTableToJson from "html-table-to-json";
+import fetch from "node-fetch";
 // Import fetch utils
 import {
   removeKeysFromArray,
   cleanKeysAndRemoveNonASCII,
 } from "./fetchUtils.js";
 
-// Function to generate the request body for the POST request to Avalanche Blue.
-const genBody = (query) => {
-  // Define the request body as a JavaScript object.
+const genBody = (code, instructor) => {
   let body = {
     strUiCultureIn: "en",
-    datasourceId: "560",
+    datasourceId: "670",
     blockId: "30",
     subjectColId: "2",
-    subjectValue: "____[-1]____",
-    detailValue: "____[-1]____",
-    gridId: "fbvGrid",
+    subjectValue: code,
+    detailValue: instructor,
+    gridId: "fbvGridDrilldown",
     pageActuelle: 1,
-    strOrderBy: ["col_2", "asc"],
-    strFilter: ["", query, "ddlFbvColumnSelectorLvl1", ""],
-    sortCallbackFunc: "__getFbvGrid",
+    strOrderBy: ["col_19", "desc", code, instructor],
+    strFilter: ["", "", "ddlFbvColumnSelector", ""],
+    sortCallbackFunc: "__getFbvGridDrilldownData",
     userid: "",
     pageSize: "1000",
   };
+
   // Convert the body object to a JSON string.
   return JSON.stringify(body);
 };
 
-// Async function to fetch reviews from the BC Avalanche Blue API, parse the response, and return review data as JSON.
-export const getReviews = async (query) => {
+export const getDrillDown = async (code, instructor) => {
   // Data values to exclude in output
   const uneeded_keys = [
-    "dpt_ins_overall",
-    "dpt_crs_overall",
-    "ratio",
-    "modalityeffectiveness",
+    "learningobjectivesclear(c)",
+    "effectivecreatingunderstandingofdifficultsubjectmatter/practices(i)",
+    "instructorreturnedassignments(i)",
+    "timelyfeedback(i)",
+    "meaningfulfeedback(i)",
+    "seminaraworthwhileexperience(i)",
+    "seminarasamethodtoadvisefreshmen(i)",
+    "asanacademicadvisor(i)",
+    "asacourseinstructor(i)",
+    "readingsanddiscussionswereinterestinganduseful(i)",
+    "waytolearnaboutclassmates(i)",
+    "learningapplicablebeyondcourse(c)",
+    "motivatedmetodomybestwork(i)",
+    "instructorenthusiastic(i)",
+    "coursefollowedsyllabus(c)",
+    "instructorrespectfulofstudents(i)",
+    "workrequired(c)",
+    "courseoverall(c)",
+    "instructoroverall(i)",
   ];
 
   // Send a POST request to the specified URL with the generated request body and headers.
@@ -49,7 +60,7 @@ export const getReviews = async (query) => {
     "https://avalanche.bc.edu/BPI/fbview-WebService.asmx/getFbvGrid",
     {
       method: "post",
-      body: genBody(query),
+      body: genBody(code, instructor),
       headers: { "Content-Type": "application/json; charset=UTF-8" },
     }
   );
