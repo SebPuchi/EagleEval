@@ -41,10 +41,10 @@ app.post(
       console.log("Processing response for query: " + query);
 
       // Wait for response from bc reviews
-      let fetch_response = await getReviews(query);
+      let [fetch_response, row_ids] = await getReviews(query);
 
       console.log("Successfully fetched reviews for: " + data.fetch_query);
-      return res.send(fetch_response);
+      return res.send({ fetch_response, row_ids });
     }
 
     console.error(

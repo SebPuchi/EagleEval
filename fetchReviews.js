@@ -115,7 +115,6 @@ export const getReviews = async (query) => {
 
   // Extract id and sk from html table. Used later for drill down data
   const row_ids = extractIdAndSkAttributesFromHTML(String(rawData["d"][0]));
-  console.log(row_ids);
 
   // Remove uneeded keys in json
   let json_objects = reviews_json.results[0];
@@ -124,5 +123,5 @@ export const getReviews = async (query) => {
   // Clean JSON keys
   let result = cleanKeysAndRemoveNonASCII(filtered_json);
 
-  return result;
+  return [result, row_ids];
 };
