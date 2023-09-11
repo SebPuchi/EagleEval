@@ -10,14 +10,17 @@ import { HttpClientModule }
 // Primeng angular module imports
 
 import { MenubarModule } from 'primeng/menubar';
-
 import { ButtonModule } from 'primeng/button';
-
 import { ImageModule } from 'primeng/image';
+import { HomeBarComponent } from './home-bar/home-bar.component';
+import { HeroSectionComponent } from './hero-section/hero-section.component';
+import { InputTextModule } from 'primeng/inputtext';
 
 @NgModule({
 	declarations: [
-		AppComponent
+		AppComponent,
+  HomeBarComponent,
+  HeroSectionComponent
 	],
 	imports: [
 		BrowserModule,
@@ -25,6 +28,7 @@ import { ImageModule } from 'primeng/image';
 		ButtonModule,
 		MenubarModule,
 		ImageModule,
+		InputTextModule,
 		HttpClientModule
 	],
 	providers: [],

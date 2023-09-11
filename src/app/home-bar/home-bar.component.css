@@ -1,0 +1,31 @@
+
+
+
+  /* Style for the menu bar */
+        .home-bar {
+            margin: 0;
+            background-color: #501315; /* Background color for the menu bar */
+            color: white; /* Text color */
+            display: flex;
+            justify-content: space-between; /* Align logo and link to the sides */
+            align-items: center; /* Center items vertically */
+            padding: 10px; /* Add some padding for spacing */
+
+
+
+        }
+
+        /* Style for the logo */
+        .logo {
+            width: 50px; /* Adjust the width as needed */
+            height: auto; /* Maintain aspect ratio */
+        }
+
+        /* Style for the "Contact Us" link */
+        .contact-link {
+            text-decoration: none; /* Remove underline from the link */
+            color: white; /* Text color */
+            font-family: 'Inter';
+            font-size: 18px;/* Adjust font size as needed */
+            padding-right: 10px;
+        }
