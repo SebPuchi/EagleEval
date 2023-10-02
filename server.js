@@ -2,6 +2,7 @@ import { getReviews } from "./fetchReviews.js";
 import { getDrillDown } from "./fetchDrillDown.js";
 import { processNewData } from "./syncData.js";
 import { connectToMongoDB, closeMongoDBConnection } from "./mongo.js";
+import { processNewData } from "./syncData.js";
 import "log-timestamp";
 import express from "express";
 import bodyParser from "body-parser";
@@ -110,6 +111,14 @@ app.use(async (req, res, next) => {
   } catch (error) {
     next(error);
   }
+});
+
+app.get("/api/fetch/courseData", async (req, res) => {
+  console.log("Fetching course data from BC database");
+
+  let newData = await processNewData();
+
+  res.send(newData);
 });
 
 app.listen(3000, () => {
