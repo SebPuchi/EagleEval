@@ -48,12 +48,20 @@ async function fetchJsonsFromUrls(urlArray) {
   }
 }
 
-export async function processNewData() {
-  const uneeded_keys = ["comments", "xlist", "coreq", "open_close"];
+async function processNewData() {
+  const uneeded_keys = [
+    "course_is",
+    "comments",
+    "xlist",
+    "coreq",
+    "open_close",
+  ];
+  const id = ["dept_code", "crs_number"];
 
   const new_json_data = fetchJsonsFromUrls(COURSE_DATA_URLS);
 
   var parsed_json = [];
+  const courses = new Set();
 
   await new_json_data.then((results) => {
     for (const result of results) {
@@ -64,3 +72,16 @@ export async function processNewData() {
 
   return parsed_json;
 }
+
+export async function getNewData() {
+  const processed_data = processNewData();
+}
+
+for (let i = 0; i < parsed_json.length; i++) {
+  for (let j = 0; j < parsed_json[i].length; j++) {
+    let curr_id = parsed_json[i][j][id[0]] + parsed_json[i][j][id[1]];
+    courses.add(curr_id);
+  }
+}
+
+return courses;
