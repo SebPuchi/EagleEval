@@ -1,20 +1,22 @@
-
-.hero{
-height: 100vh;
-}
-
-.HeroImage{
-
-height: 80%;
-background-image: url('https://media.licdn.com/dms/image/C4E1BAQEWsAoh7VZm9w/company-background_10000/0/1553706404737?e=1694714400&v=beta&t=Nj76a4Lz-u48detPqe5hJ7AdGIg1bfQBi5lLQEbl4ic');
-background-size: cover;
-background-position: center;
-background-color: #b2c0b9;
-
+.herosection {
+  height: 90vh;
 
 }
 
-.gold-spacer{
-  height: 10%;
-  background-color: #c5bfb0
+.video-container {
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+video {
+z-index: -1;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.herosectionunderlay {
+  height: 10vh;
+  background-color: #c5bfb0;
 }
