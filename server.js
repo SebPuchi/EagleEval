@@ -1,6 +1,7 @@
 import { getReviews } from "./fetchReviews.js";
 import { getDrillDown } from "./fetchDrillDown.js";
 import { processNewData } from "./syncData.js";
+import { connectToMongoDB, closeMongoDBConnection } from "./mongo.js";
 import "log-timestamp";
 import express from "express";
 import bodyParser from "body-parser";
@@ -16,6 +17,16 @@ app.use((req, res, next) => {
     "Origin, X-Requested-With, Content-Type, Accept"
   );
   next();
+});
+
+// Middleware to connect to MongoDB when the server starts
+app.use(async (req, res, next) => {
+  try {
+    await connectToMongoDB();
+    next();
+  } catch (error) {
+    next(error);
+  }
 });
 
 // handle parsing post body
@@ -91,6 +102,14 @@ app.get("/api/fetch/courseData", async (req, res) => {
   let newData = await processNewData();
 
   res.send(newData);
+// Middleware to close the MongoDB connection when the server stops
+app.use(async (req, res, next) => {
+  try {
+    await closeMongoDBConnection();
+    next();
+  } catch (error) {
+    next(error);
+  }
 });
 
 app.listen(3000, () => {
