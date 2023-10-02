@@ -1,31 +1,36 @@
+.navbar {
+  height: 11vh;
+  background-color: #6d1f22;
+  flex-direction: row;
+  justify-content: space-between;
+  display: flex;
+}
 
 
+.contactusdiv {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-right: 20px;
+  display: flex;
+}
 
-  /* Style for the menu bar */
-        .home-bar {
-            margin: 0;
-            background-color: #501315; /* Background color for the menu bar */
-            color: white; /* Text color */
-            display: flex;
-            justify-content: space-between; /* Align logo and link to the sides */
-            align-items: center; /* Center items vertically */
-            padding: 10px; /* Add some padding for spacing */
+.link {
+  color: #fff;
+  font-family: "Exo";
+  font-weight: 400;
+  font-size: 17px;
+  text-decoration: none;
+}
 
+.crestimageholder {
+  width: 20vh;
+  height: 20vh;
+  background-image: url('https://www.bc.edu/content/bc-web/offices/office-of-university-communications/policies-guidelines/graphic-identity-system/_jcr_content/par/responsive_columns/col1/bc_image_content/image.img.png/1550507443010.png');
+  background-position: 50%;
+  background-size: cover;
+  margin-top: 10px;
+  margin-left: 20px;
+   z-index: 5;
+}
 
-
-        }
-
-        /* Style for the logo */
-        .logo {
-            width: 50px; /* Adjust the width as needed */
-            height: auto; /* Maintain aspect ratio */
-        }
-
-        /* Style for the "Contact Us" link */
-        .contact-link {
-            text-decoration: none; /* Remove underline from the link */
-            color: white; /* Text color */
-            font-family: 'Inter';
-            font-size: 18px;/* Adjust font size as needed */
-            padding-right: 10px;
-        }
