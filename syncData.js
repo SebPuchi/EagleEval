@@ -9,9 +9,10 @@ Spring - https://bcweb.bc.edu/aem/coursessprg.json
 */
 
 import fetch from "node-fetch";
-import { removeKeysFromArray } from "./fetchUtils";
+import { removeKeysFromArray } from "./fetchUtils.js";
+import { keyframes } from "@angular/animations";
 
-var COURSE_DATA_URL = [
+var COURSE_DATA_URLS = [
   "https://bcweb.bc.edu/aem/coursesfall.json",
   "https://bcweb.bc.edu/aem/coursessumm.json",
   "https://bcweb.bc.edu/aem/coursessprg.json",
@@ -27,7 +28,7 @@ async function fetchJsonFromBC(url) {
       throw new Error(`HTTP Error! Status: ${response.status}`);
     }
 
-    const json = await JSON.parse(response.json());
+    const json = await response.json();
     return json;
   } catch (error) {
     console.error("Error:", error.message);
@@ -50,9 +51,16 @@ async function fetchJsonsFromUrls(urlArray) {
 export async function processNewData() {
   const uneeded_keys = ["comments", "xlist", "coreq", "open_close"];
 
-  const new_json_data = fetchJsonsFromUrls(COURSE_DATA_URL);
+  const new_json_data = fetchJsonsFromUrls(COURSE_DATA_URLS);
 
-  let parsed_json = new_json_data.map((json) =>
-    removeKeysFromArray(json, uneeded_keys)
-  );
+  var parsed_json = [];
+
+  await new_json_data.then((results) => {
+    for (const result of results) {
+      let clean_json = removeKeysFromArray(result.payload, uneeded_keys);
+      parsed_json.push(clean_json);
+    }
+  });
+
+  return parsed_json;
 }

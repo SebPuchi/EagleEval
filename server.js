@@ -1,5 +1,6 @@
 import { getReviews } from "./fetchReviews.js";
 import { getDrillDown } from "./fetchDrillDown.js";
+import { processNewData } from "./syncData.js";
 import "log-timestamp";
 import express from "express";
 import bodyParser from "body-parser";
@@ -20,11 +21,6 @@ app.use((req, res, next) => {
 // handle parsing post body
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-
-// route for handling requests from the Angular client
-app.get("/api/message", (req, res) => {
-  res.json({ message: "Hello from the Express server!" });
-});
 
 // route to fetching review data from api for a certain query
 app.post(
@@ -88,6 +84,14 @@ app.post(
     res.send("Invalid body params: code and prof must not be empty");
   }
 );
+
+app.get("/api/fetch/courseData", async (req, res) => {
+  console.log("Fetching course data from BC database");
+
+  let newData = await processNewData();
+
+  res.send(newData);
+});
 
 app.listen(3000, () => {
   console.log("Server listening on port 3000");
