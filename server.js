@@ -1,5 +1,6 @@
 import { getReviews } from "./fetchReviews.js";
 import { getDrillDown } from "./fetchDrillDown.js";
+import { connectToMongoDB, closeMongoDBConnection } from "./mongo.js";
 import "log-timestamp";
 import express from "express";
 import bodyParser from "body-parser";
@@ -15,6 +16,16 @@ app.use((req, res, next) => {
     "Origin, X-Requested-With, Content-Type, Accept"
   );
   next();
+});
+
+// Middleware to connect to MongoDB when the server starts
+app.use(async (req, res, next) => {
+  try {
+    await connectToMongoDB();
+    next();
+  } catch (error) {
+    next(error);
+  }
 });
 
 // handle parsing post body
@@ -88,6 +99,16 @@ app.post(
     res.send("Invalid body params: code and prof must not be empty");
   }
 );
+
+// Middleware to close the MongoDB connection when the server stops
+app.use(async (req, res, next) => {
+  try {
+    await closeMongoDBConnection();
+    next();
+  } catch (error) {
+    next(error);
+  }
+});
 
 app.listen(3000, () => {
   console.log("Server listening on port 3000");
