@@ -1,56 +1,44 @@
-// mongo.js
-import MongoClient from "mongodb";
+import mongoose from "mongoose";
 
-const uri =
-  "mongodb+srv://<your_username>:<your_password>@<your_cluster_url>/<your_database_name>?retryWrites=true&w=majority";
-const client = new MongoClient(uri, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+// Replace 'your_database_url' with your MongoDB database URL
+const databaseURL = "mongodb://localhost:27017/your_database_name";
 
-// Create connection to mongodb
-export async function connectToMongoDB() {
+// Function to connect to the database
+export async function connectToDatabase(databaseURL) {
   try {
-    await client.connect();
-    console.log("Connected to MongoDB");
-  } catch (error) {
-    console.error("Error connecting to MongoDB:", error);
-  }
-}
-
-// Close connection
-export async function closeMongoDBConnection() {
-  try {
-    await client.close();
-    console.log("MongoDB connection closed");
-  } catch (error) {
-    console.error("Error closing MongoDB connection:", error);
-  }
-}
-
-// Function to create a MongoDB document from a JSON object.
-async function createDocumentFromJSON(jsonData) {
-  try {
-    // Create a new MongoDB client with specified options for connection.
-    const client = new MongoClient(uri, {
+    await mongoose.connect(databaseURL, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
-
-    // Connect to the MongoDB database.
-    await client.connect();
-
-    // Get a reference to the MongoDB collection.
-    const collection = client.db().collection(collectionName);
-
-    // Insert the JSON data into the collection.
-    const result = await collection.insertOne(jsonData);
-
-    console.log("Document inserted with ID:", result.insertedId);
-  } catch (error) {
-    console.error("Error creating MongoDB document:", error);
-  } finally {
-    // Close the MongoDB client connection.
-    client.close();
+    console.log("Connected to the database");
+  } catch (err) {
+    console.error("Error connecting to the database:", err);
   }
 }
+
+// Function to close the database connection
+export function closeDatabaseConnection() {
+  mongoose.connection.close(() => {
+    console.log("Database connection closed");
+  });
+}
+
+// Get the default connection
+const db = mongoose.connection;
+
+// Event listeners for successful and failed connection
+db.on("connected", () => {
+  console.log(`Connected to MongoDB at ${databaseURL}`);
+});
+
+db.on("error", (err) => {
+  console.error(`MongoDB connection error: ${err}`);
+});
+
+// Close the Mongoose connection when the Node.js process exits
+process.on("SIGINT", () => {
+  db.close(() => {
+    console.log("Mongoose connection closed due to application termination");
+    process.exit(0);
+  });
+});
