@@ -8,6 +8,7 @@ const client = new MongoClient(uri, {
   useUnifiedTopology: true,
 });
 
+// Create connection to mongodb
 export async function connectToMongoDB() {
   try {
     await client.connect();
@@ -17,11 +18,39 @@ export async function connectToMongoDB() {
   }
 }
 
+// Close connection
 export async function closeMongoDBConnection() {
   try {
     await client.close();
     console.log("MongoDB connection closed");
   } catch (error) {
     console.error("Error closing MongoDB connection:", error);
+  }
+}
+
+// Function to create a MongoDB document from a JSON object.
+async function createDocumentFromJSON(jsonData) {
+  try {
+    // Create a new MongoDB client with specified options for connection.
+    const client = new MongoClient(uri, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+
+    // Connect to the MongoDB database.
+    await client.connect();
+
+    // Get a reference to the MongoDB collection.
+    const collection = client.db().collection(collectionName);
+
+    // Insert the JSON data into the collection.
+    const result = await collection.insertOne(jsonData);
+
+    console.log("Document inserted with ID:", result.insertedId);
+  } catch (error) {
+    console.error("Error creating MongoDB document:", error);
+  } finally {
+    // Close the MongoDB client connection.
+    client.close();
   }
 }
