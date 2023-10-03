@@ -22,23 +22,3 @@ export function closeDatabaseConnection() {
     console.log("Database connection closed");
   });
 }
-
-// Get the default connection
-const db = mongoose.connection;
-
-// Event listeners for successful and failed connection
-db.on("connected", () => {
-  console.log(`Connected to MongoDB at ${databaseURL}`);
-});
-
-db.on("error", (err) => {
-  console.error(`MongoDB connection error: ${err}`);
-});
-
-// Close the Mongoose connection when the Node.js process exits
-process.on("SIGINT", () => {
-  db.close(() => {
-    console.log("Mongoose connection closed due to application termination");
-    process.exit(0);
-  });
-});

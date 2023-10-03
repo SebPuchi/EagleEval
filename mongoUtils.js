@@ -19,3 +19,22 @@ export async function courseExsists(courseModel, keyToCheck) {
     return false; // Handle the error as needed
   }
 }
+
+// Converts a course json object to a mongodb Model
+export async function courseJSONToModel(courseModel, courseJSON) {
+  // Converts json to format of schema
+  courseData = {
+    title: courseJSON.title,
+    college: courseJSON.college,
+    crs_desc: courseJSON.crs_desc,
+    subject: courseJSON.subject,
+    crs_id: {
+      crs_number: parseInt(courseJSON.crs_number),
+      dept_code: courseJSON.dept_code,
+    },
+  };
+
+  // return model of data from json
+  const course = await new courseModel(courseData);
+  return course;
+}
