@@ -28,6 +28,7 @@ export async function findOrCreateAndUpdateUser(courseModel, crsObject) {
     // Create an options object to specify that we want to upsert (insert if not found)
     const options = { upsert: true, new: true, setDefaultsOnInsert: true };
 
+    console.log(`Updating: ${crsObject.crs_id}`);
     // Use findOneAndReplace to find and replace or insert the document
     const updatedCourse = await courseModel.findOneAndReplace(
       query,

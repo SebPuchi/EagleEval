@@ -1,8 +1,7 @@
 import { getReviews } from "./fetchReviews.js";
 import { getDrillDown } from "./fetchDrillDown.js";
 import { processNewData } from "./syncData.js";
-import { connectToMongoDB, closeMongoDBConnection } from "./mongo.js";
-import { processNewData } from "./syncData.js";
+import { connectToDatabase, closeDatabaseConnection } from "./mongo.js";
 import "log-timestamp";
 import express from "express";
 import bodyParser from "body-parser";
@@ -23,7 +22,7 @@ app.use((req, res, next) => {
 // Middleware to connect to MongoDB when the server starts
 app.use(async (req, res, next) => {
   try {
-    await connectToMongoDB();
+    await connectToDatabase();
     next();
   } catch (error) {
     next(error);
@@ -103,22 +102,25 @@ app.get("/api/fetch/courseData", async (req, res) => {
   let newData = await processNewData();
 
   res.send(newData);
+});
+
+app.post("/api/update/courses", (req, res) => {
+  var courseData = http.request({
+    host: "localhost",
+    port: 3000,
+    path: "/api/fetch/courseData",
+    method: "GET",
+  });
+});
+
 // Middleware to close the MongoDB connection when the server stops
 app.use(async (req, res, next) => {
   try {
-    await closeMongoDBConnection();
+    await closeDatabaseConnection();
     next();
   } catch (error) {
     next(error);
   }
-});
-
-app.get("/api/fetch/courseData", async (req, res) => {
-  console.log("Fetching course data from BC database");
-
-  let newData = await processNewData();
-
-  res.send(newData);
 });
 
 app.listen(3000, () => {

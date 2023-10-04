@@ -10,7 +10,6 @@ Spring - https://bcweb.bc.edu/aem/coursessprg.json
 
 import fetch from "node-fetch";
 import { removeKeysFromArray } from "./fetchUtils.js";
-import { keyframes } from "@angular/animations";
 
 var COURSE_DATA_URLS = [
   "https://bcweb.bc.edu/aem/coursesfall.json",
@@ -48,20 +47,28 @@ async function fetchJsonsFromUrls(urlArray) {
   }
 }
 
-async function processNewData() {
+export async function processNewData() {
   const uneeded_keys = [
-    "course_is",
+    "course_id",
     "comments",
     "xlist",
     "coreq",
     "open_close",
+    "instructors",
+    "room_schedule",
+    "student_level",
+    "section",
+    "dept_name",
+    "freq",
+    "prereq",
+    "term",
+    "core_list",
+    "credits",
   ];
-  const id = ["dept_code", "crs_number"];
 
   const new_json_data = fetchJsonsFromUrls(COURSE_DATA_URLS);
 
   var parsed_json = [];
-  const courses = new Set();
 
   await new_json_data.then((results) => {
     for (const result of results) {
@@ -72,16 +79,3 @@ async function processNewData() {
 
   return parsed_json;
 }
-
-export async function getNewData() {
-  const processed_data = processNewData();
-}
-
-for (let i = 0; i < parsed_json.length; i++) {
-  for (let j = 0; j < parsed_json[i].length; j++) {
-    let curr_id = parsed_json[i][j][id[0]] + parsed_json[i][j][id[1]];
-    courses.add(curr_id);
-  }
-}
-
-return courses;
