@@ -20,6 +20,27 @@ export async function courseExsists(courseModel, keyToCheck) {
   }
 }
 
+export async function findOrCreateAndUpdateUser(courseModel, crsObject) {
+  try {
+    // Define a query to find the user by a unique identifier (e.g., course id)
+    const query = { crs_id: crsObject.crs_id };
+
+    // Create an options object to specify that we want to upsert (insert if not found)
+    const options = { upsert: true, new: true, setDefaultsOnInsert: true };
+
+    // Use findOneAndReplace to find and replace or insert the document
+    const updatedCourse = await courseModel.findOneAndReplace(
+      query,
+      crsObject,
+      options
+    );
+
+    return updatedCourse;
+  } catch (error) {
+    throw new Error(`Error finding or creating course: ${error}`);
+  }
+}
+
 // Converts a course json object to a mongodb Model
 export async function courseJSONToModel(courseModel, courseJSON) {
   // Converts json to format of schema
