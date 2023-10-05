@@ -1,5 +1,3 @@
-import mongoose from "mongoose";
-
 // Function to check if a document with a specific key exists
 export async function courseExsists(courseModel, keyToCheck) {
   try {
