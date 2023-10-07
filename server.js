@@ -1,7 +1,7 @@
 import { getReviews } from "./fetchReviews.js";
 import { getDrillDown } from "./fetchDrillDown.js";
 import { processNewData } from "./syncData.js";
-import { getMcasDeps } from "./syncMCAS.js";
+import { getAllProfData, getMcasDeps } from "./syncMCAS.js";
 import { updateCourses } from "./updateMongo.js";
 import { courseSchema } from "./courseSchema.js";
 import { connectToDatabase, closeDatabaseConnection } from "./mongo.js";
@@ -111,15 +111,26 @@ app.get("/api/fetch/courseData", async (req, res) => {
   res.send(newData);
 });
 
-app.get("/api/fetch/mcasDeps", async (req, res) => {
+app.get("/api/fetch/mcas/deps", async (req, res) => {
   console.log("Fetching MCAS Department URLs");
 
   // wait for response form bc website
-  let urls = await getMcasDeps();
+  let departments = await getMcasDeps();
 
   console.log("Successfully fetched MCAS departments");
 
-  res.send(urls);
+  res.send(departments);
+});
+
+app.get("/api/fetch/mcas/profs", async (req, res) => {
+  console.log("Fethcing MCAS professor data");
+
+  // wait for response from BC site scraper
+  let profData = await getAllProfData();
+
+  console.log("Finished collecting MCAS prof data");
+
+  res.send(profData);
 });
 
 app.post("/api/update/courses", async (req, res) => {
