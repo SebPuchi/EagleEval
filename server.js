@@ -12,10 +12,6 @@ import { body, matchedData, validationResult } from "express-validator";
 
 const app = express();
 
-// Digital Ocean mongodb url
-const databaseURL =
-  "mongodb+srv://doadmin:8DO741n5i6AZ3qH9@eagle-eval-db-prod-3b6a0eee.mongo.ondigitalocean.com/courses?authSource=admin&replicaSet=eagle-eval-db-prod&tls=true";
-
 // handling CORS
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "http://localhost:4200");
@@ -29,7 +25,7 @@ app.use((req, res, next) => {
 // Middleware to connect to MongoDB when the server starts
 app.use(async (req, res, next) => {
   try {
-    await connectToDatabase(databaseURL);
+    await connectToDatabase();
     next();
   } catch (error) {
     next(error);
@@ -137,7 +133,7 @@ app.post("/api/update/courses", async (req, res) => {
 // Middleware to close the MongoDB connection when the server stops
 app.use(async (req, res, next) => {
   try {
-    await closeMongoDBConnection();
+    await closeDatabaseConnection();
     next();
   } catch (error) {
     next(error);

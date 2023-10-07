@@ -9,7 +9,7 @@ Spring - https://bcweb.bc.edu/aem/coursessprg.json
 */
 
 import fetch from "node-fetch";
-import { removeKeysFromArray } from "./fetchUtils.js";
+import { removeKeysFromArray, removeDuplicateObjects } from "./fetchUtils.js";
 
 var COURSE_DATA_URLS = [
   "https://bcweb.bc.edu/aem/coursesfall.json",
@@ -73,7 +73,8 @@ export async function processNewData() {
   await new_json_data.then((results) => {
     for (const result of results) {
       let clean_json = removeKeysFromArray(result.payload, uneeded_keys);
-      parsed_json.push(clean_json);
+      let trimmed_json = removeDuplicateObjects(clean_json);
+      parsed_json.push(trimmed_json);
     }
   });
 

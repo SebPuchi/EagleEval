@@ -30,7 +30,7 @@ export async function findOrCreateAndUpdateUser(courseModel, crsJSON) {
     const options = {
       upsert: true,
       setDefaultsOnInsert: true,
-      rawResult: true,
+      includeResultMetadata: true,
     };
 
     // Use findOneAndReplace to find and replace or insert the document

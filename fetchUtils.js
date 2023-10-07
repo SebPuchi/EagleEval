@@ -37,3 +37,18 @@ export const removeKeysFromArray = (arr, keysToRemove) => {
 
   return newArray;
 };
+
+export const removeDuplicateObjects = (arr) => {
+  const uniqueObjects = [];
+  const seenObjects = new Set();
+
+  for (const obj of arr) {
+    const objString = JSON.stringify(obj);
+    if (!seenObjects.has(objString)) {
+      uniqueObjects.push(obj);
+      seenObjects.add(objString);
+    }
+  }
+
+  return uniqueObjects;
+};
