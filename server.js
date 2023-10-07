@@ -1,13 +1,20 @@
 import { getReviews } from "./fetchReviews.js";
 import { getDrillDown } from "./fetchDrillDown.js";
 import { processNewData } from "./syncData.js";
+import { updateCourses } from "./updateMongo.js";
+import { courseSchema } from "./courseSchema.js";
 import { connectToDatabase, closeDatabaseConnection } from "./mongo.js";
 import "log-timestamp";
+import mongoose from "mongoose";
 import express from "express";
 import bodyParser from "body-parser";
 import { body, matchedData, validationResult } from "express-validator";
 
 const app = express();
+
+// Digital Ocean mongodb url
+const databaseURL =
+  "mongodb+srv://doadmin:8DO741n5i6AZ3qH9@eagle-eval-db-prod-3b6a0eee.mongo.ondigitalocean.com/courses?authSource=admin&replicaSet=eagle-eval-db-prod&tls=true";
 
 // handling CORS
 app.use((req, res, next) => {
@@ -22,7 +29,7 @@ app.use((req, res, next) => {
 // Middleware to connect to MongoDB when the server starts
 app.use(async (req, res, next) => {
   try {
-    await connectToDatabase();
+    await connectToDatabase(databaseURL);
     next();
   } catch (error) {
     next(error);
@@ -99,24 +106,38 @@ app.post(
 app.get("/api/fetch/courseData", async (req, res) => {
   console.log("Fetching course data from BC database");
 
+  // wait for response from BC Course Database
   let newData = await processNewData();
+
+  console.log("Successfully fetched course data from BC");
 
   res.send(newData);
 });
 
-app.post("/api/update/courses", (req, res) => {
-  var courseData = http.request({
-    host: "localhost",
-    port: 3000,
-    path: "/api/fetch/courseData",
-    method: "GET",
-  });
+app.post("/api/update/courses", async (req, res) => {
+  const Course = new mongoose.model("Course", courseSchema);
+
+  console.log("Updating mongo with new data");
+
+  // Fetch data from BC Course database
+  console.log("Fetching new course data from BC");
+  let newData = await processNewData();
+  console.log("Completed fetching course data");
+
+  // Update mongodb with new course data
+  console.log("Starting updating of course database");
+  let newCourses = await updateCourses(newData, Course);
+  console.log("Finished updating course database");
+
+  res.send(
+    `Successfully updated course database. Added ${newCourses} new courses`
+  );
 });
 
 // Middleware to close the MongoDB connection when the server stops
 app.use(async (req, res, next) => {
   try {
-    await closeDatabaseConnection();
+    await closeMongoDBConnection();
     next();
   } catch (error) {
     next(error);

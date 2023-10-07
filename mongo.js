@@ -1,8 +1,5 @@
 import mongoose from "mongoose";
 
-// Replace 'your_database_url' with your MongoDB database URL
-const databaseURL = "mongodb://localhost:27017/your_database_name";
-
 // Function to connect to the database
 export async function connectToDatabase(databaseURL) {
   try {

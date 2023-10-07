@@ -18,43 +18,59 @@ export async function courseExsists(courseModel, keyToCheck) {
   }
 }
 
-export async function findOrCreateAndUpdateUser(courseModel, crsObject) {
+export async function findOrCreateAndUpdateUser(courseModel, crsJSON) {
   try {
+    // create doc from course JSON for update
+    const crsObject = courseJSONToDoc(crsJSON);
+
     // Define a query to find the user by a unique identifier (e.g., course id)
     const query = { crs_id: crsObject.crs_id };
 
     // Create an options object to specify that we want to upsert (insert if not found)
-    const options = { upsert: true, new: true, setDefaultsOnInsert: true };
+    const options = {
+      upsert: true,
+      setDefaultsOnInsert: true,
+      rawResult: true,
+    };
 
-    console.log(`Updating: ${crsObject.crs_id}`);
     // Use findOneAndReplace to find and replace or insert the document
-    const updatedCourse = await courseModel.findOneAndReplace(
+    const updatedCourse = await courseModel.findOneAndUpdate(
       query,
       crsObject,
       options
     );
 
-    return updatedCourse;
+    if (updatedCourse.lastErrorObject.updatedExisting) {
+      console.log(
+        `Updating: ${crsObject.crs_id.dept_code + crsObject.crs_id.crs_number}`
+      );
+      return false;
+    } else {
+      console.log(
+        `Adding new course: ${
+          crsObject.crs_id.dept_code + crsObject.crs_id.crs_number
+        }`
+      );
+      return true;
+    }
   } catch (error) {
     throw new Error(`Error finding or creating course: ${error}`);
   }
 }
 
-// Converts a course json object to a mongodb Model
-export async function courseJSONToModel(courseModel, courseJSON) {
+// Converts a course json object to a mongodb Document
+function courseJSONToDoc(courseJSON) {
   // Converts json to format of schema
-  courseData = {
+  let courseData = {
     title: courseJSON.title,
     college: courseJSON.college,
     crs_desc: courseJSON.crs_desc,
     subject: courseJSON.subject,
     crs_id: {
-      crs_number: parseInt(courseJSON.crs_number),
       dept_code: courseJSON.dept_code,
+      crs_number: parseInt(courseJSON.crs_number),
     },
   };
 
-  // return model of data from json
-  const course = await new courseModel(courseData);
-  return course;
+  return courseData;
 }

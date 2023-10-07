@@ -41,6 +41,7 @@ export const getReviews = async (query) => {
     "dpt_ins_overall",
     "dpt_crs_overall",
     "ratio",
+    "modality",
     "modalityeffectiveness",
   ];
 
