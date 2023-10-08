@@ -22,7 +22,6 @@ function profJSONtoDoc(profJson) {
     title: profJson["jcr:content"]["jcr:title"],
     firstName: profJson["jcr:content"]["firstName"],
     lastName: profJson["jcr:content"]["lastName"],
-    address: profJson["jcr:content"]["address"],
     office: profJson["jcr:content"]["office"],
     education: profJson["jcr:content"]["education"],
     email: profJson["jcr:content"]["email"],
