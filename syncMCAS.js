@@ -105,7 +105,7 @@ function appendPathToURL(inputPath) {
   }
 
   // Append "people.html" to the pathname
-  parsedURL.pathname = parsedURL.pathname + "/people/faculty-directory.4.json";
+  parsedURL.pathname = parsedURL.pathname + "/people/faculty-directory.3.json";
 
   // Serialize the updated URL back to a string
   const updatedURL = parsedURL.toString();
@@ -119,11 +119,11 @@ function cleanProfData(obj) {
   }
 
   // Filter out keys starting with 'jcr:'
-  const result = {};
+  const result = [];
 
   for (const key in obj) {
     if (!key.startsWith("jcr:")) {
-      result[key] = obj[key];
+      result.push(obj[key]);
     }
   }
 

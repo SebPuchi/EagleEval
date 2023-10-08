@@ -1,26 +1,24 @@
-import { findOrCreateAndUpdateUser } from "./mongoUtils.js";
-
 // Update or insert new data
-export async function updateCourses(courseData, courseModel) {
+export async function updateCollection(colData, colModel, updateFunc) {
   try {
     // count of new course added
-    var newCourses = 0;
+    var newItems = 0;
 
     // loop through each semester
-    for (const semester of courseData) {
+    for (const item of colData) {
       // loop through courses in semester
-      for (const course of semester) {
-        let newCourse = await findOrCreateAndUpdateUser(courseModel, course);
+      for (const obj of item) {
+        let newDoc = await updateFunc(colModel, obj);
 
         // Add to new courses count
-        if (newCourse) {
-          newCourses += 1;
+        if (newDoc) {
+          newItems += 1;
         }
       }
     }
 
-    return newCourses;
+    return newItems;
   } catch (error) {
-    throw new Error(`Error updating course data: ${error}`);
+    throw new Error(`Error updating collection data for ${colModel}: ${error}`);
   }
 }

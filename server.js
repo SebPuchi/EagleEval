@@ -2,14 +2,20 @@ import { getReviews } from "./fetchReviews.js";
 import { getDrillDown } from "./fetchDrillDown.js";
 import { processNewData } from "./syncData.js";
 import { getAllProfData, getMcasDeps } from "./syncMCAS.js";
-import { updateCourses } from "./updateMongo.js";
+import { updateCollection } from "./updateMongo.js";
 import { courseSchema } from "./courseSchema.js";
+import { profSchema } from "./profSchema.js";
+import {
+  findOrCreateAndUpdateCourse,
+  findOrCreateAndUpdateProf,
+} from "./mongoUtils.js";
 import { connectToDatabase, closeDatabaseConnection } from "./mongo.js";
 import "log-timestamp";
 import mongoose from "mongoose";
 import express from "express";
 import bodyParser from "body-parser";
 import { body, matchedData, validationResult } from "express-validator";
+import { ConsoleLogger } from "@angular/compiler-cli";
 
 const app = express();
 
@@ -127,7 +133,6 @@ app.get("/api/fetch/mcas/profs", async (req, res) => {
 
   // wait for response from BC site scraper
   let profData = await getAllProfData();
-
   console.log("Finished collecting MCAS prof data");
 
   res.send(profData);
@@ -136,7 +141,7 @@ app.get("/api/fetch/mcas/profs", async (req, res) => {
 app.post("/api/update/courses", async (req, res) => {
   const Course = new mongoose.model("Course", courseSchema);
 
-  console.log("Updating mongo with new data");
+  console.log("Updating mongo with new course data");
 
   // Fetch data from BC Course database
   console.log("Fetching new course data from BC");
@@ -145,7 +150,11 @@ app.post("/api/update/courses", async (req, res) => {
 
   // Update mongodb with new course data
   console.log("Starting updating of course database");
-  let newCourses = await updateCourses(newData, Course);
+  let newCourses = await updateCollection(
+    newData,
+    Course,
+    findOrCreateAndUpdateCourse
+  );
   console.log("Finished updating course database");
 
   res.send(
@@ -153,14 +162,26 @@ app.post("/api/update/courses", async (req, res) => {
   );
 });
 
-// Middleware to close the MongoDB connection when the server stops
-app.use(async (req, res, next) => {
-  try {
-    await closeDatabaseConnection();
-    next();
-  } catch (error) {
-    next(error);
-  }
+app.post("/api/update/mcas/profs", async (req, res) => {
+  const Professor = new mongoose.model("Professor", profSchema);
+
+  console.log("Updating mongo with MCAS data");
+
+  console.log("Getting prof data from BC website");
+  let newProfData = await getAllProfData();
+  console.log("Completed fetching MCAS prof data");
+
+  console.log("Starting updating professor data for MCAS");
+  let newProfs = await updateCollection(
+    newProfData,
+    Professor,
+    findOrCreateAndUpdateProf
+  );
+  console.log("Finished updating prof databse for MCAS");
+
+  res.send(
+    `Successfully updated MCAS professor databse. Added ${newProfs} new professors`
+  );
 });
 
 app.listen(3000, () => {
