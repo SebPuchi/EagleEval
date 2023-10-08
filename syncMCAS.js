@@ -105,7 +105,7 @@ function appendPathToURL(inputPath) {
   }
 
   // Append "people.html" to the pathname
-  parsedURL.pathname = parsedURL.pathname + "/people.html";
+  parsedURL.pathname = parsedURL.pathname + "/people/faculty-directory.4.json";
 
   // Serialize the updated URL back to a string
   const updatedURL = parsedURL.toString();
@@ -113,14 +113,32 @@ function appendPathToURL(inputPath) {
   return updatedURL;
 }
 
+function cleanProfData(obj) {
+  if (typeof obj !== "object" || obj === null) {
+    return obj; // Return non-objects or null as is
+  }
+
+  // Filter out keys starting with 'jcr:'
+  const result = {};
+
+  for (const key in obj) {
+    if (!key.startsWith("jcr:")) {
+      result[key] = obj[key];
+    }
+  }
+
+  return result;
+}
+
 // Gets prof data for a given department url
 async function getProfData(depUrl) {
-  // Get raw html from website
-  const rawHTML = await getHtmlPage(depUrl);
+  // Get json from url
+  let response = await fetch(depUrl);
+  let rawProfJson = await response.json();
 
-  const profDiv = findDivByClassName(rawHTML, PROF_CLASS);
+  const cleanProfJson = cleanProfData(rawProfJson);
 
-  return profDiv;
+  return cleanProfJson;
 }
 
 export async function getAllProfData() {
@@ -132,9 +150,10 @@ export async function getAllProfData() {
   for (const dep of deps) {
     console.log(`Fetching prof data for MCAS ${dep.department}`);
     let peopleURL = appendPathToURL(dep.url);
-    console.log(peopleURL);
-    let profDiv = await getProfData(peopleURL);
-    profData += profDiv;
+
+    let profJson = await getProfData(peopleURL);
+
+    profData.push(profJson);
   }
 
   return profData;
