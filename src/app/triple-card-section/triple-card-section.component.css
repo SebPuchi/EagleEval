@@ -1,5 +1,86 @@
 
+.herosection {
+  height: 90vh;
+}
 
+.footer {
+  height: 10vh;
+  background-color: #6d1f22;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  display: flex;
+}
+
+
+
+.contactusdiv {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-right: 20px;
+  display: flex;
+}
+
+.link {
+  color: #fff;
+  font-family: Roboto, sans-serif;
+  font-size: 17px;
+  font-weight: 400;
+  text-decoration: none;
+}
+
+.background-video {
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+.bodydivcontainer {
+  background-color: #5c0d0f;
+}
+
+.herosectionunderlay {
+  height: 10vh;
+  background-color: #c5bfb0;
+}
+
+.text-block {
+  color: #fff;
+  margin-left: 20px;
+  font-family: Exo, sans-serif;
+}
+
+.utility-page-wrap {
+  width: 100vw;
+  height: 100vh;
+  max-height: 100%;
+  max-width: 100%;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+.utility-page-content {
+  width: 260px;
+  text-align: center;
+  flex-direction: column;
+  display: flex;
+}
+
+.herowrapperlogotext {
+  height: 100%;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding-top: 56px;
+  display: flex;
+}
+
+.image {
+  width: 50vw;
+}
 
 .text-14 {
   line-height: 24px;
@@ -35,7 +116,6 @@
 }
 
 .descriptionhm {
-margin-top: 150px;
   z-index: -1;
   height: auto;
   flex-direction: column;
@@ -65,7 +145,26 @@ margin-top: 150px;
   margin-bottom: 30px;
 }
 
+.content1-image.content1-image3 {
+  height: 450px;
+  background-image: url('https://www.bc.edu/content/dam/bc1/schools/carroll/news/2019/Catalyst%20photo%204.jpg');
+  background-position: 70%;
+  background-size: cover;
+}
 
+.content1-image.content1-image2 {
+  height: 450px;
+  background-image: url('https://www.usnews.com/object/image/00000174-c71d-db16-ad76-cf5fdfe10000/c21roadbos-bc.bos_bc.JPG?update-time=1601068808168&size=responsive640');
+  background-position: 50%;
+  background-size: cover;
+}
+
+.content1-image.content1-image1 {
+  height: 450px;
+  background-image: url('https://www.bc.edu/content/bc-web/schools/mcas/departments/theology/people/faculty-directory/jeremy-wilkins/_jcr_content/profileImage.img.png');
+  background-position: 50% 20%;
+  background-size: cover;
+}
 
 ._4-col-2 {
   width: 560px;
@@ -130,7 +229,6 @@ margin-top: 150px;
   font-family: Roboto, sans-serif;
   font-weight: 400;
   line-height: 44px;
-
 }
 
 .navsearch {
@@ -273,4 +371,5 @@ margin-top: 150px;
     width: 95%;
   }
 }
+
 
