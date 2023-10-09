@@ -34,3 +34,26 @@
    z-index: 5;
 }
 
+
+
+@media screen and (max-width: 767px) {
+  .crestimageholder {
+    width: 15vh;
+    height: 15vh;
+    margin-top: 23px;
+  }
+
+}
+
+@media screen and (max-width: 479px) {
+  .navbar {
+    height: 8vh;
+  }
+
+  .crestimageholder {
+    width: 10vh;
+    height: 10vh;
+    margin-top: 19px;
+  }
+
+}
