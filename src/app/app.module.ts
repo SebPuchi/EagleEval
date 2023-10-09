@@ -17,6 +17,7 @@ import { HeroSectionComponent } from './hero-section/hero-section.component';
 import { InputTextModule } from 'primeng/inputtext';
 import { FooterComponent } from './footer/footer.component';
 import { DescriptionhmComponent } from './descriptionhm/descriptionhm.component';
+import { TripleCardSectionComponent } from './triple-card-section/triple-card-section.component';
 
 @NgModule({
 	declarations: [
@@ -24,7 +25,8 @@ import { DescriptionhmComponent } from './descriptionhm/descriptionhm.component'
   HomeBarComponent,
   HeroSectionComponent,
   FooterComponent,
-  DescriptionhmComponent
+  DescriptionhmComponent,
+  TripleCardSectionComponent
 	],
 	imports: [
 		BrowserModule,
