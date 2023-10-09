@@ -4,7 +4,6 @@ import cheerio from "cheerio";
 
 // Define the constant for the class name of the department div
 const DEP_CLASS = "tab-pane tab-departments active ";
-const PROF_CLASS = "faultySectionResult";
 
 // Function to fetch the HTML content of a web page given its URL
 async function getHtmlPage(url) {
@@ -141,24 +140,6 @@ async function getProfData(depUrl) {
   return cleanProfJson;
 }
 
-export async function getAllProfData() {
-  var profData = [];
-
-  // Scrape departments from BC website
-  const deps = await getMcasDeps();
-
-  for (const dep of deps) {
-    console.log(`Fetching prof data for MCAS ${dep.department}`);
-    let peopleURL = appendPathToURL(dep.url);
-
-    let profJson = await getProfData(peopleURL);
-
-    profData.push(profJson);
-  }
-
-  return profData;
-}
-
 // Main function to get the JSON representation of department information
 export async function getMcasDeps() {
   var combinedLists = "";
@@ -184,4 +165,71 @@ export async function getMcasDeps() {
   let depJSON = unorderedListToJson(combinedLists);
 
   return depJSON;
+}
+
+//
+// Functions to get prof data for each school
+//
+
+export async function getMcasProfData() {
+  var profData = [];
+
+  // Scrape departments from BC website
+  const deps = await getMcasDeps();
+
+  for (const dep of deps) {
+    console.log(`Fetching prof data for MCAS ${dep.department}`);
+    let peopleURL = appendPathToURL(dep.url);
+
+    let profJson = await getProfData(peopleURL);
+
+    profData.push(profJson);
+  }
+
+  return profData;
+}
+
+export async function getCsomProfData() {
+  const jsonUrl =
+    "https://www.bc.edu/content/bc-web/schools/carroll-school/faculty-research/faculty-directory.2.json";
+
+  let profJson = await getProfData(jsonUrl);
+
+  return profJson;
+}
+
+export async function getCsonProfData() {
+  const jsonUrl =
+    "https://www.bc.edu/content/bc-web/schools/cson/faculty-research/faculty-directory.2.json";
+
+  let profJson = await getProfData(jsonUrl);
+
+  return profJson;
+}
+
+export async function getSswProfData() {
+  const jsonUrl =
+    "https://www.bc.edu/content/bc-web/schools/ssw/faculty.3.json";
+
+  let profJson = await getProfData(jsonUrl);
+
+  return profJson;
+}
+
+export async function getLynchProfData() {
+  const jsonUrl =
+    "https://www.bc.edu/content/bc-web/schools/lynch-school/faculty-research/faculty-directory.3.json";
+
+  let profJson = await getProfData(jsonUrl);
+
+  return profJson;
+}
+
+export async function getStmProfData() {
+  const jsonUrl =
+    "https://www.bc.edu/content/bc-web/schools/stm/faculty/faculty-directory.2.json";
+
+  let profJson = await getProfData(jsonUrl);
+
+  return profJson;
 }

@@ -1,7 +1,15 @@
 import { getReviews } from "./fetchReviews.js";
 import { getDrillDown } from "./fetchDrillDown.js";
-import { processNewData } from "./syncData.js";
-import { getAllProfData, getMcasDeps } from "./syncMCAS.js";
+import { processNewData } from "./syncCourses.js";
+import {
+  getMcasProfData,
+  getMcasDeps,
+  getCsomProfData,
+  getCsonProfData,
+  getLynchProfData,
+  getSswProfData,
+  getStmProfData,
+} from "./syncProfs.js";
 import { updateCollection } from "./updateMongo.js";
 import { courseSchema } from "./courseSchema.js";
 import { profSchema } from "./profSchema.js";
@@ -9,7 +17,7 @@ import {
   findOrCreateAndUpdateCourse,
   findOrCreateAndUpdateProf,
 } from "./mongoUtils.js";
-import { connectToDatabase, closeDatabaseConnection } from "./mongo.js";
+import { connectToDatabase } from "./mongo.js";
 import "log-timestamp";
 import mongoose from "mongoose";
 import express from "express";
@@ -117,27 +125,6 @@ app.get("/api/fetch/courseData", async (req, res) => {
   res.send(newData);
 });
 
-app.get("/api/fetch/mcas/deps", async (req, res) => {
-  console.log("Fetching MCAS Department URLs");
-
-  // wait for response form bc website
-  let departments = await getMcasDeps();
-
-  console.log("Successfully fetched MCAS departments");
-
-  res.send(departments);
-});
-
-app.get("/api/fetch/mcas/profs", async (req, res) => {
-  console.log("Fethcing MCAS professor data");
-
-  // wait for response from BC site scraper
-  let profData = await getAllProfData();
-  console.log("Finished collecting MCAS prof data");
-
-  res.send(profData);
-});
-
 app.post("/api/update/courses", async (req, res) => {
   const Course = new mongoose.model("Course", courseSchema);
 
@@ -162,27 +149,64 @@ app.post("/api/update/courses", async (req, res) => {
   );
 });
 
-app.post("/api/update/mcas/profs", async (req, res) => {
-  const Professor = new mongoose.model("Professor", profSchema);
+app.post(
+  "/api/update/profs",
+  body("schools").trim().notEmpty().escape(),
+  async (req, res) => {
+    let result = validationResult(req);
 
-  console.log("Updating mongo with MCAS data");
+    // Dict of school to fetch function
+    const schools = {
+      MCAS: getMcasDeps,
+      CSOM: getCsomProfData,
+      CSON: getCsonProfData,
+      SSW: getSswProfData,
+      LS: getLynchProfData,
+      STM: getStmProfData,
+    };
 
-  console.log("Getting prof data from BC website");
-  let newProfData = await getAllProfData();
-  console.log("Completed fetching MCAS prof data");
+    const Professor = new mongoose.model("Professor", profSchema);
 
-  console.log("Starting updating professor data for MCAS");
-  let newProfs = await updateCollection(
-    newProfData,
-    Professor,
-    findOrCreateAndUpdateProf
-  );
-  console.log("Finished updating prof databse for MCAS");
+    if (result.isEmpty()) {
+      for (const school of req.schools) {
+        console.log(`Updating prof data for ${school}`);
 
-  res.send(
-    `Successfully updated MCAS professor databse. Added ${newProfs} new professors`
-  );
-});
+        try {
+          const fetchFunc = schools[school];
+
+          console.log("Getting prof data ");
+        } catch {
+          console.log(`Error procesing: ${scholl} doesn't exist`);
+          continue;
+        }
+      }
+    }
+
+    console.error(
+      req.schools
+        ? `Error for request: ${req.schools}`
+        : "Error: empty body params"
+    );
+
+    console.log("Updating mongo with MCAS data");
+
+    console.log("Getting prof data from BC website");
+    let newProfData = await getMcasProfData();
+    console.log("Completed fetching MCAS prof data");
+
+    console.log("Starting updating professor data for MCAS");
+    let newProfs = await updateCollection(
+      newProfData,
+      Professor,
+      findOrCreateAndUpdateProf
+    );
+    console.log("Finished updating prof databse for MCAS");
+
+    res.send(
+      `Successfully updated MCAS professor databse. Added ${newProfs} new professors`
+    );
+  }
+);
 
 app.listen(3000, () => {
   console.log("Server listening on port 3000");
