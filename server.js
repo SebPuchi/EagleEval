@@ -131,9 +131,7 @@ app.post("/api/update/courses", async (req, res) => {
   console.log("Updating mongo with new course data");
 
   // Fetch data from BC Course database
-  console.log("Fetching new course data from BC");
   let newData = await processNewData();
-  console.log("Completed fetching course data");
 
   // Update mongodb with new course data
   console.log("Starting updating of course database");
@@ -168,17 +166,26 @@ app.post(
     const Professor = new mongoose.model("Professor", profSchema);
 
     if (result.isEmpty()) {
-      for (const school of req.schools) {
-        console.log(`Updating prof data for ${school}`);
-
-        try {
+      try {
+        const promises = req.schools.map((school) => {
           const fetchFunc = schools[school];
 
-          console.log("Getting prof data ");
-        } catch {
-          console.log(`Error procesing: ${scholl} doesn't exist`);
-          continue;
-        }
+          let newProfData = await fetchFunc();
+        });
+
+        const responses = Promise.all(promises);
+
+        const sumResponses = responses.reduce(
+          (partialSum, a) => partialSum + a,
+          0
+        );
+
+        res.send(
+          `Successfully updated profs for ${req.schools}. Added ${sumResponses} new professors`
+        );
+      } catch (error) {
+        console.error("Error updating profs:", error);
+        throw error;
       }
     }
 

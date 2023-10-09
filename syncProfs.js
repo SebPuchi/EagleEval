@@ -172,21 +172,23 @@ export async function getMcasDeps() {
 //
 
 export async function getMcasProfData() {
-  var profData = [];
+  try {
+    // Scrape departments from BC website
+    const deps = await getMcasDeps();
 
-  // Scrape departments from BC website
-  const deps = await getMcasDeps();
+    const promises = deps.map((dep) => {
+      console.log(`Fetching prof data for MCAS ${dep.department}`);
+      const peopleURL = appendPathToURL(dep.url);
+      return getProfData(peopleURL);
+    });
 
-  for (const dep of deps) {
-    console.log(`Fetching prof data for MCAS ${dep.department}`);
-    let peopleURL = appendPathToURL(dep.url);
+    const profData = await Promise.all(promises);
 
-    let profJson = await getProfData(peopleURL);
-
-    profData.push(profJson);
+    return profData;
+  } catch (error) {
+    console.erro("Error getting MCAS profs:", error);
+    throw error;
   }
-
-  return profData;
 }
 
 export async function getCsomProfData() {

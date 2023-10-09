@@ -70,6 +70,8 @@ export async function processNewData() {
 
   var parsed_json = [];
 
+  console.log("Getting coure data from BC site");
+
   await new_json_data.then((results) => {
     for (const result of results) {
       let clean_json = removeKeysFromArray(result.payload, uneeded_keys);
