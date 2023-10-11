@@ -10,7 +10,7 @@ import HtmlTableToJson from "html-table-to-json";
 import {
   removeKeysFromArray,
   cleanKeysAndRemoveNonASCII,
-} from "./fetchUtils.js";
+} from "../utils/fetchUtils.js";
 
 // Function to generate the request body for the POST request to Avalanche Blue.
 const genBody = (query) => {

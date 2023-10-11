@@ -1,7 +1,7 @@
 // Import the necessary modules
 import fetch from "node-fetch";
 import cheerio from "cheerio";
-import { cleanKeysAndRemoveNonASCII } from "./fetchUtils.js";
+import { cleanKeysAndRemoveNonASCII } from "../utils/fetchUtils.js";
 
 // Define the constant for the class name of the department div
 const DEP_CLASS = "tab-pane tab-departments active ";

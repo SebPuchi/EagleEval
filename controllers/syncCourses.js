@@ -9,7 +9,10 @@ Spring - https://bcweb.bc.edu/aem/coursessprg.json
 */
 
 import fetch from "node-fetch";
-import { removeKeysFromArray, removeDuplicateObjects } from "./fetchUtils.js";
+import {
+  removeKeysFromArray,
+  removeDuplicateObjects,
+} from "../utils/fetchUtils.js";
 
 var COURSE_DATA_URLS = [
   "https://bcweb.bc.edu/aem/coursesfall.json",

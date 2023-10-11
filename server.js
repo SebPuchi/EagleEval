@@ -1,20 +1,20 @@
-import { getReviews } from "./fetchReviews.js";
-import { getDrillDown } from "./fetchDrillDown.js";
-import { processNewData } from "./syncCourses.js";
-import { getMcasProfData, getProfData } from "./syncProfs.js";
-import { updateCollection } from "./updateMongo.js";
-import { courseSchema } from "./courseSchema.js";
-import { profSchema } from "./profSchema.js";
+import { getReviews } from "./controllers/fetchReviews.js";
+import { getDrillDown } from "./controllers/fetchDrillDown.js";
+import { processNewData } from "./controllers/syncCourses.js";
+import { getMcasProfData, getProfData } from "./controllers/syncProfs.js";
+import { updateCollection } from "./controllers/updateMongo.js";
+import { courseSchema } from "./models/courseSchema.js";
+import { profSchema } from "./models/profSchema.js";
 import {
   findOrCreateAndUpdateCourse,
   findOrCreateAndUpdateProf,
-} from "./mongoUtils.js";
-import { connectToDatabase } from "./mongo.js";
+} from "./utils/mongoUtils.js";
+import { connectToDatabase } from "./controllers/mongo.js";
 import "log-timestamp";
 import mongoose from "mongoose";
 import express from "express";
 import bodyParser from "body-parser";
-import { body, matchedData, validationResult, check } from "express-validator";
+import { body, matchedData, validationResult } from "express-validator";
 import { ConsoleLogger } from "@angular/compiler-cli";
 
 const schoolUrls = {
