@@ -1,15 +1,7 @@
 import { getReviews } from "./fetchReviews.js";
 import { getDrillDown } from "./fetchDrillDown.js";
 import { processNewData } from "./syncCourses.js";
-import {
-  getMcasProfData,
-  getMcasDeps,
-  getCsomProfData,
-  getCsonProfData,
-  getLynchProfData,
-  getSswProfData,
-  getStmProfData,
-} from "./syncProfs.js";
+import { getMcasProfData, getProfData } from "./syncProfs.js";
 import { updateCollection } from "./updateMongo.js";
 import { courseSchema } from "./courseSchema.js";
 import { profSchema } from "./profSchema.js";
@@ -147,71 +139,97 @@ app.post("/api/update/courses", async (req, res) => {
   );
 });
 
+// Define a route for handling POST requests to update professors
 app.post(
   "/api/update/profs",
+  // Validate the 'schools' field in the request body: trim, check if not empty, and escape special characters
   body("schools").trim().notEmpty().escape(),
   async (req, res) => {
+    // Validate the request body against defined validation rules
     let result = validationResult(req);
 
-    // Dict of school to fetch function
-    const schools = {
-      MCAS: getMcasDeps,
-      CSOM: getCsomProfData,
-      CSON: getCsonProfData,
-      SSW: getSswProfData,
-      LS: getLynchProfData,
-      STM: getStmProfData,
+    // Dictionary of school URLs to fetch professor data
+    const schoolUrls = {
+      MCAS: "https://www.bc.edu/bc-web/schools/morrissey/department-list.html",
+      CSOM: "https://www.bc.edu/content/bc-web/schools/carroll-school/faculty-research/faculty-directory.2.json",
+      CSON: "https://www.bc.edu/content/bc-web/schools/cson/faculty-research/faculty-directory.3.json",
+      SSW: "https://www.bc.edu/content/bc-web/schools/ssw/faculty/faculty-directory.3.json",
+      LS: "https://www.bc.edu/content/bc-web/schools/lynch-school/faculty-research/faculty-directory.3.json",
+      STM: "https://www.bc.edu/content/bc-web/schools/stm/faculty/faculty-directory.3.json",
     };
 
+    // Create a new Professor model instance using Mongoose
     const Professor = new mongoose.model("Professor", profSchema);
 
+    // Check if the request body validation passed
     if (result.isEmpty()) {
       try {
-        const promises = req.schools.map((school) => {
-          const fetchFunc = schools[school];
+        // Extract validated data from the request
+        let data = matchedData(req);
 
-          let newProfData = await fetchFunc();
+        // Extract the 'schools' field from the data
+        const schools = data.schools;
+
+        // Create an array of promises for fetching professor data for each school
+        const promises = schools.map((school) => {
+          const fetchUrl = schoolUrls[school];
+          var profData;
+
+          // Decide which function to use based on the school
+          if (school == "MCAS") {
+            profData = getMcasProfData(fetchUrl);
+
+            // Fetch professor data and update the collection
+            profData.then((result) => {
+              console.log(`Updating professors for ${school}`);
+              var depPromises = [];
+              for (const dep of result) {
+                let newProfs = updateCollection(
+                  dep,
+                  Professor,
+                  findOrCreateAndUpdateProf
+                );
+
+                depPromises.push(newProfs);
+              }
+              return depPromises;
+            });
+          } else {
+            profData = getProfData(fetchUrl);
+
+            // Fetch professor data and update the collection
+            profData.then((result) => {
+              console.log(`Updating professors for ${school}`);
+
+              let newProfs = updateCollection(
+                result,
+                Professor,
+                findOrCreateAndUpdateProf
+              );
+
+              return newProfs;
+            });
+          }
         });
+        // Wait for all promises to resolve
+        await Promise.all(promises);
 
-        const responses = Promise.all(promises);
-
-        const sumResponses = responses.reduce(
-          (partialSum, a) => partialSum + a,
-          0
-        );
-
-        res.send(
-          `Successfully updated profs for ${req.schools}. Added ${sumResponses} new professors`
-        );
+        // Send a success response
+        return res.send(`Successfully updated profs for ${req.body.schools}`);
       } catch (error) {
+        // Handle and log any errors during the update process
         console.error("Error updating profs:", error);
         throw error;
       }
     }
 
+    // Handle invalid request body parameters
     console.error(
       req.schools
         ? `Error for request: ${req.schools}`
         : "Error: empty body params"
     );
-
-    console.log("Updating mongo with MCAS data");
-
-    console.log("Getting prof data from BC website");
-    let newProfData = await getMcasProfData();
-    console.log("Completed fetching MCAS prof data");
-
-    console.log("Starting updating professor data for MCAS");
-    let newProfs = await updateCollection(
-      newProfData,
-      Professor,
-      findOrCreateAndUpdateProf
-    );
-    console.log("Finished updating prof databse for MCAS");
-
-    res.send(
-      `Successfully updated MCAS professor databse. Added ${newProfs} new professors`
-    );
+    res.send("Invalid body params schools must not be empty");
   }
 );
 

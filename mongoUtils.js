@@ -17,6 +17,18 @@ function courseJSONToDoc(courseJSON) {
 
 // Converts a professor json object to a mongodb Document
 function profJSONtoDoc(profJson) {
+  var imgFile;
+
+  if (profJson["jcr:content"].hasOwnProperty("profileImage")) {
+    imgFile = profJson["jcr:content"]["profileImage"]["fileReference"];
+    if (!imgFile) {
+      imgFile =
+        "/content/dam/bc1/schools/mcas/Faculty Directory/no-profile-image_335x400px.jpg";
+    }
+  } else {
+    imgFile =
+      `/content/bc-web/schools/carroll-school/faculty-research/faculty-directory/${profJson["jcr:content"]["firstName"]}-${profJson["jcr:content"]["lastName"]}/_jcr_content/profileImage.img.png`.toLowerCase();
+  }
   // Convert json to format of schema
   let profData = {
     title: profJson["jcr:content"]["jcr:title"],
@@ -26,7 +38,7 @@ function profJSONtoDoc(profJson) {
     education: profJson["jcr:content"]["education"],
     email: profJson["jcr:content"]["email"],
     phone: profJson["jcr:content"]["phone"],
-    profileImage: profJson["jcr:content"]["profileImage"]["fileReference"],
+    profileImage: imgFile,
   };
 
   return profData;

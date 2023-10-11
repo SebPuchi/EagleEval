@@ -1,6 +1,7 @@
 // Import the necessary modules
 import fetch from "node-fetch";
 import cheerio from "cheerio";
+import { cleanKeysAndRemoveNonASCII } from "./fetchUtils.js";
 
 // Define the constant for the class name of the department div
 const DEP_CLASS = "tab-pane tab-departments active ";
@@ -129,23 +130,9 @@ function cleanProfData(obj) {
   return result;
 }
 
-// Gets prof data for a given department url
-async function getProfData(depUrl) {
-  // Get json from url
-  let response = await fetch(depUrl);
-  let rawProfJson = await response.json();
-
-  const cleanProfJson = cleanProfData(rawProfJson);
-
-  return cleanProfJson;
-}
-
 // Main function to get the JSON representation of department information
-export async function getMcasDeps() {
+export async function getMcasDeps(pageURL) {
   var combinedLists = "";
-
-  const pageURL =
-    "https://www.bc.edu/bc-web/schools/morrissey/department-list.html";
 
   // Get MACS HTML page
   let rawHTML = await getHtmlPage(pageURL);
@@ -171,10 +158,23 @@ export async function getMcasDeps() {
 // Functions to get prof data for each school
 //
 
-export async function getMcasProfData() {
+// Gets prof data for a given department url
+export async function getProfData(depUrl) {
+  // Get json from url
+  let response = await fetch(depUrl);
+  let rawProfJson = await response.json();
+
+  const cleanProfJson = [
+    cleanKeysAndRemoveNonASCII(cleanProfData(rawProfJson)),
+  ];
+
+  return cleanProfJson;
+}
+
+export async function getMcasProfData(deaprtmentsUrl) {
   try {
     // Scrape departments from BC website
-    const deps = await getMcasDeps();
+    const deps = await getMcasDeps(deaprtmentsUrl);
 
     const promises = deps.map((dep) => {
       console.log(`Fetching prof data for MCAS ${dep.department}`);
@@ -182,56 +182,9 @@ export async function getMcasProfData() {
       return getProfData(peopleURL);
     });
 
-    const profData = await Promise.all(promises);
-
-    return profData;
+    return Promise.all(promises);
   } catch (error) {
-    console.erro("Error getting MCAS profs:", error);
+    console.error("Error getting MCAS profs:", error);
     throw error;
   }
-}
-
-export async function getCsomProfData() {
-  const jsonUrl =
-    "https://www.bc.edu/content/bc-web/schools/carroll-school/faculty-research/faculty-directory.2.json";
-
-  let profJson = await getProfData(jsonUrl);
-
-  return profJson;
-}
-
-export async function getCsonProfData() {
-  const jsonUrl =
-    "https://www.bc.edu/content/bc-web/schools/cson/faculty-research/faculty-directory.2.json";
-
-  let profJson = await getProfData(jsonUrl);
-
-  return profJson;
-}
-
-export async function getSswProfData() {
-  const jsonUrl =
-    "https://www.bc.edu/content/bc-web/schools/ssw/faculty.3.json";
-
-  let profJson = await getProfData(jsonUrl);
-
-  return profJson;
-}
-
-export async function getLynchProfData() {
-  const jsonUrl =
-    "https://www.bc.edu/content/bc-web/schools/lynch-school/faculty-research/faculty-directory.3.json";
-
-  let profJson = await getProfData(jsonUrl);
-
-  return profJson;
-}
-
-export async function getStmProfData() {
-  const jsonUrl =
-    "https://www.bc.edu/content/bc-web/schools/stm/faculty/faculty-directory.2.json";
-
-  let profJson = await getProfData(jsonUrl);
-
-  return profJson;
 }
