@@ -3,19 +3,20 @@ import { getDrillDown } from "./controllers/fetchDrillDown.js";
 import { processNewData } from "./controllers/syncCourses.js";
 import { getMcasProfData, getProfData } from "./controllers/syncProfs.js";
 import { updateCollection } from "./controllers/updateMongo.js";
-import { courseSchema } from "./models/courseSchema.js";
-import { profSchema } from "./models/profSchema.js";
 import {
   findOrCreateAndUpdateCourse,
   findOrCreateAndUpdateProf,
 } from "./utils/mongoUtils.js";
 import { connectToDatabase } from "./controllers/mongo.js";
 import "log-timestamp";
-import mongoose from "mongoose";
 import express from "express";
 import bodyParser from "body-parser";
 import { body, matchedData, validationResult } from "express-validator";
 import { ConsoleLogger } from "@angular/compiler-cli";
+
+// Global constants
+const Course = require("./models/courseSchema.js");
+const Professor = require("./models/profSchema.js");
 
 const schoolUrls = {
   MCAS: "https://www.bc.edu/bc-web/schools/morrissey/department-list.html",
@@ -136,9 +137,6 @@ app.post("/api/update/courses", async (req, res) => {
     return res.status(400).json({ errors: errors.array() });
   }
 
-  // Create the Course model using Mongoose
-  const Course = mongoose.model("Course", courseSchema);
-
   try {
     // Fetch new data to update the course database
     const newData = await processNewData();
@@ -182,9 +180,6 @@ app.post(
       // Extract validated data from the request body.
       const data = matchedData(req);
       const schools = data.schools;
-
-      // Create a Professor model using Mongoose and the "profSchema".
-      const Professor = mongoose.model("Professor", profSchema);
 
       // Initialize an array of promises for updating professor data for each school.
       let promises = schools.map(async (school) => {

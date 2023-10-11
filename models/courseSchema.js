@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 const { Schema } = mongoose;
 
 // Schema for course data
-export const courseSchema = new Schema({
+const courseSchema = new Schema({
   title: String,
   college: String,
   crs_desc: String,
@@ -12,3 +12,5 @@ export const courseSchema = new Schema({
     crs_number: Number,
   },
 });
+
+module.exports = mongoose.model("Course", courseSchema);

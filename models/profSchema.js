@@ -12,3 +12,5 @@ export const profSchema = new Schema({
   phone: String,
   profileImage: String,
 });
+
+module.exports = mongoose.model("Professor", profSchema);
