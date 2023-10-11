@@ -7,6 +7,8 @@ import {
   findOrCreateAndUpdateCourse,
   findOrCreateAndUpdateProf,
 } from "./utils/mongoUtils.js";
+import { Course } from "./models/courseSchema.js";
+import { Professor } from "./models/profSchema.js";
 import { connectToDatabase } from "./controllers/mongo.js";
 import "log-timestamp";
 import express from "express";
@@ -15,8 +17,6 @@ import { body, matchedData, validationResult } from "express-validator";
 import { ConsoleLogger } from "@angular/compiler-cli";
 
 // Global constants
-const Course = require("./models/courseSchema.js");
-const Professor = require("./models/profSchema.js");
 
 const schoolUrls = {
   MCAS: "https://www.bc.edu/bc-web/schools/morrissey/department-list.html",

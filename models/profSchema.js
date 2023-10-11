@@ -13,4 +13,4 @@ export const profSchema = new Schema({
   profileImage: String,
 });
 
-module.exports = mongoose.model("Professor", profSchema);
+export const Professor = mongoose.model("Professor", profSchema);
