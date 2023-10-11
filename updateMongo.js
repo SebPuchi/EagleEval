@@ -1,9 +1,6 @@
 // Update or insert new data
 export async function updateCollection(colData, colModel, updateFunc) {
   try {
-    // count of new course added
-    var newItems = 0;
-
     var promises = [];
     // loop through each semester
     for (const item of colData) {
@@ -15,7 +12,7 @@ export async function updateCollection(colData, colModel, updateFunc) {
       }
     }
 
-    return newItems;
+    return promises;
   } catch (error) {
     throw new Error(`Error updating collection data: ${error}`);
   }

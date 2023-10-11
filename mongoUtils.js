@@ -17,31 +17,22 @@ function courseJSONToDoc(courseJSON) {
 
 // Converts a professor json object to a mongodb Document
 function profJSONtoDoc(profJson) {
-  var imgFile;
+  const profileContent = profJson["jcr:content"];
+  const imgFile = profileContent.hasOwnProperty("profileImage")
+    ? profileContent["profileImage"]["fileReference"] ||
+      "/content/dam/bc1/schools/mcas/Faculty Directory/no-profile-image_335x400px.jpg"
+    : `/content/bc-web/schools/carroll-school/faculty-research/faculty-directory/${profileContent["firstName"]}-${profileContent["lastName"]}/_jcr_content/profileImage.img.png`.toLowerCase();
 
-  if (profJson["jcr:content"].hasOwnProperty("profileImage")) {
-    imgFile = profJson["jcr:content"]["profileImage"]["fileReference"];
-    if (!imgFile) {
-      imgFile =
-        "/content/dam/bc1/schools/mcas/Faculty Directory/no-profile-image_335x400px.jpg";
-    }
-  } else {
-    imgFile =
-      `/content/bc-web/schools/carroll-school/faculty-research/faculty-directory/${profJson["jcr:content"]["firstName"]}-${profJson["jcr:content"]["lastName"]}/_jcr_content/profileImage.img.png`.toLowerCase();
-  }
-  // Convert json to format of schema
-  let profData = {
-    title: profJson["jcr:content"]["jcr:title"],
-    firstName: profJson["jcr:content"]["firstName"],
-    lastName: profJson["jcr:content"]["lastName"],
-    office: profJson["jcr:content"]["office"],
-    education: profJson["jcr:content"]["education"],
-    email: profJson["jcr:content"]["email"],
-    phone: profJson["jcr:content"]["phone"],
+  return {
+    title: profileContent["jcr:title"],
+    firstName: profileContent["firstName"],
+    lastName: profileContent["lastName"],
+    office: profileContent["office"],
+    education: profileContent["education"],
+    email: profileContent["email"],
+    phone: profileContent["phone"],
     profileImage: imgFile,
   };
-
-  return profData;
 }
 
 // Function to check if a document with a specific key exists
