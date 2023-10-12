@@ -22,7 +22,8 @@ export async function connectToDatabase() {
 
 // Function to close the database connection
 export function closeDatabaseConnection() {
+  // Close the Mongoose connection
   mongoose.connection.close(() => {
-    console.log("Database connection closed");
+    console.log("Mongoose connection closed.");
   });
 }

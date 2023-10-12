@@ -1,20 +1,26 @@
-import { getReviews } from "./controllers/fetchReviews.js";
-import { getDrillDown } from "./controllers/fetchDrillDown.js";
-import { processNewData } from "./controllers/syncCourses.js";
-import { getMcasProfData, getProfData } from "./controllers/syncProfs.js";
-import { updateCollection } from "./controllers/updateMongo.js";
-import {
-  findOrCreateAndUpdateCourse,
-  findOrCreateAndUpdateProf,
-} from "./utils/mongoUtils.js";
-import { Course } from "./models/courseSchema.js";
-import { Professor } from "./models/profSchema.js";
-import { connectToDatabase } from "./controllers/mongo.js";
 import "log-timestamp";
 import express from "express";
 import bodyParser from "body-parser";
 import { body, matchedData, validationResult } from "express-validator";
 import { ConsoleLogger } from "@angular/compiler-cli";
+// CONTROLLERS
+import { processNewData } from "./controllers/syncCourses.js";
+import { getMcasProfData, getProfData } from "./controllers/syncProfs.js";
+import { updateCollection } from "./controllers/updateMongo.js";
+import {
+  connectToDatabase,
+  closeMongooseConnection,
+} from "./middleware/mongoConnection.js";
+// UTILS
+import {
+  findOrCreateAndUpdateCourse,
+  findOrCreateAndUpdateProf,
+} from "./utils/mongoUtils.js";
+// MODELS
+import { Course } from "./models/courseSchema.js";
+import { Professor } from "./models/profSchema.js";
+// ROUTES
+import { fetch_router } from "./routes/fetch.js";
 
 // Global constants
 
@@ -39,93 +45,15 @@ app.use((req, res, next) => {
   next();
 });
 
-// Middleware to connect to MongoDB when the server starts
-app.use(async (req, res, next) => {
-  try {
-    await connectToDatabase();
-    next();
-  } catch (error) {
-    next(error);
-  }
-});
-
 // handle parsing post body
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-// route to fetching review data from api for a certain query
-app.post(
-  "/api/fetch/reviews",
-  body("fetch_query").trim().notEmpty().escape(),
-  async (req, res) => {
-    let result = validationResult(req);
+// Middleware to connect to MongoDB when the server starts
+app.use(connectToDatabase);
 
-    // Validate input has no errors
-    if (result.isEmpty()) {
-      let data = matchedData(req);
-
-      // Query string from body (Class code or professor name)
-      let query = data.fetch_query;
-      console.log("Processing response for query: " + query);
-
-      // Wait for response from bc reviews
-      let fetch_response = await getReviews(query);
-
-      console.log("Successfully fetched reviews for: " + data.fetch_query);
-      return res.send(fetch_response);
-    }
-
-    console.error(
-      req.body.fetch_query
-        ? "Error for query: " + req.body.fetch_query
-        : "Error: empty fetch query"
-    );
-    res.send("Invalid body params: fetch_query must not be empty");
-  }
-);
-
-app.post(
-  "/api/fetch/drilldown",
-  body("code").trim().notEmpty().escape(),
-  body("prof").trim().notEmpty().escape(),
-  async (req, res) => {
-    let result = validationResult(req);
-
-    // Validate input has no errors
-    if (result.isEmpty()) {
-      let data = matchedData(req);
-
-      // Query params from body (Class code or professor name)
-      let code = data.code;
-      let prof = data.prof;
-      console.log(`Processing response for query: ${code}, ${prof}`);
-
-      // Wait for response from bc reviews
-      let fetch_response = await getDrillDown(code, prof);
-
-      console.log(`Successfully fetched drilldown data for: ${code}, ${prof}`);
-      return res.send(fetch_response);
-    }
-
-    console.error(
-      req.body.code && req.body.prof
-        ? `Error for query: ${req.body.code}, ${req.body.prof}`
-        : "Error: empty body params"
-    );
-    res.send("Invalid body params: code and prof must not be empty");
-  }
-);
-
-app.get("/api/fetch/courseData", async (req, res) => {
-  console.log("Fetching course data from BC database");
-
-  // wait for response from BC Course Database
-  let newData = await processNewData();
-
-  console.log("Successfully fetched course data from BC");
-
-  res.send(newData);
-});
+// Add routes for fetch
+app.use("/api/fetch", fetch_router);
 
 // Define the POST route for updating courses
 app.post("/api/update/courses", async (req, res) => {
@@ -221,6 +149,9 @@ app.post(
     }
   }
 );
+
+// Use the middleware to automatically close the connection
+app.use(closeMongooseConnection);
 
 app.listen(3000, () => {
   console.log("Server listening on port 3000");
