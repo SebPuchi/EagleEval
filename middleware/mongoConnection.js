@@ -1,19 +1,19 @@
 import {
   connectToDatabase,
   closeDatabaseConnection,
-} from "../controllers/mongo";
+} from "../controllers/mongo.js";
 
 // Create a middleware function to close the Mongoose connection
-const closeMongooseConnection = (req, res, next) => {
+export const closeMongooseConnection = (req, res, next) => {
   // Close the Mongoose connection
-  closeMongooseConnection();
+  closeDatabaseConnection();
 
   // Continue to the next middleware or route handler
   next();
 };
 
 // Middleware to connect to the database
-const connectToDatabase = (req, res, next) => {
+export const cerateMongooseConnection = (req, res, next) => {
   // Establish a Mongoose connection
   connectToDatabase();
 

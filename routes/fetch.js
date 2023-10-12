@@ -2,8 +2,8 @@
 import express from "express";
 import { body, matchedData, validationResult } from "express-validator";
 
-import { getReviews } from "./controllers/fetchReviews.js";
-import { getDrillDown } from "./controllers/fetchDrillDown.js";
+import { getReviews } from "../controllers/fetchReviews.js";
+import { getDrillDown } from "../controllers/fetchDrillDown.js";
 
 export const fetch_router = express.Router();
 
