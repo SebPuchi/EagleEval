@@ -15,12 +15,18 @@ import { ImageModule } from 'primeng/image';
 import { HomeBarComponent } from './home-bar/home-bar.component';
 import { HeroSectionComponent } from './hero-section/hero-section.component';
 import { InputTextModule } from 'primeng/inputtext';
+import { FooterComponent } from './footer/footer.component';
+import { DescriptionhmComponent } from './descriptionhm/descriptionhm.component';
+import { TripleCardSectionComponent } from './triple-card-section/triple-card-section.component';
 
 @NgModule({
 	declarations: [
 		AppComponent,
   HomeBarComponent,
-  HeroSectionComponent
+  HeroSectionComponent,
+  FooterComponent,
+  DescriptionhmComponent,
+  TripleCardSectionComponent
 	],
 	imports: [
 		BrowserModule,

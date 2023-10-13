@@ -1,0 +1,276 @@
+
+
+.bodydivcontainer {
+  background-color: #5c0d0f;
+}
+
+
+
+
+.image {
+  width: 50vw;
+}
+
+.text-14 {
+  line-height: 24px;
+}
+
+.text-14.text-14-60 {
+  opacity: .6;
+  color: #fff;
+  opacity: .6;
+}
+
+.tagline {
+  opacity: .6;
+  color: #fff;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-family: Roboto, sans-serif;
+  font-size: 12px;
+}
+
+.wrap {
+  width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+
+.wrap.w80 {
+  width: 100%;
+  background-color: #5c0d0f;
+  padding: 40px 25px;
+  overflow: hidden;
+}
+
+
+
+.content1-item-description {
+  padding-right: 40px;
+}
+
+.decoline {
+  width: 30px;
+  height: 2px;
+  background-color: #d2d2d2;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.decoline.decoline-dark {
+  background-color: #c5bfb0;
+}
+
+.content1-image {
+  height: 340px;
+  border-radius: 8px;
+  margin-bottom: 30px;
+}
+
+.content1-image.content1-image3 {
+  height: 450px;
+  background-image: url('https://www.bc.edu/content/dam/bc1/schools/carroll/news/2019/Catalyst%20photo%204.jpg');
+  background-position: 70%;
+  background-size: cover;
+}
+
+.content1-image.content1-image2 {
+  height: 450px;
+  background-image: url('https://www.usnews.com/object/image/00000174-c71d-db16-ad76-cf5fdfe10000/c21roadbos-bc.bos_bc.JPG?update-time=1601068808168&size=responsive640');
+  background-position: 50%;
+  background-size: cover;
+}
+
+.content1-image.content1-image1 {
+  height: 450px;
+  background-image: url('https://www.bc.edu/content/bc-web/schools/mcas/departments/theology/people/faculty-directory/jeremy-wilkins/_jcr_content/profileImage.img.png');
+  background-position: 50% 20%;
+  background-size: cover;
+}
+
+._4-col-2 {
+  width: 560px;
+  margin-right: 20px;
+  display: inline-block;
+}
+
+._4-col-2._4-col-last {
+  margin-right: 0;
+  display: inline-block;
+}
+
+.content1-items {
+  align-items: flex-start;
+  display: flex;
+}
+
+.headline-8-col {
+  width: 820px;
+  margin-bottom: 50px;
+}
+
+.heading {
+  color: #fff;
+  font-family: Roboto, sans-serif;
+  font-weight: 400;
+  line-height: 44px;
+}
+
+.heading-2, .heading-3, .heading-4 {
+  color: #fff;
+  font-family: Roboto, sans-serif;
+  font-weight: 400;
+}
+
+.hero1-headline-wrapper {
+  width: 680px;
+  text-align: center;
+  margin-top: 0;
+  margin-left: auto;
+  margin-right: auto;
+  font-weight: 400;
+  display: block;
+}
+
+.tagline-2 {
+  opacity: .6;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-family: Roboto, sans-serif;
+  font-size: 12px;
+}
+
+
+
+
+
+.divider {
+  width: 60px;
+  height: 2px;
+  background-color: #c5bfb0;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.paragraph {
+  text-align: center;
+  margin-top: 10px;
+  font-family: Roboto, sans-serif;
+  font-size: 20px;
+  line-height: 35px;
+}
+
+.subonewrap {
+  width: 1000px;
+  margin-top: 50px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media screen and (max-width: 991px) {
+  .herowrapperlogotext {
+    padding-top: 79px;
+  }
+
+  .wrap {
+    width: 645px;
+  }
+
+  .wrap.w80 {
+    width: 650px;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .content1-item-description {
+    text-align: center;
+    margin-bottom: 30px;
+    padding-right: 0;
+  }
+
+  .decoline {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+  }
+
+  .content1-image.content1-image2 {
+    background-position: 50% 62%;
+  }
+
+  ._4-col-2 {
+    width: 100%;
+    margin-bottom: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    display: inline-block;
+  }
+
+  ._4-col-2._4-col-last {
+    margin-bottom: 0;
+    margin-right: auto;
+  }
+
+  .content1-items {
+    flex-direction: column;
+    margin-bottom: -30px;
+  }
+
+  .headline-8-col {
+    width: auto;
+    text-align: center;
+  }
+
+  .hero1-headline-wrapper {
+    width: 100%;
+  }
+
+  .subsection {
+    display: block;
+  }
+
+  .subonewrap {
+    width: 650px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .crestimageholder {
+    width: 15vh;
+    height: 15vh;
+    margin-top: 23px;
+  }
+
+  .image {
+    width: 70vw;
+  }
+
+  .wrap {
+    width: 100%;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .wrap.w80, .subonewrap {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 479px) {
+  .navbar {
+    height: 8vh;
+  }
+
+  .crestimageholder {
+    width: 10vh;
+    height: 10vh;
+    margin-top: 19px;
+  }
+
+  .image {
+    width: 95%;
+  }
+}
+
+
