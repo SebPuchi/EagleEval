@@ -13,9 +13,9 @@ export const closeMongooseConnection = (req, res, next) => {
 };
 
 // Middleware to connect to the database
-export const cerateMongooseConnection = (req, res, next) => {
+export const cerateMongooseConnection = async (req, res, next) => {
   // Establish a Mongoose connection
-  connectToDatabase();
+  await connectToDatabase();
 
   // Continue to next route
   next();
