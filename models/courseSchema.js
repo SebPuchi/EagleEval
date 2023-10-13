@@ -8,7 +8,9 @@ const courseSchema = new Schema({
   crs_desc: String,
   subject: String,
   crs_id: {
-    crs_number: Number,
     dept_code: String,
+    crs_number: Number,
   },
 });
+
+export const Course = mongoose.model("Course", courseSchema);

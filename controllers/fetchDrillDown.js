@@ -8,7 +8,7 @@ import fetch from "node-fetch";
 import {
   removeKeysFromArray,
   cleanKeysAndRemoveNonASCII,
-} from "./fetchUtils.js";
+} from "../utils/fetchUtils.js";
 
 const genBody = (code, instructor) => {
   let body = {
