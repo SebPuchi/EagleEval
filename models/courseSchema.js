@@ -7,10 +7,8 @@ const courseSchema = new Schema({
   college: String,
   crs_desc: String,
   subject: String,
-  crs_id: {
-    dept_code: String,
-    crs_number: Number,
-  },
+  dept_code: String,
+  crs_code: String,
 });
 
 export const Course = mongoose.model("Course", courseSchema);

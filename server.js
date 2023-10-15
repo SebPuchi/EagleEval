@@ -6,6 +6,7 @@ import { ConsoleLogger } from "@angular/compiler-cli";
 // ROUTES
 import { fetch_router } from "./routes/fetch.js";
 import { update_router } from "./routes/update.js";
+import { search_router } from "./routes/search.js";
 // MIDDLEWARE
 import {
   cerateMongooseConnection,
@@ -30,6 +31,9 @@ app.use("/api/fetch", fetch_router);
 
 // Add routes for updating mongodb
 app.use("/api/update", update_router);
+
+// Add routes for searching database
+app.use("/api/search", search_router);
 
 // Use the middleware to automatically close the connection
 app.use(closeMongooseConnection);
