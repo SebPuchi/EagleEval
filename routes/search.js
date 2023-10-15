@@ -22,10 +22,41 @@ search_router.post(
 
       // query string from body (class title)
       const query = data.search_query;
-      console.log("Searching for: ", query);
+      console.log("Searching for course: ", query);
 
       // wait for response from mongodb
       let search_results = await autocompleteCourseSearch(query);
+
+      console.log("Successfully got results for search: ", query);
+      return res.send(search_results);
+    }
+
+    console.error(
+      req.body.search_query_query
+        ? "Error for query: " + req.body.serch_query
+        : "Error: empty search query"
+    );
+    res.send("Invalid body params: search_query must not be empty");
+  }
+);
+
+// Search for professors - autocomplete (POST)
+search_router.post(
+  "/profs",
+  body("search_query").trim().notEmpty().escape(),
+  async (req, res) => {
+    let result = validationResult(req);
+
+    // check input has no errors
+    if (result.isEmpty()) {
+      let data = matchedData(req);
+
+      // query string from body (class title)
+      const query = data.search_query;
+      console.log("Searching for prof: ", query);
+
+      // wait for response from mongodb
+      let search_results = await autocompleteProfSearch(query);
 
       console.log("Successfully got results for search: ", query);
       return res.send(search_results);
