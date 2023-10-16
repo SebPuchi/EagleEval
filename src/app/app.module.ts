@@ -18,6 +18,8 @@ import { InputTextModule } from 'primeng/inputtext';
 import { FooterComponent } from './footer/footer.component';
 import { DescriptionhmComponent } from './descriptionhm/descriptionhm.component';
 import { TripleCardSectionComponent } from './triple-card-section/triple-card-section.component';
+import { SearchBarComponent } from './search-bar/search-bar.component';
+import { AutoCompleteModule } from 'primeng/autocomplete';
 
 @NgModule({
 	declarations: [
@@ -26,13 +28,15 @@ import { TripleCardSectionComponent } from './triple-card-section/triple-card-se
   HeroSectionComponent,
   FooterComponent,
   DescriptionhmComponent,
-  TripleCardSectionComponent
+  TripleCardSectionComponent,
+  SearchBarComponent
 	],
 	imports: [
 		BrowserModule,
 		AppRoutingModule,
 		ButtonModule,
 		MenubarModule,
+		AutoCompleteModule,
 		ImageModule,
 		InputTextModule,
 		HttpClientModule
