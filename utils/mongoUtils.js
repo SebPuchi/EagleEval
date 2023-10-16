@@ -35,6 +35,22 @@ function profJSONtoDoc(profJson) {
   };
 }
 
+// Converts a reviews json from bc reviews to a mongodb doc
+function reviewJsonToDoc(revJson) {
+  const revData = {
+    course_code: revJson.course_code,
+    course_name: revJson.course_name,
+    semester: revJson.semester,
+    department: revJson.department,
+    school: revJson.school,
+    instructor: revJson.instructor,
+    instructor_overall: revJson.instructor_overall,
+    course_overall: revJson.course_overall,
+  };
+
+  return revData;
+}
+
 // Function to check if a document with a specific key exists
 export async function courseExsists(courseModel, keyToCheck) {
   try {
@@ -52,6 +68,36 @@ export async function courseExsists(courseModel, keyToCheck) {
   } catch (err) {
     console.error("Error checking document:", err);
     return false; // Handle the error as needed
+  }
+}
+
+export async function findOrCreateReview(revModel, revData) {
+  try {
+    // Create an options object to specify that we want to upsert (insert if not found)
+    const options = {
+      new: true,
+      upsert: true,
+      setDefaultsOnInsert: true,
+      includeResultMetadata: true,
+    };
+
+    // Array of promises from findOneandUpdate
+    let promises = [];
+    for (const revJson of revData) {
+      console.log(`Adding review for ${revJson.course_code}`);
+      const revDoc = reviewJsonToDoc(revJson);
+
+      // Define a query to find the user by a unique identifier (e.g., course id)
+      const query = {
+        $and: [{ crs_code: revDoc.crs_code }, { semester: revDoc.semester }],
+      };
+
+      promises.push(revModel.findOneAndUpdate(query, revDoc, options));
+    }
+
+    return await Promise.all(promises);
+  } catch (error) {
+    throw new Error(`Error when processing review data: ${error}`);
   }
 }
 
