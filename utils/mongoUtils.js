@@ -71,14 +71,21 @@ export async function courseExsists(courseModel, keyToCheck) {
   }
 }
 
-export async function findOrCreateReview(revModel, revData) {
+export async function searchReviews(model, query) {
+  const pipeline = {
+    $or: [{ course_code: { $regex: query } }, { instructor: query }],
+  };
+
+  return model.find(pipeline).exec();
+}
+
+export async function findOrCreateReviews(revModel, revData) {
   try {
     // Create an options object to specify that we want to upsert (insert if not found)
     const options = {
       new: true,
       upsert: true,
       setDefaultsOnInsert: true,
-      includeResultMetadata: true,
     };
 
     // Array of promises from findOneandUpdate
@@ -89,13 +96,16 @@ export async function findOrCreateReview(revModel, revData) {
 
       // Define a query to find the user by a unique identifier (e.g., course id)
       const query = {
-        $and: [{ crs_code: revDoc.crs_code }, { semester: revDoc.semester }],
+        $and: [
+          { course_code: revDoc.course_code },
+          { semester: revDoc.semester },
+        ],
       };
 
       promises.push(revModel.findOneAndUpdate(query, revDoc, options));
     }
 
-    return await Promise.all(promises);
+    return Promise.all(promises);
   } catch (error) {
     throw new Error(`Error when processing review data: ${error}`);
   }
