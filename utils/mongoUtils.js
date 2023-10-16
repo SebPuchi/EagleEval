@@ -6,10 +6,7 @@ function courseJSONToDoc(courseJSON) {
     college: courseJSON.college,
     crs_desc: courseJSON.crs_desc,
     subject: courseJSON.subject,
-    crs_id: {
-      dept_code: courseJSON.dept_code,
-      crs_number: parseInt(courseJSON.crs_number),
-    },
+    crs_code: courseJSON.dept_code + courseJSON.crs_number,
   };
 
   return courseData;
@@ -61,7 +58,7 @@ export async function findOrCreateAndUpdateCourse(courseModel, crsJSON) {
     const crsObject = courseJSONToDoc(crsJSON);
 
     // Define a query to find the user by a unique identifier (e.g., course id)
-    const query = { crs_id: crsObject.crs_id };
+    const query = { crs_code: crsObject.crs_code };
 
     // Create an options object to specify that we want to upsert (insert if not found)
     const options = {
@@ -78,16 +75,10 @@ export async function findOrCreateAndUpdateCourse(courseModel, crsJSON) {
     );
 
     if (updatedCourse.lastErrorObject.updatedExisting) {
-      console.log(
-        `Updating: ${crsObject.crs_id.dept_code + crsObject.crs_id.crs_number}`
-      );
+      console.log(`Updating: ${crsObject.crs_code}`);
       return false;
     } else {
-      console.log(
-        `Adding new course: ${
-          crsObject.crs_id.dept_code + crsObject.crs_id.crs_number
-        }`
-      );
+      console.log(`Adding new course: ${crsObject.crs_code}`);
       return true;
     }
   } catch (error) {

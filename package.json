@@ -22,6 +22,7 @@
     "body-parser": "^1.20.2",
     "cheerio": "^1.0.0-rc.12",
     "console-stamp": "^3.1.2",
+    "dotenv": "^16.3.1",
     "express-validator": "^7.0.1",
     "html-table-to-json": "^1.0.0",
     "jsdom": "^22.1.0",
