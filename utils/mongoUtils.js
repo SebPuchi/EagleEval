@@ -70,7 +70,10 @@ export async function courseExsists(courseModel, keyToCheck) {
 
 export async function searchReviews(model, query) {
   const pipeline = {
-    $or: [{ course_code: { $regex: query } }, { instructor: query }],
+    $or: [
+      { course_code: new RegExp(query) },
+      { instructor: new RegExp(query, "i") },
+    ],
   };
 
   return model.find(pipeline).exec();
