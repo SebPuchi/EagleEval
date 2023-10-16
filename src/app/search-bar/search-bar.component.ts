@@ -7,6 +7,36 @@ import { Component } from '@angular/core';
 })
 export class SearchBarComponent {
 
+  selectedProf: string = "";
+
+  suggestedProfs: string [] = [];
+
+  Constructor(){
+      this.suggestedProfs = [
+     "Professor Smith",
+     "Professor Johnson",
+     "Professor Williams",
+     "Professor Brown"
+   ];
+
+
+  }
+
+  search($event: any){
+  console.log($event)
+    this.suggestedProfs = [
+       "Professor Smith",
+       "Professor Johnson",
+       "Professor Williams",
+       "Professor Brown"
+     ];
+
+
+  }
+
+
+
+
 
 
 }
