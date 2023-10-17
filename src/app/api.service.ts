@@ -9,7 +9,7 @@ export class ApiService {
 
 
 	getProfs(query: string){
-	   const url = 'http:localhost3000/api/search';
+	   const url = 'http://localhost:3000/api/search';
 
        // Define the data you want to send in the request body (if any)
        const data = { search_query: query }; // Modify this as per your API's requirements
