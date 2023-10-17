@@ -19,18 +19,9 @@ export class SearchBarComponent {
   search($event: any){
 
           console.log($event)
+          console.log(this.apiService.getProfs($event))
 
-          this.apiService.getProfs($event).subscribe(
-                (response: any) => {
-                  // Assuming the response is an array of objects as shown in your initial question
-                  response.forEach((item: any) => {
-                    console.log('Title:', item.title);
-                  });
-                },
-                (error: any) => {
-                  console.error('Error:', error);
-                }
-              );
+
 
 
   }
