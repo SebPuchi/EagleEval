@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ApiService } from './api.service';
 
 @Component({
   selector: 'app-search-bar',
@@ -11,25 +12,18 @@ export class SearchBarComponent {
 
   suggestedProfs: string [] = [];
 
-  Constructor(){
-      this.suggestedProfs = [
-     "Professor Smith",
-     "Professor Johnson",
-     "Professor Williams",
-     "Professor Brown"
-   ];
-
+  Constructor(private apiService: ApiService){
 
   }
 
   search($event: any){
   console.log($event)
-    this.suggestedProfs = [
-       "Professor Smith",
-       "Professor Johnson",
-       "Professor Williams",
-       "Professor Brown"
-     ];
+    this.apiService.getProfs($event.query).subscribe(
+
+    response => this.suggestedProfs = response.
+    )
+
+
 
 
   }
