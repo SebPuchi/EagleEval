@@ -1,3 +1,5 @@
+import { parse } from "dotenv";
+
 // Converts a course json object to a mongodb Document
 function courseJSONToDoc(courseJSON) {
   // Converts json to format of schema
@@ -46,6 +48,53 @@ function reviewJsonToDoc(revJson) {
   };
 
   return revData;
+}
+
+// Convert detailed drilldown data into a mongodb doc
+function drilldownJsonToDoc(ddJson) {
+  const ddData = {
+    course_code: ddJson["course_code"],
+    course_name: ddJson["course_name"],
+    instructor: ddJson["instructor"],
+    semester: ddJson["semester"],
+    coursewellorganized: !isNaN(ddJson["coursewellorganized(c)"])
+      ? ddJson["coursewellorganized(c)"]
+      : undefined,
+    courseintellectuallychallenging: !isNaN(
+      ddJson["courseintellectuallychallanging(c)"]
+    )
+      ? ddJson["courseintellectuallychallanging(c)"]
+      : undefined,
+    effortavghoursweeklyc: !isNaN(ddJson["effortavghoursweeklyc"])
+      ? ddJson["effortavghoursweeklyc"]
+      : undefined,
+    attendancenecessary: !isNaN(ddJson["attendancenecessary(c)"])
+      ? ddJson["attendancenecessary(c)"]
+      : undefined,
+    assignmentshelpful: !isNaN(ddJson["assignmentshelpful(c)"])
+      ? ddJson["assignmentshelpful(c)"]
+      : undefined,
+    instructorprepared: !isNaN(ddJson["instructorprepared(i)"])
+      ? ddJson["instructorprepared(i)"]
+      : undefined,
+    instructorclearexplanations: !isNaN(
+      ddJson["instructorclearexplanations(i)"]
+    )
+      ? ddJson["instructorclearexplanations(i)"]
+      : undefined,
+    availableforhelpoutsideofclass: !isNaN(
+      ddJson["availableforhelpoutsideofclass(i)"]
+    )
+      ? ddJson["availableforhelpoutsideofclass(i)"]
+      : undefined,
+    stimulatedinterestinthesubjectmatter: !isNaN(
+      ddJson["stimulatedinterestinthesubjectmatter(i)"]
+    )
+      ? ddJson["stimulatedinterestinthesubjectmatter(i)"]
+      : undefined,
+  };
+
+  return ddData;
 }
 
 // Function to check if a document with a specific key exists
@@ -108,6 +157,38 @@ export async function findOrCreateReviews(revModel, revData) {
     return Promise.all(promises);
   } catch (error) {
     throw new Error(`Error when processing review data: ${error}`);
+  }
+}
+
+export async function findOrCreateDrilldown(ddModel, ddData) {
+  try {
+    // Create an options object to specify that we want to upsert (insert if not found)
+    const options = {
+      new: true,
+      upsert: true,
+      setDefaultsOnInsert: true,
+    };
+
+    // Array of promises from findOneandUpdate
+    let promises = [];
+    for (const ddJson of ddData) {
+      console.log(`Adding drilldown data for ${ddJson.course_code}`);
+      const ddDoc = drilldownJsonToDoc(ddJson);
+
+      // Define a query to find the data by a unique identifier (e.g., course id)
+      const query = {
+        $and: [
+          { course_code: ddDoc.course_code },
+          { semester: ddDoc.semester },
+        ],
+      };
+
+      promises.push(ddModel.findOneAndUpdate(query, ddDoc, options));
+    }
+
+    return Promise.all(promises);
+  } catch (error) {
+    throw new Error(`Error when processing drilldown data: ${error}`);
   }
 }
 

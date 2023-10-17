@@ -5,6 +5,7 @@ import { body, matchedData, validationResult } from "express-validator";
 import { getReviews } from "../controllers/fetchReviews.js";
 import { getDrillDown } from "../controllers/fetchDrillDown.js";
 import { cacheReviews } from "../controllers/cacheReviews.js";
+import { cacheDrilldown } from "../controllers/cacheDrilldown.js";
 
 export const fetch_router = express.Router();
 
@@ -67,7 +68,11 @@ fetch_router.post(
       let fetch_response = await getDrillDown(code, prof);
 
       console.log(`Successfully fetched drilldown data for: ${code}, ${prof}`);
-      return res.json(fetch_response);
+
+      console.log("Caching drilldown data in mongodb");
+      let cached_dd = await cacheDrilldown(fetch_response);
+
+      return res.json(cached_dd);
     }
 
     console.error(
