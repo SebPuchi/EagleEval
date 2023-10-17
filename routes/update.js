@@ -52,6 +52,7 @@ update_router.post("/courses", async (req, res) => {
     // Respond with a success message if everything is successful
     res.send("Successfully updated course database.");
   } catch (error) {
+    console.log(error);
     // If an error occurs during the update process, respond with a 500 Internal Server Error
     res.status(500).send("Failed to update course database.");
   }

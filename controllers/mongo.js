@@ -1,15 +1,22 @@
 import mongoose from "mongoose";
 
+// app.js
+import { config } from "../config/mongoConfig.js";
+
+// Access MongoDB username and password
+const username = config.mongodb.username;
+const password = config.mongodb.password;
+
 // Digital Ocean mongodb url
 const databaseURL =
-  "mongodb+srv://eagle-eval-db-prod-3b6a0eee.mongo.ondigitalocean.com";
+  "mongodb+srv://eagleevaldata.gxxyol0.mongodb.net/?retryWrites=true&w=majority";
 
 // Function to connect to the database
 export async function connectToDatabase() {
   try {
     await mongoose.connect(databaseURL, {
-      user: "dev-admin",
-      pass: "b9pKv1sm865P0c42",
+      user: username,
+      pass: password,
       dbName: "dev",
       useNewUrlParser: true,
       useUnifiedTopology: true,
@@ -21,9 +28,8 @@ export async function connectToDatabase() {
 }
 
 // Function to close the database connection
-export function closeDatabaseConnection() {
+export async function closeDatabaseConnection() {
   // Close the Mongoose connection
-  mongoose.connection.close(() => {
-    console.log("Mongoose connection closed.");
-  });
+  await mongoose.connection.close();
+  console.log("Mongoose connection closed.");
 }
