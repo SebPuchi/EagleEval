@@ -25,6 +25,8 @@ import { TripleCardSectionComponent } from './triple-card-section/triple-card-se
 import { SearchBarComponent } from './search-bar/search-bar.component';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { HomePageComponent } from './home-page/home-page.component';
+import { ProfessorPageEntryComponent } from './professor-page-entry/professor-page-entry.component';
+import { ClassrPageEntryComponent } from './classr-page-entry/classr-page-entry.component';
 
 
 @NgModule({
@@ -36,7 +38,9 @@ import { HomePageComponent } from './home-page/home-page.component';
   DescriptionhmComponent,
   TripleCardSectionComponent,
   SearchBarComponent,
-  HomePageComponent
+  HomePageComponent,
+  ProfessorPageEntryComponent,
+  ClassrPageEntryComponent
 	],
 	imports: [
 		BrowserModule,
