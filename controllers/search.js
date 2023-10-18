@@ -57,14 +57,14 @@ export async function autocompleteProfSearch(query) {
                 query: query,
                 path: "title",
                 tokenOrder: "any",
-                fuzzy: { maxEdits: 1, prefixLength: 1, maxExpansions: 256 },
+                fuzzy: { maxEdits: 1, prefixLength: 0, maxExpansions: 50 },
               },
             },
             {
               text: {
                 query: query,
                 path: "title",
-                fuzzy: { maxEdits: 1, prefixLength: 1, maxExpansions: 256 },
+                fuzzy: { maxEdits: 1, prefixLength: 0, maxExpansions: 50 },
               },
             },
           ],
