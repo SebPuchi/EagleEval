@@ -2,12 +2,16 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
-	providedIn: 'root'
+  providedIn: 'root',
 })
 export class ApiService {
-	constructor(private http: HttpClient) { }
-	getMessage() {
-		return this.http.get(
-			'http://localhost:3000/api/message');
-	}
+  constructor(private http: HttpClient) {}
+
+  getSearchResults(query: any, url: string) {
+    // Define the data you want to send in the request body (if any)
+    const data = { search_query: query.query }; // Modify this as per your API's requirements
+
+    // Send the POST request using the HttpClient's post method
+    return this.http.post<any>(url, data);
+  }
 }
