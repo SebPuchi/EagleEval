@@ -24,6 +24,7 @@ import { DescriptionhmComponent } from './descriptionhm/descriptionhm.component'
 import { TripleCardSectionComponent } from './triple-card-section/triple-card-section.component';
 import { SearchBarComponent } from './search-bar/search-bar.component';
 import { AutoCompleteModule } from 'primeng/autocomplete';
+import { HomePageComponent } from './home-page/home-page.component';
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
   FooterComponent,
   DescriptionhmComponent,
   TripleCardSectionComponent,
-  SearchBarComponent
+  SearchBarComponent,
+  HomePageComponent
 	],
 	imports: [
 		BrowserModule,
