@@ -127,7 +127,6 @@ function addKeysToObjects(jsonArray, keysToAdd) {
       ...newObj["jcr:content"],
       ...newImageObj,
     }; // Add a new key to the object
-    console.log("New object", newObj);
     return newObj;
   });
 
