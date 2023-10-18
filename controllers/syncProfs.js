@@ -1,7 +1,6 @@
 // Import the necessary modules
 import fetch from "node-fetch";
 import cheerio from "cheerio";
-import { cleanKeysAndRemoveNonASCII } from "../utils/fetchUtils.js";
 
 // Define the constant for the class name of the department div
 const DEP_CLASS = "tab-pane tab-departments active ";
@@ -91,6 +90,50 @@ function unorderedListToJson(html) {
   return json;
 }
 
+function getDivKeysWithImagePaths(html) {
+  const $ = cheerio.load(html); // Load the HTML content
+
+  const imagePaths = [];
+
+  // Find all the <div> elements with a "data-imagepath" attribute
+  $("div[data-imagepath]").each((index, element) => {
+    const $div = $(element);
+    const imagePath = $div.attr("data-imagepath");
+    imagePaths.push(imagePath);
+  });
+
+  return imagePaths;
+}
+
+function addKeysToObjects(jsonArray, keysToAdd) {
+  if (!Array.isArray(jsonArray) || !Array.isArray(keysToAdd)) {
+    throw new Error("Both input parameters should be arrays.");
+  }
+
+  if (jsonArray.length !== keysToAdd.length) {
+    throw new Error(
+      "The length of the prof data and images should be the same."
+    );
+  }
+
+  const resultArray = jsonArray.map((obj, index) => {
+    if (typeof obj !== "object" || !obj) {
+      throw new Error(`Element at index ${index} is not a valid JSON object.`);
+    }
+
+    const newObj = { ...obj }; // Create a shallow copy of the original object
+    const newImageObj = { profileImage: { fileRefrence: keysToAdd[index] } };
+    newObj["jcr:content"] = {
+      ...newObj["jcr:content"],
+      ...newImageObj,
+    }; // Add a new key to the object
+    console.log("New object", newObj);
+    return newObj;
+  });
+
+  return resultArray;
+}
+
 function appendPathToURL(inputPath) {
   if (!inputPath.startsWith("https://www.bc.edu")) {
     // Append "https://www.bc.edu/" to the front of the input string
@@ -166,6 +209,36 @@ export async function getProfData(depUrl) {
   const cleanProfJson = [cleanProfData(rawProfJson)];
 
   return cleanProfJson;
+}
+
+export async function getSSWProfData(depUrl) {
+  const imgPage =
+    "https://www.bc.edu/content/bc-web/schools/ssw/faculty/faculty-expertise/jcr:content/facultyList/faculty-list.items.html";
+  // get json prof data
+  let profJson = await getProfData(depUrl);
+
+  // get images from html page
+  let rawHTML = await getHtmlPage(imgPage);
+  let people = findDivByClassName(rawHTML, "hide");
+
+  let images = getDivKeysWithImagePaths(people);
+
+  return [addKeysToObjects(profJson[0], images)];
+}
+
+export async function getCSOMProfData(depUrl) {
+  const imgPage =
+    "https://www.bc.edu/content/bc-web/schools/carroll-school/faculty-research/faculty-expertise/jcr:content/facultyList/faculty-list.items.html";
+  // get json prof data
+  let profJson = await getProfData(depUrl);
+
+  // get images from html page
+  let rawHTML = await getHtmlPage(imgPage);
+  let people = findDivByClassName(rawHTML, "hide");
+
+  let images = getDivKeysWithImagePaths(people);
+
+  return [addKeysToObjects(profJson[0], images)];
 }
 
 export async function getMcasProfData(deaprtmentsUrl) {

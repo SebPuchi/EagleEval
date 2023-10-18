@@ -3,7 +3,12 @@ import express from "express";
 import { body, matchedData, validationResult } from "express-validator";
 
 import { processNewData } from "../controllers/syncCourses.js";
-import { getMcasProfData, getProfData } from "../controllers/syncProfs.js";
+import {
+  getMcasProfData,
+  getCSOMProfData,
+  getSSWProfData,
+  getProfData,
+} from "../controllers/syncProfs.js";
 import { updateCollection } from "../controllers/updateMongo.js";
 
 import {
@@ -85,9 +90,18 @@ update_router.post(
         // Determine the URL to fetch data based on the school.
         const fetchUrl = schoolUrls[school];
 
-        // Fetch professor data from the appropriate source (MCAS or general).
-        const profData =
-          school === "MCAS" ? getMcasProfData(fetchUrl) : getProfData(fetchUrl);
+        const profData = (() => {
+          switch (school) {
+            case "MCAS":
+              return getMcasProfData(fetchUrl);
+            case "CSOM":
+              return getCSOMProfData(fetchUrl);
+            case "SSW":
+              return getSSWProfData(fetchUrl);
+            default:
+              return getProfData(fetchUrl);
+          }
+        })();
 
         // Wait for the data to be fetched and log progress.
         const result = await profData;

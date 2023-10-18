@@ -29,10 +29,10 @@ function courseJSONToDoc(courseJSON) {
 // Converts a professor json object to a mongodb Document
 function profJSONtoDoc(profJson) {
   const profileContent = trimJsonValues(profJson["jcr:content"]);
+
   const imgFile = profileContent.hasOwnProperty("profileImage")
-    ? profileContent["profileImage"]["fileReference"] ||
-      "/content/dam/bc1/schools/mcas/Faculty Directory/no-profile-image_335x400px.jpg"
-    : `/content/bc-web/schools/carroll-school/faculty-research/faculty-directory/${profileContent["firstName"]}-${profileContent["lastName"]}/_jcr_content/profileImage.img.png`.toLowerCase();
+    ? profileContent["profileImage"]["fileReference"]
+    : "/content/dam/bc1/schools/mcas/Faculty Directory/no-profile-image_335x400px.jpg";
 
   return {
     title: `${profileContent["firstName"]} ${profileContent["lastName"]}`,
