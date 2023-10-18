@@ -1,2 +1,5 @@
-
-<p-autoComplete [(ngModel)]="selectedProf" [suggestions]="suggestedProfs" (completeMethod)="search($event)"></p-autoComplete>
+<p-autoComplete
+  [(ngModel)]="selectedResult"
+  [suggestions]="results"
+  (completeMethod)="search($event)"
+></p-autoComplete>
