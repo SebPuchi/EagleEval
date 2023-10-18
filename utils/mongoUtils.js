@@ -21,7 +21,7 @@ function profJSONtoDoc(profJson) {
     : `/content/bc-web/schools/carroll-school/faculty-research/faculty-directory/${profileContent["firstName"]}-${profileContent["lastName"]}/_jcr_content/profileImage.img.png`.toLowerCase();
 
   return {
-    title: profileContent["jcr:title"],
+    title: `${profileContent["firstName"]} ${profileContent["lastName"]}`,
     firstName: profileContent["firstName"],
     lastName: profileContent["lastName"],
     office: profileContent["office"],

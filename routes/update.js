@@ -18,7 +18,7 @@ const schoolUrls = {
   MCAS: "https://www.bc.edu/bc-web/schools/morrissey/department-list.html",
   CSOM: "https://www.bc.edu/content/bc-web/schools/carroll-school/faculty-research/faculty-directory.2.json",
   CSON: "https://www.bc.edu/content/bc-web/schools/cson/faculty-research/faculty-directory.3.json",
-  SSW: "https://www.bc.edu/content/bc-web/schools/ssw/faculty/faculty-directory.3.json",
+  SSW: "https://www.bc.edu/content/bc-web/schools/ssw/faculty/faculty-directory.2.json",
   LS: "https://www.bc.edu/content/bc-web/schools/lynch-school/faculty-research/faculty-directory.3.json",
   STM: "https://www.bc.edu/content/bc-web/schools/stm/faculty/faculty-directory.3.json",
 };
