@@ -43,16 +43,20 @@ export class SearchBarComponent {
           const courses = <Array<any>>response.courses;
 
           // initialize array for storing combined results
-          const result: any[] = [];
+          let result: any[] = [];
 
           profs.map((prof: ProfData) => {
-            result.push(prof.title);
+            result.push(prof);
           });
           courses.map((course: CourseData) => {
-            result.push(course.title + ' - ' + course.crs_code);
+            result.push(course);
           });
 
-          return result;
+          // Sort results by score
+          result = result.sort((a, b) => b.score - a.score);
+
+          // Return array for titles
+          return Array.from(result, (r) => r.title);
         })
       )
       .subscribe((data) => {
