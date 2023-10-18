@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule }
 	from '@angular/platform-browser';
-import { AppRoutingModule }
+import { AppRoutingModule, routingComponents }
 	from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule }
@@ -39,8 +39,7 @@ import { ClassrPageEntryComponent } from './classr-page-entry/classr-page-entry.
   TripleCardSectionComponent,
   SearchBarComponent,
   HomePageComponent,
-  ProfessorPageEntryComponent,
-  ClassrPageEntryComponent
+  routingComponents
 	],
 	imports: [
 		BrowserModule,
@@ -59,3 +58,4 @@ import { ClassrPageEntryComponent } from './classr-page-entry/classr-page-entry.
 	bootstrap: [AppComponent]
 })
 export class AppModule { }
+
