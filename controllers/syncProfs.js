@@ -163,10 +163,7 @@ export async function getProfData(depUrl) {
   // Get json from url
   let response = await fetch(depUrl);
   let rawProfJson = await response.json();
-
-  const cleanProfJson = [
-    cleanKeysAndRemoveNonASCII(cleanProfData(rawProfJson)),
-  ];
+  const cleanProfJson = [cleanProfData(rawProfJson)];
 
   return cleanProfJson;
 }

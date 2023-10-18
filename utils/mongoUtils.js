@@ -1,3 +1,17 @@
+function trimJsonValues(jsonObj) {
+  if (typeof jsonObj !== "object") {
+    throw new Error("Input must be a JSON object.");
+  }
+
+  for (const key in jsonObj) {
+    if (jsonObj.hasOwnProperty(key) && typeof jsonObj[key] === "string") {
+      jsonObj[key] = jsonObj[key].trim();
+    }
+  }
+
+  return jsonObj;
+}
+
 // Converts a course json object to a mongodb Document
 function courseJSONToDoc(courseJSON) {
   // Converts json to format of schema
@@ -14,7 +28,7 @@ function courseJSONToDoc(courseJSON) {
 
 // Converts a professor json object to a mongodb Document
 function profJSONtoDoc(profJson) {
-  const profileContent = profJson["jcr:content"];
+  const profileContent = trimJsonValues(profJson["jcr:content"]);
   const imgFile = profileContent.hasOwnProperty("profileImage")
     ? profileContent["profileImage"]["fileReference"] ||
       "/content/dam/bc1/schools/mcas/Faculty Directory/no-profile-image_335x400px.jpg"
