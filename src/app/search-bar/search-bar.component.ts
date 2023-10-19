@@ -28,6 +28,15 @@ export class SearchBarComponent {
 
   constructor(private apiService: ApiService) {}
 
+
+    onItemSelect(value: any) {
+
+      const selectedResult = value;
+
+
+      console.log('Item selected:', selectedResult);
+    }
+
   search($event: any) {
     const profRoute = AppSettings.API_ENDPOINT + 'search/profs';
     const crsRoute = AppSettings.API_ENDPOINT + 'search/courses';
