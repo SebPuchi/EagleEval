@@ -2,10 +2,12 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes, } from '@angular/router';
 import {ProfessorPageEntryComponent} from './professor-page-entry/professor-page-entry.component';
 import {ClassrPageEntryComponent} from './classr-page-entry/classr-page-entry.component';
+import {HomePageComponent} from './home-page/home-page.component';
 
 
 const routes: Routes = [
-{ path: 'professors', component: ProfessorPageEntryComponent},
+{ path: 'home', component: HomePageComponent},
+{ path: 'professor', component: ProfessorPageEntryComponent},
 { path: 'classes', component: ClassrPageEntryComponent}
 
 ];
@@ -16,4 +18,4 @@ const routes: Routes = [
 })
 export class AppRoutingModule { }
 
-export const routingComponents = [ProfessorPageEntryComponent,ClassrPageEntryComponent];
+export const routingComponents = [HomePageComponent,ProfessorPageEntryComponent,ClassrPageEntryComponent];
