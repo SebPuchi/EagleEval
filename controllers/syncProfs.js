@@ -122,7 +122,7 @@ function addKeysToObjects(jsonArray, keysToAdd) {
     }
 
     const newObj = { ...obj }; // Create a shallow copy of the original object
-    const newImageObj = { profileImage: { fileRefrence: keysToAdd[index] } };
+    const newImageObj = { profileImage: { fileReference: keysToAdd[index] } };
     newObj["jcr:content"] = {
       ...newObj["jcr:content"],
       ...newImageObj,

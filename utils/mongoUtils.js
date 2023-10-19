@@ -14,7 +14,6 @@ function trimJsonValues(jsonObj) {
   return jsonObj;
 }
 
-
 // Converts a course json object to a mongodb Document
 function courseJSONToDoc(courseJSON) {
   // Converts json to format of schema
