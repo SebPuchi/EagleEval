@@ -89,7 +89,7 @@ search_router.post(
       let search_results = await autocompleteProfSearch(query);
 
       console.log("Successfully got results for search: ", query);
-      return res.send(search_results);
+      return res.json(search_results);
     }
 
     console.error(
