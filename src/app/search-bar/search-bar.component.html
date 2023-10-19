@@ -2,4 +2,5 @@
   [(ngModel)]="selectedResult"
   [suggestions]="results"
   (completeMethod)="search($event)"
+  (onSelect)="route($event)"
 ></p-autoComplete>
