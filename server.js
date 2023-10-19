@@ -7,6 +7,8 @@ import { ConsoleLogger } from "@angular/compiler-cli";
 import { fetch_router } from "./routes/fetch.js";
 import { update_router } from "./routes/update.js";
 import { search_router } from "./routes/search.js";
+import { cache_router } from "./routes/cache.js";
+
 // MIDDLEWARE
 import {
   cerateMongooseConnection,
@@ -34,6 +36,9 @@ app.use("/api/update", update_router);
 
 // Add routes for searching database
 app.use("/api/search", search_router);
+
+// Add routes for cached reviews
+app.use("/api/cache", cache_router);
 
 // Use the middleware to automatically close the connection
 app.use(closeMongooseConnection);

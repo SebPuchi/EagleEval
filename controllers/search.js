@@ -18,9 +18,17 @@ export async function autocompleteCourseSearch(query) {
               },
             },
             {
+              autocomplete: {
+                query: query,
+                path: "crs_code",
+                tokenOrder: "any",
+                fuzzy: { maxEdits: 1, prefixLength: 1, maxExpansions: 256 },
+              },
+            },
+            {
               text: {
                 query: query,
-                path: ["title", "crs_code"],
+                path: ["crs_code", "title"],
                 fuzzy: { maxEdits: 1, prefixLength: 1, maxExpansions: 256 },
               },
             },
