@@ -1,22 +1,25 @@
+import consoleStamp from "console-stamp";
 import {
   connectToDatabase,
   closeDatabaseConnection,
 } from "../controllers/mongo.js";
 
 // Create a middleware function to close the Mongoose connection
-export const closeMongooseConnection = (req, res, next) => {
-  // Close the Mongoose connection
-  closeDatabaseConnection();
+export const closeMongooseConnection = () => {
+  // action after response
+  var afterResponse = function () {
+    // any other clean ups
+    closeDatabaseConnection().then(() => {
+      console.log("Closed mongodb connection.");
+    });
+  };
 
-  // Continue to the next middleware or route handler
-  next();
+  // hooks to execute after response
+  process.on("exit", afterResponse);
 };
 
 // Middleware to connect to the database
-export const cerateMongooseConnection = async (req, res, next) => {
+export const createMongooseConnection = async () => {
   // Establish a Mongoose connection
   await connectToDatabase();
-
-  // Continue to next route
-  next();
 };

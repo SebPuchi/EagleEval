@@ -11,7 +11,7 @@ import { cache_router } from "./routes/cache.js";
 
 // MIDDLEWARE
 import {
-  cerateMongooseConnection,
+  createMongooseConnection,
   closeMongooseConnection,
 } from "./middleware/mongoConnection.js";
 import { handleCors } from "./middleware/cors.js";
@@ -25,9 +25,6 @@ app.use(handleCors);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-// Middleware to connect to MongoDB when the server starts
-app.use(cerateMongooseConnection);
-
 // Add routes for fetch
 app.use("/api/fetch", fetch_router);
 
@@ -40,9 +37,9 @@ app.use("/api/search", search_router);
 // Add routes for cached reviews
 app.use("/api/cache", cache_router);
 
-// Use the middleware to automatically close the connection
-app.use(closeMongooseConnection);
-
 app.listen(3000, () => {
+  createMongooseConnection();
   console.log("Server listening on port 3000");
+  // create process listener to close connection on exit
+  closeMongooseConnection();
 });
