@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ApiService } from 'src/app/api.service';
 import { AppSettings } from '../appSettings';
 import { forkJoin, map } from 'rxjs';
+import { PageServiceService } from 'src/app/page-service.service';
 
 interface ProfData {
   _id: string;
@@ -26,7 +27,33 @@ export class SearchBarComponent {
 
   results: any[] = [];
 
-  constructor(private apiService: ApiService) {}
+  profs: ProfData[] = [];
+  courses: CourseData[] = [];
+
+
+  constructor(private apiService: ApiService,
+  public _pageService: PageServiceService ) {}
+
+
+  route($event: any) {
+    console.log('EVENT: ', $event);
+    // Search results array for title
+
+    // Search profs
+    for (const prof of this.profs) {
+      if (prof.title == $event) {
+        console.log(`Routing to ${$event} prof page`);
+        this._pageService.setShowProfPage();
+      }
+    }
+    // Search courses
+    for (const crs of this.courses) {
+      if (crs.title == $event) {
+        this._pageService.setShowClassPage();
+        console.log(`Routing to ${$event} course page`);
+      }
+    }
+  }
 
   search($event: any) {
     const profRoute = AppSettings.API_ENDPOINT + 'search/profs';
@@ -39,16 +66,16 @@ export class SearchBarComponent {
       .pipe(
         map((response) => {
           // Gets data from response
-          const profs = <Array<any>>response.profs;
-          const courses = <Array<any>>response.courses;
+          this.profs = <Array<ProfData>>response.profs;
+          this.courses = <Array<CourseData>>response.courses;
 
           // initialize array for storing combined results
           let result: any[] = [];
 
-          profs.map((prof: ProfData) => {
+          this.profs.map((prof: ProfData) => {
             result.push(prof);
           });
-          courses.map((course: CourseData) => {
+          this.courses.map((course: CourseData) => {
             result.push(course);
           });
 

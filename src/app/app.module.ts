@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule }
 	from '@angular/platform-browser';
-import { AppRoutingModule }
+import { AppRoutingModule, routingComponents }
 	from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule }
@@ -24,6 +24,10 @@ import { DescriptionhmComponent } from './descriptionhm/descriptionhm.component'
 import { TripleCardSectionComponent } from './triple-card-section/triple-card-section.component';
 import { SearchBarComponent } from './search-bar/search-bar.component';
 import { AutoCompleteModule } from 'primeng/autocomplete';
+import { HomePageComponent } from './home-page/home-page.component';
+import { ProfessorPageEntryComponent } from './professor-page-entry/professor-page-entry.component';
+import { ClassrPageEntryComponent } from './classr-page-entry/classr-page-entry.component';
+import { PageServiceService } from './page-service.service';
 
 
 @NgModule({
@@ -34,7 +38,9 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
   FooterComponent,
   DescriptionhmComponent,
   TripleCardSectionComponent,
-  SearchBarComponent
+  SearchBarComponent,
+  HomePageComponent,
+  routingComponents
 	],
 	imports: [
 		BrowserModule,
@@ -49,7 +55,8 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
 		BrowserAnimationsModule
 
 	],
-	providers: [],
+	providers: [PageServiceService],
 	bootstrap: [AppComponent]
 })
 export class AppModule { }
+

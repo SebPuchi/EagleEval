@@ -8,23 +8,9 @@
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 
 <div class = "hm-body">
-  <app-home-bar></app-home-bar>
-  <app-hero-section></app-hero-section>
-  <app-descriptionhm></app-descriptionhm>
-  <app-triple-card-section></app-triple-card-section>
-  <app-footer></app-footer>
-
-
+<app-home-page *ngIf="_pageService.showHomePage"></app-home-page>
+  <app-professor-page-entry  *ngIf="_pageService.showProfPage"></app-professor-page-entry>
+  <app-classr-page-entry  *ngIf="_pageService.showClassPage"></app-classr-page-entry>
 
 </div>
-
-
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * The content above * * * * * * * * * * * -->
-<!-- * * * * * * * * * * is only a placeholder * * * * * * * * * * -->
-<!-- * * * * * * * * * * and can be replaced. * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * End of Placeholder * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-
 <router-outlet></router-outlet>

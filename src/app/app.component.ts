@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from './api.service';
+import { PageServiceService } from './page-service.service';
 
 @Component({
 	selector: 'app-root',
@@ -9,7 +10,12 @@ import { ApiService } from './api.service';
 export class AppComponent implements OnInit {
 	title = 'frontEnd';
 	message: any;
-	constructor(private apiService: ApiService) { };
+
+	    showHomePage: boolean = true;
+      showProfPage: boolean = false;
+      showClassPage: boolean = false;
+	constructor(private apiService: ApiService,
+	            public _pageService: PageServiceService) { };
 	ngOnInit() {
 
 	}
