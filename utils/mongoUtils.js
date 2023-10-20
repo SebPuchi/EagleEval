@@ -14,7 +14,6 @@ function trimJsonValues(jsonObj) {
   return jsonObj;
 }
 
-
 // Converts a course json object to a mongodb Document
 function courseJSONToDoc(courseJSON) {
   // Converts json to format of schema
@@ -33,9 +32,9 @@ function courseJSONToDoc(courseJSON) {
 function profJSONtoDoc(profJson) {
   const profileContent = trimJsonValues(profJson["jcr:content"]);
 
-  const imgFile = profileContent.hasOwnProperty("profileImage")
-    ? profileContent["profileImage"]["fileReference"]
-    : "/content/dam/bc1/schools/mcas/Faculty Directory/no-profile-image_335x400px.jpg";
+  const imgFile =
+    profileContent?.profileImage?.fileReference ||
+    "/content/dam/bc1/schools/mcas/Faculty Directory/no-profile-image_335x400px.jpg";
 
   return {
     title: `${profileContent["firstName"]} ${profileContent["lastName"]}`,

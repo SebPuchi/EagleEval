@@ -122,7 +122,7 @@ function addKeysToObjects(jsonArray, keysToAdd) {
     }
 
     const newObj = { ...obj }; // Create a shallow copy of the original object
-    const newImageObj = { profileImage: { fileRefrence: keysToAdd[index] } };
+    const newImageObj = { profileImage: { fileReference: keysToAdd[index] } };
     newObj["jcr:content"] = {
       ...newObj["jcr:content"],
       ...newImageObj,
@@ -147,7 +147,7 @@ function appendPathToURL(inputPath) {
   }
 
   // Append "people.html" to the pathname
-  parsedURL.pathname = parsedURL.pathname + "/people/faculty-directory.3.json";
+  parsedURL.pathname = parsedURL.pathname + "/people/faculty-directory.4.json";
 
   // Serialize the updated URL back to a string
   const updatedURL = parsedURL.toString();
@@ -202,12 +202,28 @@ export async function getMcasDeps(pageURL) {
 
 // Gets prof data for a given department url
 export async function getProfData(depUrl) {
-  // Get json from url
-  let response = await fetch(depUrl);
-  let rawProfJson = await response.json();
-  const cleanProfJson = [cleanProfData(rawProfJson)];
+  try {
+    // Get JSON from the URL
+    let response = await fetch(depUrl);
 
-  return cleanProfJson;
+    if (response.status === 404) {
+      console.error("Error: 404 Not Found ", depUrl);
+      return [];
+    }
+
+    if (!response.ok) {
+      // Handle other non-404 errors here if needed
+      throw new Error(`Error: ${response.status} ${response.statusText}`);
+    }
+
+    let rawProfJson = await response.json();
+    const cleanProfJson = [cleanProfData(rawProfJson)];
+
+    return cleanProfJson;
+  } catch (error) {
+    console.error(`Error fetching data: ${error.message}`);
+    return [];
+  }
 }
 
 export async function getSSWProfData(depUrl) {
@@ -248,6 +264,7 @@ export async function getMcasProfData(deaprtmentsUrl) {
     const promises = deps.map((dep) => {
       console.log(`Fetching prof data for MCAS ${dep.department}`);
       const peopleURL = appendPathToURL(dep.url);
+
       return getProfData(peopleURL);
     });
 
