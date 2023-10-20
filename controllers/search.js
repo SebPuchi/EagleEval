@@ -14,7 +14,7 @@ export async function autocompleteCourseSearch(query) {
                 query: query,
                 path: "title",
                 tokenOrder: "any",
-                fuzzy: { maxEdits: 1, prefixLength: 1, maxExpansions: 256 },
+                fuzzy: { maxEdits: 1, prefixLength: 0, maxExpansions: 50 },
               },
             },
             {
@@ -28,8 +28,8 @@ export async function autocompleteCourseSearch(query) {
             {
               text: {
                 query: query,
-                path: ["crs_code", "title"],
-                fuzzy: { maxEdits: 1, prefixLength: 1, maxExpansions: 256 },
+                path: ["title", "crs_code"],
+                fuzzy: { maxEdits: 1, prefixLength: 0, maxExpansions: 50 },
               },
             },
           ],
@@ -65,14 +65,14 @@ export async function autocompleteProfSearch(query) {
                 query: query,
                 path: "title",
                 tokenOrder: "any",
-                fuzzy: { maxEdits: 1, prefixLength: 1, maxExpansions: 256 },
+                fuzzy: { maxEdits: 1, prefixLength: 0, maxExpansions: 50 },
               },
             },
             {
               text: {
                 query: query,
                 path: "title",
-                fuzzy: { maxEdits: 1, prefixLength: 1, maxExpansions: 256 },
+                fuzzy: { maxEdits: 1, prefixLength: 0, maxExpansions: 50 },
               },
             },
           ],
