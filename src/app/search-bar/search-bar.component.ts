@@ -29,6 +29,9 @@ export class SearchBarComponent {
   profs: ProfData[] = [];
   courses: CourseData[] = [];
 
+
+  //Routes
+
   constructor(private apiService: ApiService) {}
 
 

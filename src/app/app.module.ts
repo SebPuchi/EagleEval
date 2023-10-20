@@ -27,6 +27,7 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
 import { HomePageComponent } from './home-page/home-page.component';
 import { ProfessorPageEntryComponent } from './professor-page-entry/professor-page-entry.component';
 import { ClassrPageEntryComponent } from './classr-page-entry/classr-page-entry.component';
+import { PageServiceService } from './page-service.service';
 
 
 @NgModule({
@@ -54,7 +55,7 @@ import { ClassrPageEntryComponent } from './classr-page-entry/classr-page-entry.
 		BrowserAnimationsModule
 
 	],
-	providers: [],
+	providers: [PageServiceService],
 	bootstrap: [AppComponent]
 })
 export class AppModule { }

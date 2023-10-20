@@ -5,6 +5,10 @@ import { Injectable } from '@angular/core';
 })
 export class PageServiceService {
 
+    showHomePage: boolean = true;
+    showProfPage: boolean = false;
+    showClassPage: boolean = false;
+
   constructor() { }
 
   setShowHomePage() {
