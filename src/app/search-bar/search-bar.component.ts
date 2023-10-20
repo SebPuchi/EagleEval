@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ApiService } from 'src/app/api.service';
 import { AppSettings } from '../appSettings';
 import { forkJoin, map } from 'rxjs';
+import { PageServiceService } from 'src/app/page-service.service';
 
 interface ProfData {
   _id: string;
@@ -30,9 +31,8 @@ export class SearchBarComponent {
   courses: CourseData[] = [];
 
 
-  //Routes
-
-  constructor(private apiService: ApiService) {}
+  constructor(private apiService: ApiService,
+  public _pageService: PageServiceService ) {}
 
 
   route($event: any) {
@@ -43,11 +43,13 @@ export class SearchBarComponent {
     for (const prof of this.profs) {
       if (prof.title == $event) {
         console.log(`Routing to ${$event} prof page`);
+        this._pageService.setShowProfPage();
       }
     }
     // Search courses
     for (const crs of this.courses) {
       if (crs.title == $event) {
+        this._pageService.setShowClassPage();
         console.log(`Routing to ${$event} course page`);
       }
     }
