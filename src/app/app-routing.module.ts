@@ -7,8 +7,8 @@ import {HomePageComponent} from './home-page/home-page.component';
 
 const routes: Routes = [
 { path: 'home', component: HomePageComponent},
-{ path: 'professor', component: ProfessorPageEntryComponent, outlet: 'secondary' },
-{ path: 'classes', component: ClassrPageEntryComponent, outlet: 'secondary' }
+{ path: 'professor', component: ProfessorPageEntryComponent},
+{ path: 'classes', component: ClassrPageEntryComponent}
 
 ];
 

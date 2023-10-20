@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -9,24 +10,29 @@ export class PageServiceService {
     showProfPage: boolean = false;
     showClassPage: boolean = false;
 
-  constructor() { }
+  constructor(private router: Router) {
+   this.router.navigate(['home']);
+   }
+
 
   setShowHomePage() {
-      this.showHomePage = true;
+      this.router.navigate(['home']);
       this.showProfPage = false;
       this.showClassPage = false;
+
     }
 
     setShowProfPage() {
       this.showHomePage = false;
-      this.showProfPage = true;
+      this.router.navigate(['professor']);
       this.showClassPage = false;
     }
 
     setShowClassPage() {
       this.showHomePage = false;
       this.showProfPage = false;
-      this.showClassPage = true;
+      this.router.navigate(['classes']);
+
     }
 
 
