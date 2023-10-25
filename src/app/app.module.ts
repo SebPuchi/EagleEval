@@ -1,11 +1,8 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule }
-	from '@angular/platform-browser';
-import { AppRoutingModule, routingComponents }
-	from './app-routing.module';
+import { BrowserModule } from '@angular/platform-browser';
+import { AppRoutingModule, routingComponents } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HttpClientModule }
-	from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 
 import { FormsModule } from '@angular/forms';
 
@@ -13,6 +10,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // Primeng angular module imports
 
+import { CardModule } from 'primeng/card';
+import { ProfessorCard } from './professor-card/prof-card.component';
 import { MenubarModule } from 'primeng/menubar';
 import { ButtonModule } from 'primeng/button';
 import { ImageModule } from 'primeng/image';
@@ -29,34 +28,33 @@ import { ProfessorPageEntryComponent } from './professor-page-entry/professor-pa
 import { ClassrPageEntryComponent } from './classr-page-entry/classr-page-entry.component';
 import { PageServiceService } from './page-service.service';
 
-
 @NgModule({
-	declarations: [
-		AppComponent,
-  HomeBarComponent,
-  HeroSectionComponent,
-  FooterComponent,
-  DescriptionhmComponent,
-  TripleCardSectionComponent,
-  SearchBarComponent,
-  HomePageComponent,
-  routingComponents
-	],
-	imports: [
-		BrowserModule,
-		AppRoutingModule,
-		ButtonModule,
-		MenubarModule,
-		AutoCompleteModule,
-		ImageModule,
-		InputTextModule,
-		HttpClientModule,
-		FormsModule,
-		BrowserAnimationsModule
-
-	],
-	providers: [PageServiceService],
-	bootstrap: [AppComponent]
+  declarations: [
+    AppComponent,
+    HomeBarComponent,
+    HeroSectionComponent,
+    FooterComponent,
+    DescriptionhmComponent,
+    TripleCardSectionComponent,
+    SearchBarComponent,
+    ProfessorCard,
+    HomePageComponent,
+    routingComponents,
+  ],
+  imports: [
+    CardModule,
+    BrowserModule,
+    AppRoutingModule,
+    ButtonModule,
+    MenubarModule,
+    AutoCompleteModule,
+    ImageModule,
+    InputTextModule,
+    HttpClientModule,
+    FormsModule,
+    BrowserAnimationsModule,
+  ],
+  providers: [PageServiceService],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
-
+export class AppModule {}
