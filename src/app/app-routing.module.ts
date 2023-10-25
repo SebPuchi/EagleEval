@@ -5,9 +5,10 @@ import {ClassrPageEntryComponent} from './classr-page-entry/classr-page-entry.co
 import {HomePageComponent} from './home-page/home-page.component';
 
 
+
 const routes: Routes = [
 { path: 'professor', component: ProfessorPageEntryComponent},
-{ path: 'classes', component: ClassrPageEntryComponent}
+{ path: 'class', component: ClassrPageEntryComponent}
 
 ];
 

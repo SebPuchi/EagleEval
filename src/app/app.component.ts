@@ -1,7 +1,7 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { ApiService } from './api.service';
 import { PageServiceService } from './page-service.service';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 
 
 
@@ -13,10 +13,18 @@ import { Router } from '@angular/router';
 export class AppComponent implements OnInit {
 	title = 'frontEnd';
 	message: any;
+	 isHomeBarVisible: boolean = true;
 
 	constructor(private apiService: ApiService,
 	            public _pageService: PageServiceService,
 	            private router: Router) {
+
+	            router.events.subscribe((event) => {
+                    if (event instanceof NavigationEnd) {
+
+                     this.isHomeBarVisible = event.url !== '/professor' && event.url !== '/class';
+                    }
+                  });
 
 	            };
 
@@ -32,12 +40,8 @@ export class AppComponent implements OnInit {
 
    }
 
-   @HostListener('window:popstate', ['$event'])
-         onPopState(event: Event) {
 
-           console.log('Back button pressed');
-            this._pageService.setShowHomePage();
-         }
+
 
 
 	ngOnInit() {
