@@ -6,7 +6,13 @@
 <!-- * * * * * * * * * Delete the template below * * * * * * * * * * -->
 <!-- * * * * * * * to get started with your project! * * * * * * * * -->
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+<div>
+  <!-- Add a button for a test action 1 -->
+  <button  (click)="toProf()">Test Action 1</button>
 
+  <!-- Add a button for a test action 2 -->
+  <button (click)="toClass()" >Test Action 2</button>
+</div>
 <div class = "hm-body">
 <app-home-page *ngIf="_pageService.showHomePage"></app-home-page>
   <app-professor-page-entry  *ngIf="_pageService.showProfPage"></app-professor-page-entry>

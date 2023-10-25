@@ -18,6 +18,10 @@ export class PageServiceService {
        this.showHomePage = true;
     }
 
+  hideHomePage() {
+       this.showHomePage = false;
+    }
+
     setShowProfPage() {
       this.router.navigate(['professor']);
        this.showHomePage = false;
@@ -30,11 +34,7 @@ export class PageServiceService {
       this.showHomePage = false;
 
     }
-      @HostListener('window:popstate', ['$event'])
-      onPopState(event: Event) {
-        console.log('Back button pressed');
-        this.showHomePage = false;
-      }
+
 
 
 }

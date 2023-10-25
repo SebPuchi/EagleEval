@@ -14,17 +14,30 @@ export class AppComponent implements OnInit {
 	title = 'frontEnd';
 	message: any;
 
-	    showHomePage: boolean = true;
-      showProfPage: boolean = false;
-      showClassPage: boolean = false;
 	constructor(private apiService: ApiService,
 	            public _pageService: PageServiceService,
 	            private router: Router) {
 
-
-
 	            };
 
+   toProf(){
+
+      this._pageService.setShowProfPage();
+
+
+   }
+
+   toClass(){
+      this._pageService.setShowClassPage();
+
+   }
+
+   @HostListener('window:popstate', ['$event'])
+         onPopState(event: Event) {
+
+           console.log('Back button pressed');
+            this._pageService.setShowHomePage();
+         }
 
 
 	ngOnInit() {
