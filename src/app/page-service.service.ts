@@ -6,20 +6,11 @@ import { HostListener } from '@angular/core';
   providedIn: 'root'
 })
 export class PageServiceService {
-
   constructor(private router: Router) {}
-
     setShowProfPage() {
       this.router.navigate(['professor']);
-
     }
-
     setShowClassPage() {
-
       this.router.navigate(['class']);
-
     }
-
-
-
 }
