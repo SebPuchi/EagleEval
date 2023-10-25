@@ -29,6 +29,11 @@ import { ProfessorPageEntryComponent } from './professor-page-entry/professor-pa
 import { ClassrPageEntryComponent } from './classr-page-entry/classr-page-entry.component';
 import { PageServiceService } from './page-service.service';
 
+//PROF + CLASS SERVICE
+
+import { ProfessorService } from 'src/app/PageDataService/professor.service';
+import { ClassService } from 'src/app/PageDataService/class.service';
+
 
 @NgModule({
 	declarations: [
@@ -55,7 +60,7 @@ import { PageServiceService } from './page-service.service';
 		BrowserAnimationsModule
 
 	],
-	providers: [PageServiceService],
+	providers: [PageServiceService,ProfessorService,ClassService],
 	bootstrap: [AppComponent]
 })
 export class AppModule { }
