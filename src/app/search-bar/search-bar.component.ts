@@ -37,8 +37,6 @@ export class SearchBarComponent {
 
   route($event: any) {
     console.log('EVENT: ', $event);
-    // Search results array for title
-
     // Search profs
     for (const prof of this.profs) {
       if (prof.title == $event) {

@@ -1,33 +1,16 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { HostListener } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PageServiceService {
-
-    showHomePage: boolean = true;
-    showProfPage: boolean = false;
-    showClassPage: boolean = false;
-
-  constructor() { }
-
-  setShowHomePage() {
-      this.showHomePage = true;
-      this.showProfPage = false;
-      this.showClassPage = false;
-    }
-
+  constructor(private router: Router) {}
     setShowProfPage() {
-      this.showHomePage = false;
-      this.showProfPage = true;
-      this.showClassPage = false;
+      this.router.navigate(['professor']);
     }
-
     setShowClassPage() {
-      this.showHomePage = false;
-      this.showProfPage = false;
-      this.showClassPage = true;
+      this.router.navigate(['class']);
     }
-
-
 }
