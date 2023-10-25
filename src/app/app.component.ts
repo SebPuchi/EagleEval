@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { ApiService } from './api.service';
 import { PageServiceService } from './page-service.service';
 import { Router } from '@angular/router';
@@ -18,7 +18,15 @@ export class AppComponent implements OnInit {
       showProfPage: boolean = false;
       showClassPage: boolean = false;
 	constructor(private apiService: ApiService,
-	            public _pageService: PageServiceService) { };
+	            public _pageService: PageServiceService,
+	            private router: Router) {
+
+
+
+	            };
+
+
+
 	ngOnInit() {
 
 	}

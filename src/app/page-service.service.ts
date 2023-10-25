@@ -6,31 +6,23 @@ import { Router } from '@angular/router';
 })
 export class PageServiceService {
 
-    showHomePage: boolean = true;
+    showHomePage: boolean = false;
     showProfPage: boolean = false;
     showClassPage: boolean = false;
 
-  constructor(private router: Router) {
-   this.router.navigate(['home']);
-   }
+  constructor(private router: Router) {}
 
 
   setShowHomePage() {
-      this.router.navigate(['home']);
-      this.showProfPage = false;
-      this.showClassPage = false;
-
+       this.router.navigate(['']);
     }
 
     setShowProfPage() {
-      this.showHomePage = false;
       this.router.navigate(['professor']);
-      this.showClassPage = false;
     }
 
     setShowClassPage() {
-      this.showHomePage = false;
-      this.showProfPage = false;
+
       this.router.navigate(['classes']);
 
     }
