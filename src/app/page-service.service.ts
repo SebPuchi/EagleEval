@@ -7,11 +7,7 @@ import { HostListener } from '@angular/core';
 })
 export class PageServiceService {
 
-
-
   constructor(private router: Router) {}
-
-
 
     setShowProfPage() {
       this.router.navigate(['professor']);

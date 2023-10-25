@@ -13,7 +13,7 @@ import { Router, NavigationEnd } from '@angular/router';
 export class AppComponent implements OnInit {
 	title = 'frontEnd';
 	message: any;
-	 isHomeBarVisible: boolean = true;
+	isHomeBarVisible: boolean = true;
 
 	constructor(private apiService: ApiService,
 	            public _pageService: PageServiceService,
@@ -27,22 +27,6 @@ export class AppComponent implements OnInit {
                   });
 
 	            };
-
-   toProf(){
-
-      this._pageService.setShowProfPage();
-
-
-   }
-
-   toClass(){
-      this._pageService.setShowClassPage();
-
-   }
-
-
-
-
 
 	ngOnInit() {
 
