@@ -1,5 +1,4 @@
 // Import necessary modules and functions
-import { mapToCanMatch } from "@angular/router";
 import { cacheReviews } from "./cacheReviews";
 import { Professor } from "../models/profSchema";
 import { getReviews } from "./fetchReviews";
@@ -41,11 +40,12 @@ export async function scrapeProfessors() {
       // Cache the retrieved reviews in the MongoDB database
       console.log("Caching reviews in MongoDB");
       for (const review of review_data) {
+        console.log("Caching review for ", review.course_code);
         await cacheReviews(review);
       }
     }
   } catch (error) {
     // Handle any errors that occur during the scraping process
-    throw new Error("Error scraping professor reviews");
+    throw new Error("Error scraping professor reviews: ", error);
   }
 }
