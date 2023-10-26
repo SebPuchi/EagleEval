@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, NgZone, AfterViewChecked } from '@angular/core';
 import { ApiService } from 'src/app/api.service';
 import { AppSettings } from '../appSettings';
 import { forkJoin, map } from 'rxjs';
 import { PageServiceService } from 'src/app/page-service.service';
+import { AutoComplete } from 'primeng/autocomplete';
 
 interface ProfData {
   _id: string;
@@ -23,7 +24,11 @@ interface CourseData {
   styleUrls: ['./search-bar.component.css'],
 })
 export class SearchBarComponent {
+@ViewChild('autoComplete', { static: true }) autoComplete: AutoComplete | undefined;
+
+
   selectedResult: string = '';
+
 
   results: any[] = [];
 
@@ -33,7 +38,9 @@ export class SearchBarComponent {
 
 
   constructor(private apiService: ApiService,
-  public _pageService: PageServiceService ) {}
+  public _pageService: PageServiceService) {}
+
+
 
 
   route($event: any) {
