@@ -25,8 +25,6 @@ export class ProfessorService {
     private department: string = "Computer Science";
     private course_name: string = "Logic and Computation";
 
-    constructor() { }
-
     get courseCode(): string {
       return this.course_code;
     }
