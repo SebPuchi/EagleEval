@@ -12,9 +12,9 @@ export class ProfessorService {
     private instructor: string = "Carl Mctague";
 
   //***** VALUES THAT NEED TO BE AVERAGED *****//
-    private attendancenecessary: number = 4.75;
+ //   private attendancenecessary: number = 4.75;
     private availableforhelpoutsideofclass: number = 4.69;
-    private coursewellorganized: number = 4.47;
+  //  private coursewellorganized: number = 4.47;
     private instructorclearexplanations: number = 4.28;
     private instructorprepared: number = 4.75;
     private stimulatedinterestinthesubjectmatter: number = 4.81;
