@@ -29,6 +29,7 @@ export class SearchBarComponent {
 
   profs: ProfData[] = [];
   courses: CourseData[] = [];
+  placeHolder: string = "Search Professors and Classes (e.g. Erbal Caan or ECON1101)";
 
 
   constructor(private apiService: ApiService,

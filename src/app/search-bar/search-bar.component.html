@@ -3,4 +3,8 @@
   [suggestions]="results"
   (completeMethod)="search($event)"
   (onSelect)="route($event)"
+  [minLength]="3"
+  [showClear] = true
+  [autoHighlight] = "true"
+  [placeholder] = "placeHolder"
 ></p-autoComplete>
