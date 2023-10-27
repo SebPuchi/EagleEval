@@ -1,7 +1,7 @@
 // Import necessary modules and functions
-import { cacheReviews } from "./cacheReviews";
-import { Professor } from "../models/profSchema";
-import { getReviews } from "./fetchReviews";
+import { cacheReviews } from "./cacheReviews.js";
+import { Course } from "../models/courseSchema.js";
+import { getReviews } from "./fetchReviews.js";
 
 // Define constants for batch processing
 const BATCH_SIZE = 50; // The size of each batch
@@ -11,25 +11,26 @@ const MAX_BATCHES = 1; // Maximum number of batches to process
 // This function retrieves professor data and their reviews in batches.
 export async function scrapeProfessors() {
   try {
+    console.log("Scraping reviews from BC API");
     // Get the total number of professors in the database
-    const count = await Professor.count({});
+    const count = await Course.count({});
 
     // Calculate the number of batches needed (limited by MAX_BATCHES)
     const batches = Math.min(MAX_BATCHES, Math.ceil(count / BATCH_SIZE));
 
     // Loop through each batch
-    for (i = 0; i < batches; i++) {
+    for (let i = 0; i < batches; i++) {
       let promises = [];
 
       // Retrieve a batch of professors from the database
-      const curr_batch = await Professor.find(
-        {},
-        { limit: BATCH_SIZE, skip: BATCH_SIZE * i }
-      );
+      const curr_batch = await Course.find({}, null, {
+        limit: BATCH_SIZE,
+        skip: BATCH_SIZE * i,
+      }).exec();
 
       // Fetch reviews for each professor in the current batch
       for (const prof of curr_batch) {
-        const title = prof.title;
+        const title = prof.crs_code;
         console.log("Getting review data for: ", title);
         promises.push(getReviews(title));
       }
@@ -40,12 +41,14 @@ export async function scrapeProfessors() {
       // Cache the retrieved reviews in the MongoDB database
       console.log("Caching reviews in MongoDB");
       for (const review of review_data) {
-        console.log("Caching review for ", review.course_code);
-        await cacheReviews(review);
+        if (review) {
+          console.log("Caching review for ", review[0].course_code);
+          await cacheReviews(review);
+        }
       }
     }
   } catch (error) {
     // Handle any errors that occur during the scraping process
-    throw new Error("Error scraping professor reviews: ", error);
+    throw new Error("Error scraping professor reviews");
   }
 }

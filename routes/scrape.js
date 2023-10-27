@@ -14,7 +14,7 @@ scrape_router.post("/reviews", async (req, res) => {
   if (result.isEmpty()) {
     await scrapeProfessors();
 
-    return res("Scraped professor reviews");
+    return res.send("Scraped professor reviews");
   }
 
   res.send("Invalid body params");
