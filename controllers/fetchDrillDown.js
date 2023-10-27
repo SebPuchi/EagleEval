@@ -72,6 +72,12 @@ export const getDrillDown = async (code, instructor) => {
   const reviews_json = HtmlTableToJson.parse(String(rawData["d"][0]));
   let json_objects = reviews_json.results[0];
 
+  // Check if no results are returned
+  if (Object.keys(json_objects[0]).length <= 1) {
+    console.log("No data found for " + code + " " + instructor);
+    return null;
+  }
+
   // Clean JSON keys
   let clean_json = cleanKeysAndRemoveNonASCII(json_objects);
 

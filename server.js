@@ -8,6 +8,7 @@ import { fetch_router } from "./routes/fetch.js";
 import { update_router } from "./routes/update.js";
 import { search_router } from "./routes/search.js";
 import { cache_router } from "./routes/cache.js";
+import { scrape_router } from "./routes/scrape.js";
 
 // MIDDLEWARE
 import {
@@ -36,6 +37,9 @@ app.use("/api/search", search_router);
 
 // Add routes for cached reviews
 app.use("/api/cache", cache_router);
+
+// Add routes for scraping review
+app.use("/api/scrape", scrape_router);
 
 app.listen(3000, () => {
   createMongooseConnection();
