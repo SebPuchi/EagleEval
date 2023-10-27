@@ -2,7 +2,7 @@
 import express from "express";
 import { body, matchedData, validationResult } from "express-validator";
 
-import { scrapeProfessors } from "../controllers/scrapeAPI.js";
+import { scrapeDrilldown, scrapeProfessors } from "../controllers/scrapeAPI.js";
 
 export const scrape_router = express.Router();
 
@@ -15,6 +15,18 @@ scrape_router.post("/reviews", async (req, res) => {
     await scrapeProfessors();
 
     return res.send("Scraped professor reviews");
+  }
+
+  res.send("Invalid body params");
+});
+
+scrape_router.post("/drilldown", async (req, res) => {
+  let result = validationResult(req);
+
+  if (result.isEmpty()) {
+    await scrapeDrilldown();
+
+    return res.send("Scraped drilldown reviews");
   }
 
   res.send("Invalid body params");
