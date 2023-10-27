@@ -11,7 +11,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // Primeng angular module imports
 
 import { CardModule } from 'primeng/card';
-import { ProfessorCard } from './professor-card/prof-card.component';
 import { MenubarModule } from 'primeng/menubar';
 import { ButtonModule } from 'primeng/button';
 import { ImageModule } from 'primeng/image';
@@ -37,7 +36,6 @@ import { PageServiceService } from './page-service.service';
     DescriptionhmComponent,
     TripleCardSectionComponent,
     SearchBarComponent,
-    ProfessorCard,
     HomePageComponent,
     routingComponents,
   ],
