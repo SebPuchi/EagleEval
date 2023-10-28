@@ -41,13 +41,9 @@ export class ProfessorService {
       this.semester = value;
     }
 
-    get attendanceNecessary(): number {
-      return this.attendancenecessary;
-    }
 
-    set attendanceNecessary(value: number) {
-      this.attendancenecessary = value;
-    }
+
+
 
     get availableForHelpOutsideOfClass(): number {
       return this.availableforhelpoutsideofclass;
@@ -65,13 +61,6 @@ export class ProfessorService {
       this.course_name = value;
     }
 
-    get courseWellOrganized(): number {
-      return this.coursewellorganized;
-    }
-
-    set courseWellOrganized(value: number) {
-      this.coursewellorganized = value;
-    }
 
     get instructorName(): string {
       return this.instructor;
