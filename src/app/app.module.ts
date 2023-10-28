@@ -29,6 +29,7 @@ import { ProfessorPageEntryComponent } from './professor-page-entry/professor-pa
 import { ClassrPageEntryComponent } from './classr-page-entry/classr-page-entry.component';
 import { PageServiceService } from './page-service.service';
 import { ProgressBarModule } from 'primeng/progressbar'
+import { KnobModule } from 'primeng/knob';
 
 //PROF + CLASS SERVICE
 
@@ -58,6 +59,7 @@ import { ClassService } from 'src/app/PageDataService/class.service';
 		InputTextModule,
 		ProgressBarModule,
 		HttpClientModule,
+		KnobModule,
 		FormsModule,
 		BrowserAnimationsModule
 

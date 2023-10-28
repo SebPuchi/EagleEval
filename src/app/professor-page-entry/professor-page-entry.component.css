@@ -7,6 +7,13 @@
   display: grid;
 }
 
+.navbar {
+  height: 11vh;
+  background-color: #5c0d0f;
+  flex-direction: row;
+  justify-content: space-between;
+  display: flex;
+}
 
 
 
@@ -66,7 +73,7 @@
 .professor-image.card {
   width: 100%;
   height: 700px;
-  background-image: url('https://www.bc.edu/content/bc-web/schools/mcas/departments/theology/people/faculty-directory/jeremy-wilkins/_jcr_content/profileImage.img.png');
+ background-image: url('https://www.bc.edu/content/bc-web/schools/mcas/departments/theology/people/faculty-directory/jeremy-wilkins/_jcr_content/profileImage.img.png');
 
   background-position: 50%;
   background-size: cover;
@@ -84,7 +91,7 @@
 }
 
 .dataspecificgridwrap {
-  grid-template-rows: 300px auto auto auto auto;
+  grid-template-rows: auto auto auto auto auto;
   grid-template-areas: ". ."
                        "Area Area"
                        "Area-2 Area-2"
@@ -193,7 +200,7 @@
   height: auto;
   background-color: #dfdfdf;
   border-width: 1.2px;
-  border-color: #8fc3ff;
+  border-color: #cacaca;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -203,6 +210,10 @@
 
 .primengknobprofovrl {
   width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  display: flex;
 }
 
 .text-100 {
