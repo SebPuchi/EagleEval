@@ -28,6 +28,7 @@ import { HomePageComponent } from './home-page/home-page.component';
 import { ProfessorPageEntryComponent } from './professor-page-entry/professor-page-entry.component';
 import { ClassrPageEntryComponent } from './classr-page-entry/classr-page-entry.component';
 import { PageServiceService } from './page-service.service';
+import { ProgressBarModule } from 'primeng/progressbar'
 
 //PROF + CLASS SERVICE
 
@@ -55,6 +56,7 @@ import { ClassService } from 'src/app/PageDataService/class.service';
 		AutoCompleteModule,
 		ImageModule,
 		InputTextModule,
+		ProgressBarModule,
 		HttpClientModule,
 		FormsModule,
 		BrowserAnimationsModule
