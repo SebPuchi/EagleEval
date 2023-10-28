@@ -136,14 +136,51 @@ export async function courseExsists(courseModel, keyToCheck) {
 }
 
 export async function searchReviews(model, query) {
-  const pipeline = {
-    $or: [
-      { course_code: new RegExp(query) },
-      { instructor: new RegExp(query, "i") },
-    ],
-  };
+  // Regular expression pattern for a course code (e.g., "COMP1234")
+  const courseRegexPattern = /^[A-Za-z]{4}\d{4}$/;
 
-  return model.find(pipeline).exec();
+  if (courseRegexPattern.test(query)) {
+    // If the query matches the course code pattern, search for courses by code
+    const pipeline = {
+      course_code: new RegExp(query),
+    };
+
+    // Return the result of the search
+    return model.find(pipeline).exec();
+  } else {
+    // If the query doesn't match the course code pattern, split it into words
+    const nameArr = query.split(" ");
+
+    // Initialize an array to store permutations of instructor names
+    const permutations = [];
+
+    // Generate permutations of instructor names from the query
+    for (let i = 0; i < nameArr.length; i++) {
+      for (let j = 0; j < nameArr.length; j++) {
+        if (i !== j) {
+          // Combine two different names for permutations
+          permutations.push(nameArr[i] + " " + nameArr[j]);
+        }
+      }
+    }
+
+    const caseInsensitive = permutations.map((str) => {
+      return new RegExp(str, "i");
+    });
+    // Create a pipeline for searching instructors by name permutations
+    const pipeline = {
+      instructor: {
+        $in: caseInsensitive,
+      },
+    };
+
+    // Return the result of the instructor name search
+    return model.find(pipeline).exec();
+  }
+}
+
+export async function searchById(model, id) {
+  return model.findById(id).exec();
 }
 
 export async function findOrCreateReviews(revModel, revData) {
