@@ -14,4 +14,17 @@ export class ApiService {
     // Send the POST request using the HttpClient's post method
     return this.http.post<any>(url, data);
   }
+
+  getSearchById(id: string, url: string) {
+    const query = { id: id };
+
+    return this.http.post<any>(url, query);
+  }
+
+  getFromCache(query: any, url: string) {
+    const data = { search_query: query };
+
+    // Send the POST request using the HttpClient's post method
+    return this.http.post<any>(url, data);
+  }
 }
