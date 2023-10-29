@@ -26,33 +26,43 @@ import { HomePageComponent } from './home-page/home-page.component';
 import { ProfessorPageEntryComponent } from './professor-page-entry/professor-page-entry.component';
 import { ClassrPageEntryComponent } from './classr-page-entry/classr-page-entry.component';
 import { PageServiceService } from './page-service.service';
+import { ProgressBarModule } from 'primeng/progressbar'
+import { KnobModule } from 'primeng/knob';
+
+//PROF + CLASS SERVICE
+
+import { ProfessorService } from 'src/app/PageDataService/professor.service';
+import { ClassService } from 'src/app/PageDataService/class.service';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    HomeBarComponent,
-    HeroSectionComponent,
-    FooterComponent,
-    DescriptionhmComponent,
-    TripleCardSectionComponent,
-    SearchBarComponent,
-    HomePageComponent,
-    routingComponents,
-  ],
-  imports: [
-    CardModule,
-    BrowserModule,
-    AppRoutingModule,
-    ButtonModule,
-    MenubarModule,
-    AutoCompleteModule,
-    ImageModule,
-    InputTextModule,
-    HttpClientModule,
-    FormsModule,
-    BrowserAnimationsModule,
-  ],
-  providers: [PageServiceService],
-  bootstrap: [AppComponent],
+	declarations: [
+		AppComponent,
+  HomeBarComponent,
+  HeroSectionComponent,
+  FooterComponent,
+  DescriptionhmComponent,
+  TripleCardSectionComponent,
+  SearchBarComponent,
+  HomePageComponent,
+  routingComponents
+	],
+	imports: [
+		BrowserModule,
+		AppRoutingModule,
+		ButtonModule,
+		MenubarModule,
+		AutoCompleteModule,
+		ImageModule,
+		InputTextModule,
+		ProgressBarModule,
+		HttpClientModule,
+		KnobModule,
+		FormsModule,
+		BrowserAnimationsModule
+
+	],
+	providers: [PageServiceService,ProfessorService,ClassService],
+	bootstrap: [AppComponent]
+
 })
 export class AppModule {}
