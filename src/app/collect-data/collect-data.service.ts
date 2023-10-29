@@ -194,7 +194,7 @@ export class CollectDataService {
         title: currCourseData[0].course_name,
         crs_code: courseCode,
         course_overall: avgCourseOverall,
-        effort_hours: avgEffortHours / 25 + 1,
+        effort_hours: avgEffortHours >= 0 ? avgEffortHours / 25 + 1 : -1,
       };
 
       tableData.push(currTableRowData);
