@@ -3,10 +3,68 @@ import express from "express";
 import { body, matchedData, validationResult } from "express-validator";
 
 import { Review } from "../models/reviewSchema.js";
-import { searchReviews } from "../utils/mongoUtils.js";
+import { Professor } from "../models/profSchema.js";
+import { Course } from "../models/courseSchema.js";
+import { searchReviews, searchById } from "../utils/mongoUtils.js";
 import { Drilldown } from "../models/drilldownSchema.js";
 
 export const cache_router = express.Router();
+
+// Search from profs
+cache_router.post(
+  "/search/profs",
+  body("id").trim().notEmpty().escape(),
+  async (req, res) => {
+    let result = validationResult(req);
+
+    // Validate input has no errors
+    if (result.isEmpty()) {
+      let data = matchedData(req);
+
+      // Id of prof data
+      let id = data.id;
+      console.log("Searching prof collection for: " + id);
+
+      const result = await searchById(Professor, id);
+      console.log("Successfully got prof data for: ", id);
+
+      return res.json(result);
+    }
+
+    console.error(
+      req.body.id ? "Error for id: " + req.body.id : "Error: empty id param"
+    );
+    res.send("Invalid body params: id must not be empty");
+  }
+);
+
+// Search from courses
+cache_router.post(
+  "/search/courses",
+  body("id").trim().notEmpty().escape(),
+  async (req, res) => {
+    let result = validationResult(req);
+
+    // Validate input has no errors
+    if (result.isEmpty()) {
+      let data = matchedData(req);
+
+      // Id of course data
+      let id = data.id;
+      console.log("Searching course collection for: " + id);
+
+      const result = await searchById(Course, id);
+      console.log("Successfully got course data for: ", id);
+
+      return res.json(result);
+    }
+
+    console.error(
+      req.body.id ? "Error for id: " + req.body.id : "Error: empty id param"
+    );
+    res.send("Invalid body params: id must not be empty");
+  }
+);
 
 // Search chached reviews
 cache_router.post(
@@ -19,7 +77,7 @@ cache_router.post(
     if (result.isEmpty()) {
       let data = matchedData(req);
 
-      // Query string from body (Class code or professor name)
+      // Query string from body (Class code or course name)
       let query = data.search_query;
       console.log("Searching review cache for query: " + query);
 
