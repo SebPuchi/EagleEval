@@ -1,7 +1,9 @@
 import { Component, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
-import { ProfessorService } from 'src/app/PageDataService/professor.service';
 import { Injectable } from '@angular/core';
+
+import {ProfessorService} from "src/app/PageDataService/professor.service";
+import {CollectDataService} from "src/app/collect-data/collect-data.service";
 
 @Component({
   selector: 'app-professor-page-entry',
@@ -10,7 +12,11 @@ import { Injectable } from '@angular/core';
 })
 export class ProfessorPageEntryComponent {
 
-  constructor(private professorService: ProfessorService) {
-    // Access the instructor property from ProfessorService
+
+
+  constructor(private professorService: ProfessorService,
+              private collectDataService: CollectDataService) {
+
+
   }
 }
