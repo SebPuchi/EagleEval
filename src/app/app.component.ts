@@ -22,7 +22,7 @@ export class AppComponent implements OnInit {
 	            router.events.subscribe((event) => {
                     if (event instanceof NavigationEnd) {
 
-                     this.isHomeBarVisible = event.url !== '/professor' && event.url !== '/class';
+                     this.isHomeBarVisible = !/\/professor/.test(event.url) && !/\/class/.test(event.url);
                     }
                   });
 

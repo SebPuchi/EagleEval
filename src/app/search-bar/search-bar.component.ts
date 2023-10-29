@@ -41,13 +41,13 @@ export class SearchBarComponent {
     for (const prof of this.profs) {
       if (prof.title == $event) {
         console.log(`Routing to ${$event} prof page`);
-        this._pageService.setShowProfPage();
+        this._pageService.setShowProfPage(prof._id);
       }
     }
     // Search courses
     for (const crs of this.courses) {
       if (crs.title == $event) {
-        this._pageService.setShowClassPage();
+        this._pageService.setShowClassPage(crs._id);
         console.log(`Routing to ${$event} course page`);
       }
     }
