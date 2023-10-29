@@ -1,6 +1,11 @@
-import { Observable } from 'rxjs';
+import { Observable, forkJoin } from 'rxjs';
 import { ApiService } from '../api.service';
 import { AppSettings } from '../appSettings';
+import {
+  ProfPageData,
+  CourseTableData,
+  ProfessorService,
+} from '../PageDataService/professor.service';
 
 interface ProfData {
   _id: string;
@@ -56,7 +61,7 @@ interface DrilldownData {
 }
 
 export class CollectData {
-  constructor(private api: ApiService) {}
+  constructor(private api: ApiService, private prof: ProfessorService) {}
 
   private convertToPercent(value: number) {
     return value > 0 ? (value - 1) * 25 : 0;
@@ -68,7 +73,7 @@ export class CollectData {
     );
 
     if (filteredData.length === 0) {
-      return 0; // Return 0 for an empty or entirely undefined array or handle it differently based on your requirements.
+      return -1; // Return -1 for an empty or entirely undefined array or handle it differently based on your requirements.
     }
 
     const sum = filteredData.reduce(
@@ -111,43 +116,33 @@ export class CollectData {
 
   private getReviewsFromCache(query: string) {
     const url = AppSettings.API_ENDPOINT + '/cache/search/reviews';
-    let reviews: ReviewData[] = [];
 
-    this.api.getFromCache(query, url).subscribe((response) => {
-      reviews = <Array<ReviewData>>response;
-    });
-
-    return reviews;
+    return this.api.getFromCache(query, url);
   }
 
   private getDrilldownFromCache(query: string) {
     const url = AppSettings.API_ENDPOINT + '/cache/search/drilldown';
-    let reviews: DrilldownData[] = [];
 
-    this.api.getFromCache(query, url).subscribe((response) => {
-      reviews = <Array<DrilldownData>>response;
-    });
-
-    return reviews;
+    return this.api.getFromCache(query, url);
   }
 
   private getProfData(id: string) {
     const url = AppSettings.API_ENDPOINT + '/cache/search/profs';
 
-    this.api.getSearchById(id, url).subscribe((response) => {
-      const profData = <ProfData>response;
-    });
+    return this.api.getSearchById(id, url);
   }
 
   private getCourseData(id: string) {
     const url = AppSettings.API_ENDPOINT + '/cache/search/courses';
 
-    this.api.getSearchById(id, url).subscribe((response) => {
-      const crsData = <CourseData>response;
-    });
+    return this.api.getSearchById(id, url);
   }
 
-  getProfAvgData(revData: ReviewData[], drilldownData: DrilldownData[]) {
+  getProfAvgData(
+    metaData: ProfData,
+    revData: ReviewData[],
+    drilldownData: DrilldownData[]
+  ) {
     const courseSet = new Set<string>();
 
     // Create a set of all the courses the prof teaches
@@ -160,9 +155,13 @@ export class CollectData {
         courseSet.add(courseName);
       }
     });
+    // Data for table
+    const profsCoursesData = this.groupBy(revData, 'course code');
+    const profsCoursesDdData = this.groupBy(drilldownData, 'course code');
 
     // Prof data points
     const avgProfOverall = this.calculateAverage(revData, 'instructor_overall');
+
     const avgPrepared = this.calculateAverage(
       drilldownData,
       'instructorprepared'
@@ -180,15 +179,37 @@ export class CollectData {
       'stimulatedinterestinthesubjectmatter'
     );
 
-    // Data for table
-    const profsCoursesData = this.groupBy(revData, 'course code');
-    const profsCoursesDdData = this.groupBy(drilldownData, 'course code');
+    // Create inteface obj with data
+    const pageData: ProfPageData = {
+      title: metaData.title,
+      education: metaData.education,
+      email: metaData.email,
+      firstName: metaData.fistName,
+      lastName: metaData.lastName,
+      phone: metaData.phone,
+      profileImage: metaData.profileImage,
+      avgOverall: avgProfOverall,
+      avgPrepared: avgPrepared,
+      avgExplains: avgExplains,
+      avgAvailable: avgAvailable,
+      avgEnthusiastic: avgEnthusiastic,
+    };
+
+    // Update professor service
+    this.prof.ProfPageData = pageData;
   }
 
-  getCacheProfData(name: string) {
-    const revData = this.getReviewsFromCache(name);
-    const drilldownData = this.getDrilldownFromCache(name);
+  getCacheProfData(id: string) {
+    this.getProfData(id).subscribe((metaData: ProfData) => {
+      const name = metaData.title;
 
-    this.getProfAvgData(revData, drilldownData);
+      // Join obsevables
+      forkJoin([
+        this.getReviewsFromCache(name),
+        this.getDrilldownFromCache(name),
+      ]).subscribe(([revData, drilldownData]) => {
+        this.getProfAvgData(metaData, revData, drilldownData);
+      });
+    });
   }
 }

@@ -1,122 +1,55 @@
 import { Injectable } from '@angular/core';
 
+export interface ProfPageData {
+  title: string;
+  education?: string[];
+  email?: string;
+  firstName: string;
+  lastName: string;
+  phone?: string;
+  profileImage?: string;
+  avgOverall?: number;
+  avgPrepared?: number;
+  avgExplains?: number;
+  avgAvailable?: number;
+  avgEnthusiastic?: number;
+}
+
+export interface CourseTableData {
+  title: string;
+  crs_code: string;
+  course_overall: number;
+  effort_hours: number;
+}
+
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ProfessorService {
+  constructor() {
+    this._prof_data = null;
+    this._table_data = null;
+  }
 
-  constructor() { }
+  // Define variables
+  private _prof_data: ProfPageData | null;
+  private _table_data: CourseTableData[] | null;
 
-    private course_code: string = "CSCI224301";
-    private semester: string = "Fall 2020";
-    private instructor: string = "Carl Mctague";
+  // Prof data setters and getters
+  get ProfPageData(): ProfPageData | null {
+    return this._prof_data;
+  }
 
-  //***** VALUES THAT NEED TO BE AVERAGED *****//
- //   private attendancenecessary: number = 4.75;
-    private availableforhelpoutsideofclass: number = 4.69;
-  //  private coursewellorganized: number = 4.47;
-    private instructorclearexplanations: number = 4.28;
-    private instructorprepared: number = 4.75;
-    private stimulatedinterestinthesubjectmatter: number = 4.81;
-    private instructor_overall: number = 3.29;
-    //**********************************//
+  set ProfPageData(data: ProfPageData | null) {
+    this._prof_data = data;
+  }
 
-    private school: string = "Morrissey College of Arts and Sciences";
-    private department: string = "Computer Science";
-    private course_name: string = "Logic and Computation";
+  // Course table setters and getters
+  get crsTableData(): CourseTableData[] | null {
+    return this._table_data;
+  }
 
-    get courseCode(): string {
-      return this.course_code;
-    }
-
-    set courseCode(value: string) {
-      this.course_code = value;
-    }
-
-    get semesterValue(): string {
-      return this.semester;
-    }
-
-    set semesterValue(value: string) {
-      this.semester = value;
-    }
-
-
-
-
-
-    get availableForHelpOutsideOfClass(): number {
-      return this.availableforhelpoutsideofclass;
-    }
-
-    set availableForHelpOutsideOfClass(value: number) {
-      this.availableforhelpoutsideofclass = value;
-    }
-
-    get courseName(): string {
-      return this.course_name;
-    }
-
-    set courseName(value: string) {
-      this.course_name = value;
-    }
-
-
-    get instructorName(): string {
-      return this.instructor;
-    }
-
-    set instructorName(value: string) {
-      this.instructor = value;
-    }
-
-    get instructorClearExplanations(): number {
-      return this.instructorclearexplanations;
-    }
-
-    set instructorClearExplanations(value: number) {
-      this.instructorclearexplanations = value;
-    }
-
-    get instructorPrepared(): number {
-      return this.instructorprepared;
-    }
-
-    set instructorPrepared(value: number) {
-      this.instructorprepared = value;
-    }
-
-    get stimulatedInterestInSubjectMatter(): number {
-      return this.stimulatedinterestinthesubjectmatter;
-    }
-
-    set stimulatedInterestInSubjectMatter(value: number) {
-      this.stimulatedinterestinthesubjectmatter = value;
-    }
-
-    get instructorOverall(): number {
-      return this.instructor_overall;
-    }
-
-    set instructorOverall(value: number) {
-      this.instructor_overall = value;
-    }
-
-    get schoolName(): string {
-      return this.school;
-    }
-
-    set schoolName(value: string) {
-      this.school = value;
-    }
-
-    get departmentName(): string {
-      return this.department;
-    }
-
-    set departmentName(value: string) {
-      this.department = value;
-    }
-
-
+  set crsTableData(data: CourseTableData[] | null) {
+    this._table_data = data;
+  }
 }
