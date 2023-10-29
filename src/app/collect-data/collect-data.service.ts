@@ -60,7 +60,7 @@ interface DrilldownData {
   stimulatedinterestinthesubjectmatter?: number;
 }
 
-export class CollectData {
+export class CollectDataService {
   constructor(private api: ApiService, private prof: ProfessorService) {}
 
   private convertToPercent(value: number) {
@@ -136,7 +136,7 @@ export class CollectData {
     return this.api.getSearchById(id, url);
   }
 
-  getProfAvgData(
+  private getProfAvgData(
     metaData: ProfData,
     revData: ReviewData[],
     drilldownData: DrilldownData[]
@@ -184,6 +184,8 @@ export class CollectData {
 
       tableData.push(currTableRowData);
     }
+    // Sort by course overall score
+    tableData = tableData.sort((a, b) => b.course_overall - a.course_overall);
 
     // Prof data points
     const avgProfOverall = this.calculateAverage(revData, 'instructor_overall');
