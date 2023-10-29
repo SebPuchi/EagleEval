@@ -1,4 +1,5 @@
 import { Observable, forkJoin } from 'rxjs';
+import { Injectable } from '@angular/core';
 import { ApiService } from '../api.service';
 import { AppSettings } from '../appSettings';
 import {
@@ -60,6 +61,9 @@ interface DrilldownData {
   stimulatedinterestinthesubjectmatter?: number;
 }
 
+@Injectable({
+  providedIn: 'root',
+})
 export class CollectDataService {
   constructor(private api: ApiService, private prof: ProfessorService) {}
 
