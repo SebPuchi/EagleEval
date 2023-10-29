@@ -11,6 +11,7 @@ export class ProfContactComponent {
   public phone: string = "N/A";
   public office: string = "N/A";
 
-    public educationDetails: string[] = [];
+  public educationDetails: string[] = ["N/A"];
+
 
 }
