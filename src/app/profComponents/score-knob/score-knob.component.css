@@ -1,23 +1,5 @@
 
 
-
-.utility-page-wrap {
-  width: 100vw;
-  height: 100vh;
-  max-height: 100%;
-  max-width: 100%;
-  justify-content: center;
-  align-items: center;
-  display: flex;
-}
-
-.utility-page-content {
-  width: 260px;
-  text-align: center;
-  flex-direction: column;
-  display: flex;
-}
-
 .mainsection {
   flex-direction: row;
   justify-content: space-between;
@@ -38,15 +20,6 @@
   padding-right: 30px;
 }
 
-.professorimagenamediv.card {
-  width: 100%;
-  height: 800px;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  padding: 30px;
-  display: flex;
-}
 
 .card {
   background-color: #eee;
@@ -67,41 +40,24 @@
 }
 
 .knobdata.card {
+  height: 93%;
   background-color: #fff;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   margin: 20px 0 20px 20px;
   padding: 24px;
   display: flex;
 }
 
-.sliderdatadiv.card {
-  height: 70px;
-  background-color: #fff;
-  margin-left: 20px;
-  margin-right: 20px;
-}
-
-.sliderdatadiv.card.bottomslider {
-  margin-bottom: 0;
-}
-
 .profinfodiv.card {
+  height: 93%;
   background-color: #fff;
   flex-direction: column;
   justify-content: space-between;
   align-items: flex-start;
   margin: 20px 20px 20px 0;
   padding: 24px;
-  display: flex;
-}
-
-.sliderobjects {
-  width: 100%;
-  height: 100%;
-  flex-direction: row;
-  justify-content: space-between;
   display: flex;
 }
 
@@ -264,6 +220,13 @@
 
 
 
+.professorimage.card {
+  height: 600px;
+  background-position: 50%;
+  margin: 0;
+}
+
+
 
 .searchdiv {
   width: 70%;
@@ -318,6 +281,15 @@
     margin-right: 0;
   }
 
+  .sliderheadings {
+    font-size: 12px;
+    line-height: 15px;
+  }
+
+  .logo-holder {
+    width: 40px;
+    height: 40px;
+  }
 }
 
 #w-node-c87be3b7-c141-005e-9f22-f1ade205e490-bca6b5a5 {
