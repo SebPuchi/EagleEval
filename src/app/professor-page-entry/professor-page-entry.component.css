@@ -7,23 +7,6 @@
   display: grid;
 }
 
-.navbar {
-  height: 12vh;
-  background-color: #5c0d0f;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  display: flex;
-}
-
-.footer {
-  height: 10vh;
-  background-color: #6d1f22;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  display: flex;
-}
 
 .text-block {
   color: #fff;
@@ -154,48 +137,9 @@
   font-size: 20px;
 }
 
-.slideranddescription {
-  width: 70%;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 15px;
-  display: flex;
-}
 
-.stronglyagreeordiss {
-  width: 95%;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: flex-end;
-  margin-top: 5px;
-  display: flex;
-}
 
-.primengslider {
-  width: 95%;
-  flex-direction: row;
-  justify-content: space-between;
-  margin-bottom: 10px;
-}
 
-.agreeordisstxt {
-  margin-top: 0;
-  margin-bottom: 0;
-  font-family: Inter, sans-serif;
-  font-size: 13px;
-  font-weight: 400;
-  line-height: 5px;
-}
-
-.sliderdatatypediv {
-  width: 30%;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding-right: 0;
-  display: flex;
-}
 
 .vertical-divider {
   width: 2px;
@@ -204,20 +148,8 @@
   margin-bottom: 15px;
 }
 
-.knobdescrtiption {
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  display: flex;
-}
 
-.primengknobprofovrl {
-  width: 100%;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  display: flex;
-}
+
 
 .heading-8 {
   text-align: center;
@@ -292,14 +224,6 @@
   font-style: normal;
 }
 
-.professorimage {
-  width: 100%;
-  height: 400px;
- background-image: url('https://www.bc.edu/content/bc-web/schools/mcas/departments/theology/people/faculty-directory/jeremy-wilkins/_jcr_content/profileImage.img.png');
-  background-position: 0 0;
-  background-size: cover;
-  margin: 20px;
-}
 
 .professorimage.card {
   height: 600px;
