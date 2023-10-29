@@ -7,13 +7,22 @@
   display: grid;
 }
 
+.navbar {
+  height: 12vh;
+  background-color: #5c0d0f;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
+}
 
-.link {
-  color: #fff;
-  font-family: Roboto, sans-serif;
-  font-size: 17px;
-  font-weight: 400;
-  text-decoration: none;
+.footer {
+  height: 10vh;
+  background-color: #6d1f22;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  display: flex;
 }
 
 .text-block {
@@ -53,10 +62,6 @@
   margin-top: 30px;
 }
 
-.professornamelarge {
-  text-align: center;
-}
-
 .contentwrapper {
   padding-bottom: 0;
   padding-left: 30px;
@@ -71,13 +76,6 @@
   align-items: center;
   padding: 30px;
   display: flex;
-}
-
-.profname {
-  text-align: center;
-  margin-bottom: 20px;
-  font-family: Inter, sans-serif;
-  font-size: 50px;
 }
 
 .card {
@@ -245,26 +243,13 @@
   margin-bottom: 25px;
 }
 
-.spacerhoriz.image.small {
-  width: 20%;
-  margin-top: 0;
-  margin-bottom: 25px;
-}
-
 .spacerhoriz.image.bottom {
   width: 70%;
   margin-top: 25px;
   margin-bottom: 15px;
 }
 
-.contactdiv {
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  display: flex;
-}
-
-.educationdiv {
+.contactdiv, .educationdiv {
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
@@ -289,38 +274,11 @@
   font-size: 16px;
 }
 
-.profnamediv.card {
-  background-color: #fff;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 30px;
-  margin-bottom: 30px;
-  display: flex;
-}
-
-.longheaderdiv {
-  width: 25vw;
-  height: 2px;
-  background-color: rgba(122, 122, 122, .52);
-  margin-left: 44px;
-  margin-right: 44px;
-}
-
 .professorname {
   width: 100%;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  display: flex;
-}
-
-.professorname.card {
-  width: 100%;
-  background-color: #fff;
-  justify-content: center;
-  align-items: center;
-  margin: 0;
   display: flex;
 }
 
@@ -334,15 +292,10 @@
   font-style: normal;
 }
 
-.profnameheading.card {
-  background-color: #fff;
-}
-
 .professorimage {
   width: 100%;
   height: 400px;
  background-image: url('https://www.bc.edu/content/bc-web/schools/mcas/departments/theology/people/faculty-directory/jeremy-wilkins/_jcr_content/profileImage.img.png');
-
   background-position: 0 0;
   background-size: cover;
   margin: 20px;
@@ -354,21 +307,24 @@
   margin: 0;
 }
 
+
+
+.searchdiv {
+  width: 70%;
+  margin-right: 20px;
+}
+
 @media screen and (max-width: 991px) {
   .dynamicprofcontent {
     grid-template-columns: 1fr;
     grid-template-areas: "."
                          "Area";
   }
+
+
 }
 
 @media screen and (max-width: 767px) {
-  .crestimageholder {
-    width: 15vh;
-    height: 15vh;
-    margin-top: 23px;
-  }
-
   .card {
     box-shadow: 0 2px 12px rgba(20, 20, 43, .04);
   }
@@ -376,21 +332,11 @@
 
 @media screen and (max-width: 479px) {
   .navbar {
-    height: 8vh;
-  }
-
-  .crestimageholder {
-    width: 10vh;
-    height: 10vh;
-    margin-top: 19px;
+    height: 12vh;
   }
 
   .professorimagenamediv.card {
     height: 500px;
-  }
-
-  .profname {
-    font-size: 25px;
   }
 
   .dataspecificgridwrap {
@@ -416,10 +362,6 @@
     margin-right: 0;
   }
 
-  .sliderheadings {
-    font-size: 12px;
-    line-height: 15px;
-  }
 }
 
 #w-node-c87be3b7-c141-005e-9f22-f1ade205e490-bca6b5a5 {
