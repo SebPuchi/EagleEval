@@ -7,4 +7,5 @@ import { Component } from '@angular/core';
 })
 export class EnthCourseMaterialComponent {
 
+  enthCourseValue: number = 0;
 }
