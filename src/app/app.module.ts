@@ -33,6 +33,13 @@ import { KnobModule } from 'primeng/knob';
 
 import { ProfessorService } from 'src/app/PageDataService/professor.service';
 import { ClassService } from 'src/app/PageDataService/class.service';
+import { ScoreKnobComponent } from './profComponents/score-knob/score-knob.component';
+import { ProfCardComponent } from './profComponents/prof-card/prof-card.component';
+import { ProfContactComponent } from './profComponents/prof-contact/prof-contact.component';
+import { InstructorPreparedComponent } from './profComponents/instructor-prepared/instructor-prepared.component';
+import { ClearMaterialComponent } from './profComponents/clear-material/clear-material.component';
+import { AviblOutsideClassComponent } from './profComponents/avibl-outside-class/avibl-outside-class.component';
+import { EnthCourseMaterialComponent } from './profComponents/enth-course-material/enth-course-material.component';
 
 @NgModule({
 	declarations: [
@@ -44,7 +51,14 @@ import { ClassService } from 'src/app/PageDataService/class.service';
   TripleCardSectionComponent,
   SearchBarComponent,
   HomePageComponent,
-  routingComponents
+  routingComponents,
+  ScoreKnobComponent,
+  ProfCardComponent,
+  ProfContactComponent,
+  InstructorPreparedComponent,
+  ClearMaterialComponent,
+  AviblOutsideClassComponent,
+  EnthCourseMaterialComponent
 	],
 	imports: [
 		BrowserModule,
