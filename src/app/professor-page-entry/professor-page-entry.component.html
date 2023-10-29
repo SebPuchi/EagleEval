@@ -1,37 +1,64 @@
 <app-home-bar></app-home-bar>
 
 
-<p-knob
-  [(ngModel)]="value"
-  [size] = "250"
-  [readonly] = "true"
-  [strokeWidth]="10"
-
-
-></p-knob>
 
 
 <div class="mainsection">
-  <div class="professornamelarge">
-    <h1 class="heading-6">JEREMY WILKINS</h1>
-  </div>
   <div class="contentwrapper">
     <div class="w-layout-grid dynamicprofcontent">
-      <div id="w-node-c87be3b7-c141-005e-9f22-f1ade205e490-bca6b5a5" class="professor-image card"></div>
+      <div id="w-node-c87be3b7-c141-005e-9f22-f1ade205e490-bca6b5a5" class="professorimagenamediv card">
+        <div class="professorname">
+          <h1 class="profnameheading">Jeremy Wilkins</h1>
+        </div>
+        <div class="spacerhoriz image"></div>
+        <div class="professorimage card"></div>
+        <div class="spacerhoriz image bottom"></div>
+      </div>
       <div id="w-node-_1f2ae32f-a360-e950-5bea-c98badf7a3f2-bca6b5a5" class="card">
         <div class="w-layout-grid dataspecificgridwrap">
           <div id="w-node-aa7a8a2f-c845-0fce-f654-85ceb364e554-bca6b5a5" class="knobdata card">
             <div class="primengknobprofovrl">
 
+              <p-knob
+                [(ngModel)]="value"
+                [size] = "250"
+                [readonly] = "true"
+                [strokeWidth]="10"
+
+
+              ></p-knob>
 
             </div>
             <div class="knobdescrtiption">
               <h1 class="sliderheadings profscore">Professor Overall</h1>
               <div class="spacerhoriz"></div>
-              <h1 class="heading-8">Weighted Avg. of class scores Professor Teaches</h1>
+              <h1 class="heading-8">Weighted Avg. of class scores Professor teaches</h1>
             </div>
           </div>
-          <div id="w-node-e211b9d4-0e08-2720-9313-0428ac4843e1-bca6b5a5" class="profinfodiv card"></div>
+          <div id="w-node-e211b9d4-0e08-2720-9313-0428ac4843e1-bca6b5a5" class="profinfodiv card">
+            <div class="contactdiv">
+              <h1 class="sliderheadings profscore contact">Contact</h1>
+              <div class="spacerhoriz"></div>
+            </div>
+            <div class="contactdescription">
+              <div class="email">Email: jwilkins@bc.edu</div>
+              <div class="email">Phone: 720-397-8266</div>
+              <div class="email">Office: Stokes Hall 425N</div>
+            </div>
+            <div class="educationdiv">
+              <h1 class="sliderheadings profscore contact">Education</h1>
+              <div class="spacerhoriz"></div>
+              <div class="contactdescription"></div>
+              <div class="contactdescription">
+                <div class="email">A.B., Washington University in St. Louis</div>
+                <div class="email">M.Div., Regis College/University of Toronto</div>
+                <div class="email">S.T.B., Regis College</div>
+                <div class="email">S.T.L., St. Mary’s Seminary and University</div>
+              </div>
+            </div>
+          </div>
+
+
           <div id="w-node-_95dac4bd-9b80-4676-ae0a-c18e352028ff-bca6b5a5" class="sliderdatadiv card">
             <div class="sliderobjects">
               <div id="w-node-e381e299-4ce1-d895-168d-51c34a0b65ef-bca6b5a5" class="sliderdatatypediv">
