@@ -85,21 +85,19 @@ export class CollectData {
     return this.convertToPercent(average);
   }
 
-  private groupBy(
-    data: (ReviewData | DrilldownData)[],
-    key: 'instructor' | 'course code'
-  ): {
-    [key: string]: (ReviewData | DrilldownData)[];
-  } {
-    const groupedData: { [key: string]: (ReviewData | DrilldownData)[] } = {};
+  private groupBy<T extends ReviewData | DrilldownData, K extends keyof T>(
+    data: T[],
+    key: K
+  ): Record<string, T[]> {
+    const groupedData: Record<string, T[]> = {};
 
     data.forEach((item) => {
       let itemKey: string;
 
       if (key === 'instructor') {
-        itemKey = item.instructor || '';
+        itemKey = (item as any).instructor || '';
       } else if (key === 'course code') {
-        itemKey = item.course_code.slice(0, 8);
+        itemKey = (item as any).course_code.slice(0, 8);
       } else {
         itemKey = '';
       }
@@ -145,6 +143,8 @@ export class CollectData {
   ) {
     const courseSet = new Set<string>();
 
+    let tableData: CourseTableData[] = [];
+
     // Create a set of all the courses the prof teaches
     revData.forEach((course) => {
       const courseCode = course.course_code;
@@ -156,8 +156,34 @@ export class CollectData {
       }
     });
     // Data for table
-    const profsCoursesData = this.groupBy(revData, 'course code');
-    const profsCoursesDdData = this.groupBy(drilldownData, 'course code');
+    const profsCoursesData = this.groupBy(revData, 'course_code');
+    const profsCoursesDdData = this.groupBy(drilldownData, 'course_code');
+
+    // Loop through courses set and get table averages
+    for (let course of courseSet) {
+      const currCourseData = profsCoursesData[course];
+      const currCourseDdData = profsCoursesDdData[course];
+
+      const courseName = currCourseData[0].course_name;
+      const courseCode = course;
+      const avgCourseOverall = this.calculateAverage(
+        currCourseData,
+        'course_overall'
+      );
+      const avgEffortHours = this.calculateAverage(
+        currCourseDdData,
+        'effortavghoursweeklyc'
+      );
+
+      const currTableRowData: CourseTableData = {
+        title: courseName,
+        crs_code: courseCode,
+        course_overall: avgCourseOverall,
+        effort_hours: avgEffortHours,
+      };
+
+      tableData.push(currTableRowData);
+    }
 
     // Prof data points
     const avgProfOverall = this.calculateAverage(revData, 'instructor_overall');
@@ -197,6 +223,7 @@ export class CollectData {
 
     // Update professor service
     this.prof.ProfPageData = pageData;
+    this.prof.crsTableData = tableData;
   }
 
   getCacheProfData(id: string) {
