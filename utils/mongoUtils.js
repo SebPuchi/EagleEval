@@ -57,8 +57,12 @@ function reviewJsonToDoc(revJson) {
     department: revJson.department,
     school: revJson.school,
     instructor: revJson.instructor,
-    instructor_overall: revJson.instructor_overall,
-    course_overall: revJson.course_overall,
+    instructor_overall: !isNaN(revJson.instructor_overall)
+      ? revJson.instructor_overall
+      : undefined,
+    course_overall: !isNaN(revJson.course_overall)
+      ? revJson.course_overall
+      : undefined,
   };
 
   return revData;

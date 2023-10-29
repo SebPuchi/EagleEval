@@ -1,11 +1,8 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule }
-	from '@angular/platform-browser';
-import { AppRoutingModule, routingComponents }
-	from './app-routing.module';
+import { BrowserModule } from '@angular/platform-browser';
+import { AppRoutingModule, routingComponents } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HttpClientModule }
-	from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 
 import { FormsModule } from '@angular/forms';
 
@@ -13,6 +10,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // Primeng angular module imports
 
+import { CardModule } from 'primeng/card';
 import { MenubarModule } from 'primeng/menubar';
 import { ButtonModule } from 'primeng/button';
 import { ImageModule } from 'primeng/image';
@@ -35,7 +33,6 @@ import { KnobModule } from 'primeng/knob';
 
 import { ProfessorService } from 'src/app/PageDataService/professor.service';
 import { ClassService } from 'src/app/PageDataService/class.service';
-
 
 @NgModule({
 	declarations: [
@@ -66,6 +63,6 @@ import { ClassService } from 'src/app/PageDataService/class.service';
 	],
 	providers: [PageServiceService,ProfessorService,ClassService],
 	bootstrap: [AppComponent]
-})
-export class AppModule { }
 
+})
+export class AppModule {}
