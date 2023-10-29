@@ -10,7 +10,6 @@ export class ProfContactComponent {
   public email: string = "N/A"
   public phone: string = "N/A";
   public office: string = "N/A";
-
   public educationDetails: string[] = ["N/A"];
 
 

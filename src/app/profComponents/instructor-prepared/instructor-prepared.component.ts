@@ -6,5 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./instructor-prepared.component.css']
 })
 export class InstructorPreparedComponent {
+  instructorPreparedValue: number = 0;
 
 }
