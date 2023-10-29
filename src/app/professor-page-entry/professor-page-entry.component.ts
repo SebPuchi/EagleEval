@@ -10,7 +10,6 @@ import { Injectable } from '@angular/core';
 })
 export class ProfessorPageEntryComponent {
 
-  value: number = 50;
 
  instructorInAnotherClass: string;
 

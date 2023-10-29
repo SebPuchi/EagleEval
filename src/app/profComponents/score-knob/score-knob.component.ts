@@ -7,4 +7,12 @@ import { Component } from '@angular/core';
 })
 export class ScoreKnobComponent {
 
+  value: number = 0;
+  isDisabled: boolean = true;
+
+  Constructor(){
+
+
+  }
+
 }

@@ -6,7 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./prof-card.component.css']
 })
 export class ProfCardComponent {
-
  professorName: string = "";
  professroImgURL: string = "";
 constructor() {
@@ -14,7 +13,5 @@ constructor() {
     this.professroImgURL = "https://www.bc.edu/content/bc-web/schools/morrissey/departments/computer-science/people/faculty-directory/noami-bolotin/_jcr_content/profileImage.img.png";
 
   }
-
-
 
 }
