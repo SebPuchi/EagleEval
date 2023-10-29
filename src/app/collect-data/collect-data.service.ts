@@ -124,6 +124,18 @@ export class CollectDataService {
     return this.api.getFromCache(query, url);
   }
 
+  private getReviewsFromAPI(query: string) {
+    const url = AppSettings.API_ENDPOINT + '/fetch/reviews';
+
+    return this.api.getReviewsFromAPI(query, url);
+  }
+
+  private getDrilldownFromAPI(code: string, prof: string) {
+    const url = AppSettings.API_ENDPOINT + '/fetch/drilldown';
+
+    return this.api.getDrilldownFromAPI(prof, code, url);
+  }
+
   private getProfData(id: string) {
     const url = AppSettings.API_ENDPOINT + '/cache/search/profs';
 
@@ -238,6 +250,24 @@ export class CollectDataService {
         this.getDrilldownFromCache(name),
       ]).subscribe(([revData, drilldownData]) => {
         this.getProfAvgData(metaData, revData, drilldownData);
+      });
+    });
+  }
+
+  getAPIProfData(id: string) {
+    this.getProfData(id).subscribe((metaData: ProfData) => {
+      const name = metaData.title;
+
+      this.getReviewsFromAPI(name).subscribe((reviews: ReviewData[]) => {
+        const ddObervables: Observable<DrilldownData>[] = [];
+        for (const review of reviews) {
+          ddObervables.push(
+            this.getDrilldownFromAPI(review.course_code, review.instructor)
+          );
+        }
+        forkJoin(ddObervables).subscribe((drilldownData: DrilldownData[]) => {
+          this.getProfAvgData(metaData, reviews, drilldownData);
+        });
       });
     });
   }

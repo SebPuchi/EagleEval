@@ -27,4 +27,18 @@ export class ApiService {
     // Send the POST request using the HttpClient's post method
     return this.http.post<any>(url, data);
   }
+
+  getReviewsFromAPI(query: any, url: string) {
+    const data = { fetch_query: query };
+
+    // Send the POST request using the HttpClient's post method
+    return this.http.post<any>(url, data);
+  }
+
+  getDrilldownFromAPI(prof: string, code: string, url: string) {
+    const data = { code: code, prof: prof };
+
+    // Send the POST request using the HttpClient's post method
+    return this.http.post<any>(url, data);
+  }
 }
