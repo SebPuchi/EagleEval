@@ -1,0 +1,19 @@
+<div id="w-node-e211b9d4-0e08-2720-9313-0428ac4843e1-bca6b5a5" class="profinfodiv card">
+  <div class="contactdiv">
+    <h1 class="sliderheadings profscore contact">Contact</h1>
+    <div class="spacerhoriz"></div>
+  </div>
+  <div class="contactdescription">
+    <div class="email">Email: {{email}}</div>
+    <div class="email">Phone: {{phone}}</div>
+    <div class="email">Office: {{office}}</div>
+  </div>
+  <div class="educationdiv">
+    <h1 class="sliderheadings profscore contact">Education</h1>
+    <div class="spacerhoriz"></div>
+    <div class="contactdescription"></div>
+    <div class="contactdescription">
+      <div class="email" *ngFor="let education of educationDetails">{{ education }}</div>
+    </div>
+  </div>
+</div>

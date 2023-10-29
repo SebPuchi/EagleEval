@@ -8,48 +8,6 @@
 }
 
 
-.text-block {
-  color: #fff;
-  margin-left: 20px;
-  font-family: Exo, sans-serif;
-}
-
-.utility-page-wrap {
-  width: 100vw;
-  height: 100vh;
-  max-height: 100%;
-  max-width: 100%;
-  justify-content: center;
-  align-items: center;
-  display: flex;
-}
-
-.utility-page-content {
-  width: 260px;
-  text-align: center;
-  flex-direction: column;
-  display: flex;
-}
-
-.mainsection {
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.dynamicprofcontent {
-  grid-column-gap: 30px;
-  grid-row-gap: 25px;
-  grid-template-rows: auto auto auto auto;
-  grid-template-columns: .5fr 1fr;
-  margin-top: 30px;
-}
-
-.contentwrapper {
-  padding-bottom: 0;
-  padding-left: 30px;
-  padding-right: 30px;
-}
 
 .professorimagenamediv.card {
   width: 100%;
@@ -79,23 +37,6 @@
   padding: 10px;
 }
 
-.knobdata.card {
-  background-color: #fff;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin: 20px 0 20px 20px;
-  padding: 24px;
-  display: flex;
-}
-
-.sliderdatadiv.card {
-  height: 70px;
-  background-color: #fff;
-  margin-left: 20px;
-  margin-right: 20px;
-}
-
 .sliderdatadiv.card.bottomslider {
   margin-bottom: 0;
 }
@@ -110,35 +51,6 @@
   display: flex;
 }
 
-.sliderobjects {
-  width: 100%;
-  height: 100%;
-  flex-direction: row;
-  justify-content: space-between;
-  display: flex;
-}
-
-.sliderheadings {
-  width: 100%;
-  text-align: center;
-  margin-top: 0;
-  margin-bottom: 0;
-  font-family: Inter, sans-serif;
-  font-size: 15px;
-  line-height: 20px;
-}
-
-.sliderheadings.profscore {
-  font-size: 22px;
-}
-
-.sliderheadings.profscore.contact {
-  text-align: left;
-  font-size: 20px;
-}
-
-
-
 
 
 .vertical-divider {
@@ -147,8 +59,6 @@
   margin-top: 15px;
   margin-bottom: 15px;
 }
-
-
 
 
 .heading-8 {
@@ -224,6 +134,13 @@
   font-style: normal;
 }
 
+.professorimage {
+  width: 100%;
+  height: 400px;
+  background-position: 0 0;
+  background-size: cover;
+  margin: 20px;
+}
 
 .professorimage.card {
   height: 600px;

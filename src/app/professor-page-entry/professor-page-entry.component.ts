@@ -9,7 +9,6 @@ import { Injectable } from '@angular/core';
   styleUrls: ['./professor-page-entry.component.css'],
 })
 export class ProfessorPageEntryComponent {
-  value: number = 50;
 
   constructor(private professorService: ProfessorService) {
     // Access the instructor property from ProfessorService
