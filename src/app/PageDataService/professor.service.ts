@@ -19,7 +19,7 @@ export interface CourseTableData {
   title: string;
   crs_code: string;
   course_overall: number;
-  effort_hours: number;
+  effort_hours?: number;
 }
 
 @Injectable({

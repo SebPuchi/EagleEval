@@ -6,6 +6,11 @@ import {
   CourseTableData,
   ProfessorService,
 } from '../PageDataService/professor.service';
+import {
+  CoursePageData,
+  ProfTableData,
+  ClassService,
+} from '../PageDataService/class.service';
 
 interface ProfData {
   _id: string;
@@ -61,7 +66,11 @@ interface DrilldownData {
 }
 
 export class CollectDataService {
-  constructor(private api: ApiService, private prof: ProfessorService) {}
+  constructor(
+    private api: ApiService,
+    private prof: ProfessorService,
+    private course: ClassService
+  ) {}
 
   private convertToPercent(value: number) {
     return value > 0 ? (value - 1) * 25 : 0;
