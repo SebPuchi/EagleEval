@@ -86,7 +86,7 @@ export class CollectDataService {
     );
     const average = sum / filteredData.length;
 
-    return this.convertToPercent(average) | 0;
+    return Math.round(this.convertToPercent(average));
   }
 
   private groupBy<T extends ReviewData | DrilldownData, K extends keyof T>(
@@ -194,7 +194,8 @@ export class CollectDataService {
         title: currCourseData[0].course_name,
         crs_code: courseCode,
         course_overall: avgCourseOverall,
-        effort_hours: avgEffortHours >= 0 ? avgEffortHours / 25 + 1 : -1,
+        effort_hours:
+          avgEffortHours >= 0 ? Math.round(avgEffortHours / 25 + 1) : -1,
       };
 
       tableData.push(currTableRowData);
