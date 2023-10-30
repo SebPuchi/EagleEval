@@ -1,6 +1,6 @@
 import { Component,OnInit } from '@angular/core';
 import {ProfPageData, ProfessorService} from "src/app/PageDataService/professor.service";
-import { Subscription } from 'rxjs';
+
 
 @Component({
   selector: 'app-score-knob',
@@ -28,8 +28,6 @@ export class ScoreKnobComponent implements OnInit {
           this.isDisabled = true;
 
           }
-
-
         }
 
         //Communciate skeleton
