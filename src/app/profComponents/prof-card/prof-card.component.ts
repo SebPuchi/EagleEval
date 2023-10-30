@@ -1,17 +1,44 @@
-import { Component } from '@angular/core';
+import { Component,OnInit } from '@angular/core';
+import {ProfPageData, ProfessorService} from "src/app/PageDataService/professor.service";
 
 @Component({
   selector: 'app-prof-card',
   templateUrl: './prof-card.component.html',
   styleUrls: ['./prof-card.component.css']
 })
-export class ProfCardComponent {
+export class ProfCardComponent implements OnInit {
  professorName: string = "";
- professroImgURL: string = "";
-constructor() {
-    this.professorName = "No Data";
-    this.professroImgURL = "https://www.bc.edu/content/bc-web/schools/morrissey/departments/computer-science/people/faculty-directory/noami-bolotin/_jcr_content/profileImage.img.png";
+ professorImgURL: string = "";
+
+  constructor(private prof: ProfessorService) {
+  }
+  ngOnInit() {
+
+  this.prof.getProfPageData().subscribe((data: ProfPageData | null) => {
+        if (data) {
+
+          if(data.title){
+
+           this.professorName = data.title;
+
+          }else{
+          this.professorName = "No Data";
+
+
+          }
+
+          if (data.profileImage){
+
+            this.professorImgURL = encodeURI("https://bc.edu"+data.profileImage);
+
+            console.log(this.professorImgURL);
+          }
+        }
+
+        //Communciate skeleton
+      })
 
   }
+
 
 }
