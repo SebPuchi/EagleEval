@@ -241,8 +241,8 @@ export class CollectDataService {
     console.log(pageData);
     console.log(tableData);
     // Update professor service
-    this.prof.ProfPageData = pageData;
-    this.prof.crsTableData = tableData;
+    this.prof.setProfPageData(pageData);
+    this.prof.setcrsTableData(tableData);
   }
 
   getCacheProfData(id: string) {

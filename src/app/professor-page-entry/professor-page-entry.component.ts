@@ -18,7 +18,7 @@ export class ProfessorPageEntryComponent {
   ) {}
   ngOnInit() {
     // Set prof data to null
-    this.professorService.ProfPageData = null;
+    this.professorService.setProfPageData(null);
 
     // First get the product id from the current route.
     const routeParams = this.route.snapshot.paramMap;
