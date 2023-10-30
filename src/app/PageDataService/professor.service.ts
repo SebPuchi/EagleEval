@@ -8,6 +8,7 @@ export interface ProfPageData {
   firstName: string;
   lastName: string;
   phone?: string;
+  office?: string;
   profileImage?: string;
   avgOverall?: number;
   avgPrepared?: number;

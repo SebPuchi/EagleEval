@@ -16,6 +16,7 @@ interface ProfData {
   email: string;
   firstName: string;
   lastName: string;
+  office: string;
   phone: string;
   profileImage: string;
 }
@@ -231,6 +232,7 @@ export class CollectDataService {
       firstName: metaData.firstName,
       lastName: metaData.lastName,
       phone: metaData.phone,
+      office: metaData.office,
       profileImage: metaData.profileImage,
       avgOverall: avgProfOverall,
       avgPrepared: avgPrepared,
