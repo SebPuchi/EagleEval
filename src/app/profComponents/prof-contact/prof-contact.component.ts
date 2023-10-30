@@ -11,7 +11,7 @@ export class ProfContactComponent implements OnInit {
   public email: string = ""
   public phone: string = "";
   public office: string = "";
-  public educationDetails: string[] = ["Not Available"];
+  public educationDetails: string[] = [];
    constructor(private prof: ProfessorService) {
     }
 
@@ -36,7 +36,13 @@ export class ProfContactComponent implements OnInit {
 
             if (data.education){
 
-              this.educationDetails = data.education;
+                if (data.education.length === 0) {
+              this.educationDetails[0]  = "Not Available";
+                }
+
+              else{
+                  this.educationDetails = data.education;
+              }
 
             }
 
