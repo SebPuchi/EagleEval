@@ -363,9 +363,9 @@ export class CollectDataService {
     });
   }
 
-  getAPIProfData(id: string) {
-    this.getProfData(id).subscribe((metaData: ProfData) => {
-      const name = metaData.title;
+  getAPICourseData(id: string) {
+    this.getCourseData(id).subscribe((metaData: CourseData) => {
+      const name = metaData.crs_code;
 
       this.getReviewsFromAPI(name).subscribe((reviews: ReviewData[]) => {
         const ddObervables: Observable<DrilldownData>[] = [];
@@ -375,8 +375,22 @@ export class CollectDataService {
           );
         }
         forkJoin(ddObervables).subscribe((drilldownData: DrilldownData[]) => {
-          this.getProfAvgData(metaData, reviews, drilldownData);
+          this.getCourseAvgData(metaData, reviews, drilldownData);
         });
+      });
+    });
+  }
+
+  getCacheCourseData(id: string) {
+    this.getCourseData(id).subscribe((metaData: CourseData) => {
+      const name = metaData.crs_code;
+
+      // Join obsevables
+      forkJoin([
+        this.getReviewsFromCache(name),
+        this.getDrilldownFromCache(name),
+      ]).subscribe(([revData, drilldownData]) => {
+        this.getCourseAvgData(metaData, revData, drilldownData);
       });
     });
   }
