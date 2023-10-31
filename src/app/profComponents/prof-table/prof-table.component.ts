@@ -1,5 +1,5 @@
 import { Component,OnInit } from '@angular/core';
-import {CourseTableData, ProfessorService} from "src/app/PageDataService/professor.service";
+import {CourseTableData, ProfPageData, ProfessorService} from "src/app/PageDataService/professor.service";
 
 @Component({
   selector: 'app-prof-table',
@@ -8,6 +8,8 @@ import {CourseTableData, ProfessorService} from "src/app/PageDataService/profess
 })
 export class ProfTableComponent implements OnInit {
 courseData: CourseTableData[] = [];
+
+profName: string = "";
 
 //     title: string;
 //     crs_code: string;
@@ -30,5 +32,20 @@ courseData: CourseTableData[] = [];
          });
        }
      });
+
+       this.prof.getProfPageData().subscribe((data: ProfPageData | null) => {
+             if (data) {
+
+               if(data.title){
+
+                this.profName = data.title;
+
+               }
+             }
+
+           })
+
+
+
    }
  }
