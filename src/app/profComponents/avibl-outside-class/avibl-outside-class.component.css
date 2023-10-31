@@ -1,18 +1,3 @@
-.w-layout-grid {
-  grid-row-gap: 16px;
-  grid-column-gap: 16px;
-  grid-template-rows: auto auto;
-  grid-template-columns: 1fr 1fr;
-  grid-auto-columns: 1fr;
-  display: grid;
-}
-
-
-.text-block {
-  color: #fff;
-  margin-left: 20px;
-  font-family: Exo, sans-serif;
-}
 
 .utility-page-wrap {
   width: 100vw;
@@ -31,15 +16,11 @@
   display: flex;
 }
 
-.mainsection {
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-}
 
 .dynamicprofcontent {
   grid-column-gap: 30px;
   grid-row-gap: 25px;
+  grid-template-rows: auto auto auto auto;
   grid-template-columns: .5fr 1fr;
   margin-top: 30px;
 }
@@ -50,15 +31,6 @@
   padding-right: 30px;
 }
 
-.professorimagenamediv.card {
-  width: 100%;
-  height: auto;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  padding: 30px;
-  display: flex;
-}
 
 .card {
   background-color: #eee;
@@ -78,15 +50,6 @@
   padding: 10px;
 }
 
-.knobdata.card {
-  background-color: #fff;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin: 20px 0 20px 20px;
-  padding: 24px;
-  display: flex;
-}
 
 .sliderdatadiv.card {
   height: 70px;
@@ -99,15 +62,7 @@
   margin-bottom: 0;
 }
 
-.profinfodiv.card {
-  background-color: #fff;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin: 20px 20px 20px 0;
-  padding: 24px;
-  display: flex;
-}
+
 
 .sliderobjects {
   width: 100%;
@@ -136,9 +91,48 @@
   font-size: 20px;
 }
 
+.slideranddescription {
+  width: 70%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+  display: flex;
+}
 
+.stronglyagreeordiss {
+  width: 95%;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: 5px;
+  display: flex;
+}
 
+.primengslider {
+  width: 95%;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
 
+.agreeordisstxt {
+  margin-top: 0;
+  margin-bottom: 0;
+  font-family: Inter, sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 5px;
+}
+
+.sliderdatatypediv {
+  width: 30%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-right: 0;
+  display: flex;
+}
 
 .vertical-divider {
   width: 2px;
@@ -180,22 +174,9 @@
   margin-bottom: 15px;
 }
 
-.contactdiv, .educationdiv {
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  display: flex;
-}
 
-.contactdescription {
-  width: 100%;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  margin-top: 0;
-  margin-bottom: 5px;
-  display: flex;
-}
+
+
 
 .email {
   text-align: left;
@@ -205,30 +186,6 @@
   font-size: 16px;
 }
 
-.professorname {
-  width: 100%;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  display: flex;
-}
-
-.profnameheading {
-  text-align: center;
-  text-transform: none;
-  margin-top: 0;
-  margin-bottom: 0;
-  font-family: Inter, sans-serif;
-  font-size: 40px;
-  font-style: normal;
-}
-
-
-.professorimage.card {
-  height: 600px;
-  background-position: 50%;
-  margin: 0;
-}
 
 
 
@@ -244,7 +201,6 @@
                          "Area";
   }
 
-
 }
 
 @media screen and (max-width: 767px) {
@@ -259,7 +215,7 @@
   }
 
   .professorimagenamediv.card {
-    height: auto;
+    height: 500px;
   }
 
   .dataspecificgridwrap {
@@ -285,6 +241,15 @@
     margin-right: 0;
   }
 
+  .sliderheadings {
+    font-size: 12px;
+    line-height: 15px;
+  }
+
+  .logo-holder {
+    width: 40px;
+    height: 40px;
+  }
 }
 
 #w-node-c87be3b7-c141-005e-9f22-f1ade205e490-bca6b5a5 {

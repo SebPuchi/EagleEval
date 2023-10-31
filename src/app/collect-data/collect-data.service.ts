@@ -1,4 +1,5 @@
 import { Observable, forkJoin } from 'rxjs';
+import { Injectable } from '@angular/core';
 import { ApiService } from '../api.service';
 import { AppSettings } from '../appSettings';
 import {
@@ -18,8 +19,9 @@ interface ProfData {
   __v: number;
   education: string[];
   email: string;
-  fistName: string;
+  firstName: string;
   lastName: string;
+  office: string;
   phone: string;
   profileImage: string;
 }
@@ -65,6 +67,9 @@ interface DrilldownData {
   stimulatedinterestinthesubjectmatter?: number;
 }
 
+@Injectable({
+  providedIn: 'root',
+})
 export class CollectDataService {
   constructor(
     private api: ApiService,
@@ -91,7 +96,7 @@ export class CollectDataService {
     );
     const average = sum / filteredData.length;
 
-    return this.convertToPercent(average);
+    return Math.round(this.convertToPercent(average));
   }
 
   private groupBy<T extends ReviewData | DrilldownData, K extends keyof T>(
@@ -105,7 +110,7 @@ export class CollectDataService {
 
       if (key === 'instructor') {
         itemKey = (item as any).instructor || '';
-      } else if (key === 'course code') {
+      } else if (key === 'course_code') {
         itemKey = (item as any).course_code.slice(0, 8);
       } else {
         itemKey = '';
@@ -122,37 +127,37 @@ export class CollectDataService {
   }
 
   private getReviewsFromCache(query: string) {
-    const url = AppSettings.API_ENDPOINT + '/cache/search/reviews';
+    const url = AppSettings.API_ENDPOINT + 'cache/search/reviews';
 
     return this.api.getFromCache(query, url);
   }
 
   private getDrilldownFromCache(query: string) {
-    const url = AppSettings.API_ENDPOINT + '/cache/search/drilldown';
+    const url = AppSettings.API_ENDPOINT + 'cache/search/drilldown';
 
     return this.api.getFromCache(query, url);
   }
 
   private getReviewsFromAPI(query: string) {
-    const url = AppSettings.API_ENDPOINT + '/fetch/reviews';
+    const url = AppSettings.API_ENDPOINT + 'fetch/reviews';
 
     return this.api.getReviewsFromAPI(query, url);
   }
 
   private getDrilldownFromAPI(code: string, prof: string) {
-    const url = AppSettings.API_ENDPOINT + '/fetch/drilldown';
+    const url = AppSettings.API_ENDPOINT + 'fetch/drilldown';
 
     return this.api.getDrilldownFromAPI(prof, code, url);
   }
 
   private getProfData(id: string) {
-    const url = AppSettings.API_ENDPOINT + '/cache/search/profs';
+    const url = AppSettings.API_ENDPOINT + 'cache/search/profs';
 
     return this.api.getSearchById(id, url);
   }
 
   private getCourseData(id: string) {
-    const url = AppSettings.API_ENDPOINT + '/cache/search/courses';
+    const url = AppSettings.API_ENDPOINT + 'cache/search/courses';
 
     return this.api.getSearchById(id, url);
   }
@@ -185,7 +190,6 @@ export class CollectDataService {
       const currCourseData = profsCoursesData[course];
       const currCourseDdData = profsCoursesDdData[course];
 
-      const courseName = currCourseData[0].course_name;
       const courseCode = course;
       const avgCourseOverall = this.calculateAverage(
         currCourseData,
@@ -197,10 +201,11 @@ export class CollectDataService {
       );
 
       const currTableRowData: CourseTableData = {
-        title: courseName,
+        title: currCourseData[0].course_name,
         crs_code: courseCode,
         course_overall: avgCourseOverall,
-        effort_hours: avgEffortHours,
+        effort_hours:
+          avgEffortHours >= 0 ? Math.round(avgEffortHours / 25 + 1) : -1,
       };
 
       tableData.push(currTableRowData);
@@ -233,9 +238,10 @@ export class CollectDataService {
       title: metaData.title,
       education: metaData.education,
       email: metaData.email,
-      firstName: metaData.fistName,
+      firstName: metaData.firstName,
       lastName: metaData.lastName,
       phone: metaData.phone,
+      office: metaData.office,
       profileImage: metaData.profileImage,
       avgOverall: avgProfOverall,
       avgPrepared: avgPrepared,
@@ -243,10 +249,11 @@ export class CollectDataService {
       avgAvailable: avgAvailable,
       avgEnthusiastic: avgEnthusiastic,
     };
-
+    console.log(pageData);
+    console.log(tableData);
     // Update professor service
-    this.prof.ProfPageData = pageData;
-    this.prof.crsTableData = tableData;
+    this.prof.setProfPageData(pageData);
+    this.prof.setcrsTableData(tableData);
   }
 
   getCacheProfData(id: string) {

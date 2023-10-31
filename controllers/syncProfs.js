@@ -93,36 +93,44 @@ function unorderedListToJson(html) {
 function getDivKeysWithImagePaths(html) {
   const $ = cheerio.load(html); // Load the HTML content
 
-  const imagePaths = [];
+  const imagePaths = {};
 
   // Find all the <div> elements with a "data-imagepath" attribute
   $("div[data-imagepath]").each((index, element) => {
     const $div = $(element);
+    const firstName = $div.attr("data-first-name").trim();
+    const lastName = $div.attr("data-last-name").trim();
     const imagePath = $div.attr("data-imagepath");
-    imagePaths.push(imagePath);
+
+    // Combine firstName and lastName to create the key
+    const key = firstName + " " + lastName;
+    // Set the key-value pair in the dictionary
+    imagePaths[key] = imagePath;
   });
 
   return imagePaths;
 }
 
 function addKeysToObjects(jsonArray, keysToAdd) {
-  if (!Array.isArray(jsonArray) || !Array.isArray(keysToAdd)) {
-    throw new Error("Both input parameters should be arrays.");
-  }
-
-  if (jsonArray.length !== keysToAdd.length) {
-    throw new Error(
-      "The length of the prof data and images should be the same."
-    );
-  }
-
   const resultArray = jsonArray.map((obj, index) => {
+    const firstName = obj["jcr:content"]["firstName"];
+    const lastName = obj["jcr:content"]["lastName"];
+
     if (typeof obj !== "object" || !obj) {
       throw new Error(`Element at index ${index} is not a valid JSON object.`);
     }
+    if (keysToAdd[firstName.trim() + " " + lastName.trim()] == undefined) {
+      console.error(
+        "ERROR!!! getting image for" + firstName.trim() + " " + lastName.trim()
+      );
+    }
 
     const newObj = { ...obj }; // Create a shallow copy of the original object
-    const newImageObj = { profileImage: { fileReference: keysToAdd[index] } };
+    const newImageObj = {
+      profileImage: {
+        fileReference: keysToAdd[firstName.trim() + " " + lastName.trim()],
+      },
+    };
     newObj["jcr:content"] = {
       ...newObj["jcr:content"],
       ...newImageObj,

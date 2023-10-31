@@ -33,6 +33,21 @@ import { KnobModule } from 'primeng/knob';
 
 import { ProfessorService } from 'src/app/PageDataService/professor.service';
 import { ClassService } from 'src/app/PageDataService/class.service';
+import { ScoreKnobComponent } from './profComponents/score-knob/score-knob.component';
+import { ProfCardComponent } from './profComponents/prof-card/prof-card.component';
+import { ProfContactComponent } from './profComponents/prof-contact/prof-contact.component';
+import { InstructorPreparedComponent } from './profComponents/instructor-prepared/instructor-prepared.component';
+import { ClearMaterialComponent } from './profComponents/clear-material/clear-material.component';
+import { AviblOutsideClassComponent } from './profComponents/avibl-outside-class/avibl-outside-class.component';
+import { EnthCourseMaterialComponent } from './profComponents/enth-course-material/enth-course-material.component';
+import { ClassScoreKnobComponent } from './classComponents/class-score-knob/class-score-knob.component';
+import { CourseInfoCardComponent } from './classComponents/course-info-card/course-info-card.component';
+import { CourseAvgHoursComponent } from './classComponents/course-avg-hours/course-avg-hours.component';
+import { CourseAttendanceComponent } from './classComponents/course-attendance/course-attendance.component';
+import { CourseWellOrganizedComponent } from './classComponents/course-well-organized/course-well-organized.component';
+import { CourseIntellectuallyChallengingComponent } from './classComponents/course-intellectually-challenging/course-intellectually-challenging.component';
+import { CourseAssignHelpfulComponent } from './classComponents/course-assign-helpful/course-assign-helpful.component';
+import { ProfTableComponent } from './profComponents/prof-table/prof-table.component';
 
 @NgModule({
 	declarations: [
@@ -44,7 +59,22 @@ import { ClassService } from 'src/app/PageDataService/class.service';
   TripleCardSectionComponent,
   SearchBarComponent,
   HomePageComponent,
-  routingComponents
+  routingComponents,
+  ScoreKnobComponent,
+  ProfCardComponent,
+  ProfContactComponent,
+  InstructorPreparedComponent,
+  ClearMaterialComponent,
+  AviblOutsideClassComponent,
+  EnthCourseMaterialComponent,
+  ClassScoreKnobComponent,
+  CourseInfoCardComponent,
+  CourseAvgHoursComponent,
+  CourseAttendanceComponent,
+  CourseWellOrganizedComponent,
+  CourseIntellectuallyChallengingComponent,
+  CourseAssignHelpfulComponent,
+  ProfTableComponent
 	],
 	imports: [
 		BrowserModule,

@@ -7,6 +7,23 @@
   display: grid;
 }
 
+.navbar {
+  height: 12vh;
+  background-color: #5c0d0f;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
+}
+
+.footer {
+  height: 10vh;
+  background-color: #6d1f22;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  display: flex;
+}
 
 .text-block {
   color: #fff;
@@ -40,6 +57,7 @@
 .dynamicprofcontent {
   grid-column-gap: 30px;
   grid-row-gap: 25px;
+  grid-template-rows: auto auto auto auto;
   grid-template-columns: .5fr 1fr;
   margin-top: 30px;
 }
@@ -79,9 +97,10 @@
 }
 
 .knobdata.card {
+  height: 93%;
   background-color: #fff;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   margin: 20px 0 20px 20px;
   padding: 24px;
@@ -100,13 +119,26 @@
 }
 
 .profinfodiv.card {
+  height: 93%;
   background-color: #fff;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-items: flex-start;
   margin: 20px 20px 20px 0;
   padding: 24px;
   display: flex;
+}
+
+.profinfodiv.card.averagehoursweekly {
+  justify-content: center;
+  align-items: center;
+}
+
+.profinfodiv.card.classinfo {
+  height: auto;
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-right: 0;
 }
 
 .sliderobjects {
@@ -136,9 +168,48 @@
   font-size: 20px;
 }
 
+.slideranddescription {
+  width: 70%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+  display: flex;
+}
 
+.stronglyagreeordiss {
+  width: 95%;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 5px;
+  display: flex;
+}
 
+.primengslider {
+  width: 95%;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
 
+.agreeordisstxt {
+  margin-top: 0;
+  margin-bottom: 0;
+  font-family: Inter, sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 5px;
+}
+
+.sliderdatatypediv {
+  width: 30%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-right: 0;
+  display: flex;
+}
 
 .vertical-divider {
   width: 2px;
@@ -147,11 +218,24 @@
   margin-bottom: 15px;
 }
 
+.knobdescrtiption {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
 
-
+.primengknobprofovrl {
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
 
 .heading-8 {
   text-align: center;
+  flex: 0 auto;
   margin-top: 0;
   margin-bottom: 0;
   font-family: Inter, sans-serif;
@@ -176,6 +260,7 @@
 
 .spacerhoriz.image.bottom {
   width: 70%;
+  background-color: rgba(172, 172, 172, .52);
   margin-top: 25px;
   margin-bottom: 15px;
 }
@@ -224,6 +309,8 @@
 }
 
 
+
+
 .professorimage.card {
   height: 600px;
   background-position: 50%;
@@ -235,6 +322,43 @@
 .searchdiv {
   width: 70%;
   margin-right: 20px;
+}
+
+.coursedescription.email {
+  line-height: 30px;
+}
+
+.numberofhoursweek {
+  width: 100%;
+}
+
+.heading-9 {
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-right: 13px;
+  font-family: Inter, sans-serif;
+  font-size: 90px;
+}
+
+.hourcontent {
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 11px;
+  display: flex;
+}
+
+.heading-11 {
+  align-self: auto;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-bottom: 20px;
+  font-family: Inter, sans-serif;
+}
+
+.heading-11.hrsweekly {
+  font-size: 48px;
 }
 
 @media screen and (max-width: 991px) {
@@ -285,6 +409,15 @@
     margin-right: 0;
   }
 
+  .sliderheadings {
+    font-size: 12px;
+    line-height: 15px;
+  }
+
+  .logo-holder {
+    width: 40px;
+    height: 40px;
+  }
 }
 
 #w-node-c87be3b7-c141-005e-9f22-f1ade205e490-bca6b5a5 {
@@ -310,5 +443,31 @@
 }
 
 #w-node-_587fad7d-1f9a-5278-b549-06e5d178121f-bca6b5a5 {
+  grid-area: Area-4;
+}
+
+#w-node-_0245cf09-81b2-28ed-b37d-169a2ec5ef5d-93504854 {
+  grid-area: span 1 / span 1 / span 1 / span 1;
+  align-self: center;
+  justify-self: center;
+}
+
+#w-node-_65b1e46a-f1fb-bc44-019d-7a3f9fec543a-93504854, #w-node-_65b1e46a-f1fb-bc44-019d-7a3f9fec543c-93504854, #w-node-_65b1e46a-f1fb-bc44-019d-7a3f9fec5444-93504854 {
+  grid-area: span 1 / span 1 / span 1 / span 1;
+}
+
+#w-node-_65b1e46a-f1fb-bc44-019d-7a3f9fec545e-93504854, #w-node-_65b1e46a-f1fb-bc44-019d-7a3f9fec5460-93504854 {
+  grid-area: Area;
+}
+
+#w-node-_65b1e46a-f1fb-bc44-019d-7a3f9fec5471-93504854 {
+  grid-area: Area-2;
+}
+
+#w-node-_65b1e46a-f1fb-bc44-019d-7a3f9fec5472-93504854 {
+  grid-area: Area-3;
+}
+
+#w-node-_65b1e46a-f1fb-bc44-019d-7a3f9fec5473-93504854 {
   grid-area: Area-4;
 }
