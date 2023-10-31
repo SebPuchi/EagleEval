@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 export interface CoursePageData {
   title: string;
@@ -17,7 +18,7 @@ export interface CoursePageData {
 export interface ProfTableData {
   title: string;
   prof_overall: number;
-  explains_material: number;
+  explains_material?: number;
 }
 
 @Injectable({
@@ -25,29 +26,29 @@ export interface ProfTableData {
 })
 export class ClassService {
   constructor() {
-    this._course_data = null;
-    this._table_data = null;
+    this._course_data = new BehaviorSubject<CoursePageData | null>(null);
+    this._table_data = new BehaviorSubject<ProfTableData[] | null>(null);
   }
 
-  // Private variables
-  private _course_data: CoursePageData | null;
-  private _table_data: ProfTableData[] | null;
+  // Define variables
+  private _course_data: BehaviorSubject<CoursePageData | null>;
+  private _table_data: BehaviorSubject<ProfTableData[] | null>;
 
   // Prof data setters and getters
-  get CoursePageData(): CoursePageData | null {
-    return this._course_data;
+  getProfPageData(): Observable<CoursePageData | null> {
+    return this._course_data.asObservable();
   }
 
-  set CoursePageData(data: CoursePageData | null) {
-    this._course_data = data;
+  setProfPageData(data: CoursePageData | null) {
+    this._course_data.next(data);
   }
 
   // Course table setters and getters
-  get ProfTableData(): ProfTableData[] | null {
-    return this._table_data;
+  getcrsTableData(): Observable<ProfTableData[] | null> {
+    return this._table_data.asObservable();
   }
 
-  set ProfTableData(data: ProfTableData[] | null) {
-    this._table_data = data;
+  setcrsTableData(data: ProfTableData[] | null) {
+    this._table_data.next(data);
   }
 }

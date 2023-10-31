@@ -204,8 +204,7 @@ export class CollectDataService {
         title: currCourseData[0].course_name,
         crs_code: courseCode,
         course_overall: avgCourseOverall,
-        effort_hours:
-          avgEffortHours >= 0 ? Math.round(avgEffortHours / 25 + 1) : -1,
+        effort_hours: avgEffortHours >= 0 ? avgEffortHours / 10 : -1,
       };
 
       tableData.push(currTableRowData);
@@ -254,6 +253,55 @@ export class CollectDataService {
     // Update professor service
     this.prof.setProfPageData(pageData);
     this.prof.setcrsTableData(tableData);
+  }
+
+  private getCourseAvgData(
+    metaData: CourseData,
+    revData: ReviewData[],
+    drilldownData: DrilldownData[]
+  ) {
+    const profSet = new Set<string>();
+
+    let tableData: ProfTableData[] = [];
+
+    // Create a set of all the courses the prof teaches
+    revData.forEach((course) => {
+      const prof = course.instructor;
+
+      profSet.add(prof);
+    });
+    // Data for table
+    const coursesProfData = this.groupBy(revData, 'instructor');
+    const coursesProfDdData = this.groupBy(drilldownData, 'instructor');
+
+    // Loop through professor set and get table averages
+    for (let prof of profSet) {
+      const currProfData = coursesProfData[prof];
+      const currProfDdData = coursesProfDdData[prof];
+
+      const profName = prof;
+      const avgProfOverall = this.calculateAverage(
+        currProfData,
+        'instructor_overall'
+      );
+      const avgExplains = this.calculateAverage(
+        currProfDdData,
+        'instructorclearexplanations'
+      );
+
+      const currTableRowData: ProfTableData = {
+        title: profName,
+        prof_overall: avgProfOverall,
+        explains_material: avgExplains,
+      };
+
+      tableData.push(currTableRowData);
+    }
+    // Sort by course overall score
+    tableData = tableData.sort((a, b) => b.prof_overall - a.prof_overall);
+
+    // Prof data points
+    const avgCourseOverall = this.calculateAverage(revData, 'course_overall');
   }
 
   getCacheProfData(id: string) {
