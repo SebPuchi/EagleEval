@@ -18,10 +18,17 @@ courseData: CourseTableData[] = [];
   constructor(private prof: ProfessorService) {}
 
   ngOnInit() {
-    this.prof.getcrsTableData().subscribe((data: CourseTableData[] | null) => {
-      if (data) {
-        this.courseData = data;
-      }
-    });
-  }
-}
+     this.prof.getcrsTableData().subscribe((data: CourseTableData[] | null) => {
+       if (data) {
+         this.courseData = data;
+
+         // Replace -1 with 'NaN' in effort_hours
+         this.courseData.forEach(course => {
+           if (course.effort_hours === -1) {
+             course.effort_hours = NaN;
+           }
+         });
+       }
+     });
+   }
+ }
