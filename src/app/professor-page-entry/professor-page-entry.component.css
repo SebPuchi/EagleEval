@@ -40,7 +40,6 @@
 .dynamicprofcontent {
   grid-column-gap: 30px;
   grid-row-gap: 25px;
-  grid-template-rows: auto auto auto auto;
   grid-template-columns: .5fr 1fr;
   margin-top: 30px;
 }
@@ -53,7 +52,7 @@
 
 .professorimagenamediv.card {
   width: 100%;
-  height: 800px;
+  height: auto;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
@@ -260,7 +259,7 @@
   }
 
   .professorimagenamediv.card {
-    height: 500px;
+    height: auto;
   }
 
   .dataspecificgridwrap {
