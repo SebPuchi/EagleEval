@@ -1,8 +1,63 @@
+.w-layout-grid {
+  grid-row-gap: 16px;
+  grid-column-gap: 16px;
+  grid-template-rows: auto auto;
+  grid-template-columns: 1fr 1fr;
+  grid-auto-columns: 1fr;
+  display: grid;
+}
+
+.navbar {
+  height: 12vh;
+  background-color: #5c0d0f;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
+}
+
+.footer {
+  height: 10vh;
+  background-color: #6d1f22;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  display: flex;
+}
+
+.text-block {
+  color: #fff;
+  margin-left: 20px;
+  font-family: Exo, sans-serif;
+}
+
+.utility-page-wrap {
+  width: 100vw;
+  height: 100vh;
+  max-height: 100%;
+  max-width: 100%;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+.utility-page-content {
+  width: 260px;
+  text-align: center;
+  flex-direction: column;
+  display: flex;
+}
+
+.mainsection {
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
 
 .dynamicprofcontent {
   grid-column-gap: 30px;
   grid-row-gap: 25px;
-  grid-template-rows: auto auto auto auto;
+  grid-template-rows: auto;
   grid-template-columns: .5fr 1fr;
   margin-top: 30px;
 }
@@ -327,6 +382,7 @@
   justify-content: space-between;
   margin-top: 8px;
   margin-bottom: 8px;
+  padding: 20px;
   display: flex;
 }
 
@@ -340,12 +396,7 @@
   width: auto;
   height: 100%;
   justify-content: space-around;
-  padding: 20px;
   display: flex;
-}
-
-.classnameandcode.stats {
-  width: 25%;
 }
 
 .classnamehead {
@@ -355,9 +406,19 @@
   margin-top: 0;
   margin-bottom: 0;
   font-family: Inter, sans-serif;
-  font-size: 15px;
+  font-size: 17px;
+  font-weight: 400;
   line-height: 20px;
   display: flex;
+}
+
+.classnamehead.title {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.classnamehead.hrs-week {
+  font-size: 15px;
 }
 
 .crsovlandprimeknob {
@@ -373,6 +434,12 @@
   font-family: Inter, sans-serif;
 }
 
+.hide {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
 @media screen and (max-width: 991px) {
   .dynamicprofcontent {
     grid-template-columns: 1fr;
@@ -381,6 +448,34 @@
   }
 
 
+  .professorclassstat.card {
+    height: auto;
+    flex-direction: column;
+  }
+
+  .classnameandcode {
+    flex-direction: column;
+  }
+
+  .classnameandcode.iphoneadjs {
+    flex-direction: row;
+  }
+
+  .classnamehead {
+    font-size: 12px;
+  }
+
+  .crsovlandprimeknob {
+    flex-direction: column;
+  }
+
+  .avrhours {
+    font-size: 30px;
+  }
+
+  .hide {
+    display: none;
+  }
 }
 
 @media screen and (max-width: 767px) {
@@ -426,9 +521,43 @@
     line-height: 15px;
   }
 
+  .vertical-divider.forclassstat {
+    margin-top: 2px;
+    margin-bottom: 2px;
+  }
+
   .logo-holder {
     width: 40px;
     height: 40px;
+  }
+
+  .profclasstable.card {
+    padding: 14px;
+  }
+
+  .professorclassstat.card {
+    height: auto;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 15px;
+  }
+
+  .classnameandcode {
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+
+  .classnameandcode.iphoneadjs {
+    flex-direction: row;
+  }
+
+  .hide {
+    display: none;
   }
 }
 

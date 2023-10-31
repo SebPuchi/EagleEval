@@ -1,25 +1,36 @@
 
-<div class="profclasstable card">
-      <div class="namewithstats">
-        <h1 class="nameandstatheader">Jeremy Wilkin&#x27;s Class Statistics </h1>
-      </div>
-      <div class="spacerhoriz image classstatsdiv"></div>
-      <div class="professorclassstat card">
-        <div class="classnameandcode">
-          <h1 class="classnamehead">Perspectives on Western Culture I/Perspectives </h1>
-          <div class="vertical-divider forclassstat"></div>
-          <h1 class="classnamehead">THEO1090</h1>
-        </div>
-        <div class="classnameandcode stats">
-          <div class="crsovlandprimeknob">
-            <div class="crsprimengknob"></div>
-            <h1 class="classnamehead">Course Overall</h1>
+
+        <div class="profclasstable card">
+          <div class="namewithstats">
+            <h1 class="nameandstatheader">Jeremy Wilkin&#x27;s Class Statistics </h1>
           </div>
-          <div class="vertical-divider forclassstat"></div>
-          <div class="crsovlandprimeknob">
-            <h1 class="avrhours">4.5</h1>
-            <h1 class="classnamehead">hrs/week</h1>
+          <div class="spacerhoriz image classstatsdiv"></div>
+          <div class="professorclassstat card">
+            <div class="classnameandcode">
+              <h1 class="classnamehead title">Perspectives on Western Culture I/Perspectives </h1>
+              <div class="vertical-divider forclassstat"></div>
+              <div class="hide">
+                <h1 class="classnamehead">THEO1090</h1>
+              </div>
+            </div>
+            <div class="classnameandcode iphoneadjs">
+              <div class="crsovlandprimeknob">
+
+                <p-knob
+                  [(ngModel)]="value"
+                  [size] = "80"
+                  [readonly] = "true"
+                  [strokeWidth]="15"
+
+
+                ></p-knob>
+
+              </div>
+              <div class="vertical-divider forclassstat"></div>
+              <div class="crsovlandprimeknob">
+                <h1 class="avrhours">4.5</h1>
+                <h1 class="classnamehead hrs-week">hrs/week</h1>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>

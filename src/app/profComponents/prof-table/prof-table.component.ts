@@ -8,6 +8,7 @@ import { Component } from '@angular/core';
 export class ProfTableComponent {
 
   profName: string = "";
+  value: number = 50;
 
 
 
