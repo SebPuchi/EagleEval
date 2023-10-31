@@ -1,45 +1,8 @@
-.w-layout-grid {
-  grid-row-gap: 16px;
-  grid-column-gap: 16px;
-  grid-template-rows: auto auto;
-  grid-template-columns: 1fr 1fr;
-  grid-auto-columns: 1fr;
-  display: grid;
-}
-
-
-.text-block {
-  color: #fff;
-  margin-left: 20px;
-  font-family: Exo, sans-serif;
-}
-
-.utility-page-wrap {
-  width: 100vw;
-  height: 100vh;
-  max-height: 100%;
-  max-width: 100%;
-  justify-content: center;
-  align-items: center;
-  display: flex;
-}
-
-.utility-page-content {
-  width: 260px;
-  text-align: center;
-  flex-direction: column;
-  display: flex;
-}
-
-.mainsection {
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-}
 
 .dynamicprofcontent {
   grid-column-gap: 30px;
   grid-row-gap: 25px;
+  grid-template-rows: auto auto auto auto;
   grid-template-columns: .5fr 1fr;
   margin-top: 30px;
 }
@@ -52,7 +15,7 @@
 
 .professorimagenamediv.card {
   width: 100%;
-  height: auto;
+  height: 800px;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
@@ -79,9 +42,10 @@
 }
 
 .knobdata.card {
+  height: 93%;
   background-color: #fff;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   margin: 20px 0 20px 20px;
   padding: 24px;
@@ -100,6 +64,7 @@
 }
 
 .profinfodiv.card {
+  height: 93%;
   background-color: #fff;
   flex-direction: column;
   justify-content: space-between;
@@ -107,6 +72,18 @@
   margin: 20px 20px 20px 0;
   padding: 24px;
   display: flex;
+}
+
+.profinfodiv.card.averagehoursweekly {
+  justify-content: center;
+  align-items: center;
+}
+
+.profinfodiv.card.classinfo {
+  height: auto;
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-right: 0;
 }
 
 .sliderobjects {
@@ -136,9 +113,48 @@
   font-size: 20px;
 }
 
+.slideranddescription {
+  width: 70%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+  display: flex;
+}
 
+.stronglyagreeordiss {
+  width: 95%;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 5px;
+  display: flex;
+}
 
+.primengslider {
+  width: 95%;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
 
+.agreeordisstxt {
+  margin-top: 0;
+  margin-bottom: 0;
+  font-family: Inter, sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 5px;
+}
+
+.sliderdatatypediv {
+  width: 30%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-right: 0;
+  display: flex;
+}
 
 .vertical-divider {
   width: 2px;
@@ -147,11 +163,29 @@
   margin-bottom: 15px;
 }
 
+.vertical-divider.forclassstat {
+  margin-left: 20px;
+  margin-right: 20px;
+}
 
+.knobdescrtiption {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
 
+.primengknobprofovrl {
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
 
 .heading-8 {
   text-align: center;
+  flex: 0 auto;
   margin-top: 0;
   margin-bottom: 0;
   font-family: Inter, sans-serif;
@@ -176,8 +210,13 @@
 
 .spacerhoriz.image.bottom {
   width: 70%;
+  background-color: rgba(172, 172, 172, .52);
   margin-top: 25px;
   margin-bottom: 15px;
+}
+
+.spacerhoriz.image.classstatsdiv {
+  width: 100%;
 }
 
 .contactdiv, .educationdiv {
@@ -224,17 +263,114 @@
 }
 
 
-.professorimage.card {
-  height: 600px;
-  background-position: 50%;
-  margin: 0;
-}
-
-
 
 .searchdiv {
   width: 70%;
   margin-right: 20px;
+}
+
+.coursedescription.email {
+  line-height: 30px;
+}
+
+.numberofhoursweek {
+  width: 100%;
+}
+
+.heading-9 {
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-right: 13px;
+  font-family: Inter, sans-serif;
+  font-size: 90px;
+}
+
+.hourcontent {
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 11px;
+  display: flex;
+}
+
+.heading-11 {
+  align-self: auto;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-bottom: 20px;
+  font-family: Inter, sans-serif;
+}
+
+.heading-11.hrsweekly {
+  font-size: 48px;
+}
+
+.profclasstable {
+  margin-top: 30px;
+}
+
+.profclasstable.card {
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  margin-bottom: 30px;
+  padding: 30px;
+  display: flex;
+}
+
+.professorclassstat.card {
+  width: 100%;
+  height: 110px;
+  background-color: #fff;
+  justify-content: space-between;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  display: flex;
+}
+
+.nameandstatheader {
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 40px;
+}
+
+.classnameandcode {
+  width: auto;
+  height: 100%;
+  justify-content: space-around;
+  padding: 20px;
+  display: flex;
+}
+
+.classnameandcode.stats {
+  width: 25%;
+}
+
+.classnamehead {
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  margin-top: 0;
+  margin-bottom: 0;
+  font-family: Inter, sans-serif;
+  font-size: 15px;
+  line-height: 20px;
+  display: flex;
+}
+
+.crsovlandprimeknob {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+.avrhours {
+  margin-top: 0;
+  margin-bottom: 0;
+  font-family: Inter, sans-serif;
 }
 
 @media screen and (max-width: 991px) {
@@ -259,7 +395,7 @@
   }
 
   .professorimagenamediv.card {
-    height: auto;
+    height: 500px;
   }
 
   .dataspecificgridwrap {
@@ -285,30 +421,39 @@
     margin-right: 0;
   }
 
+  .sliderheadings {
+    font-size: 12px;
+    line-height: 15px;
+  }
+
+  .logo-holder {
+    width: 40px;
+    height: 40px;
+  }
 }
 
-#w-node-c87be3b7-c141-005e-9f22-f1ade205e490-bca6b5a5 {
+#w-node-_0245cf09-81b2-28ed-b37d-169a2ec5ef5d-93504854 {
   grid-area: span 1 / span 1 / span 1 / span 1;
   align-self: center;
   justify-self: center;
 }
 
-#w-node-_1f2ae32f-a360-e950-5bea-c98badf7a3f2-bca6b5a5, #w-node-aa7a8a2f-c845-0fce-f654-85ceb364e554-bca6b5a5, #w-node-e211b9d4-0e08-2720-9313-0428ac4843e1-bca6b5a5 {
+#w-node-_65b1e46a-f1fb-bc44-019d-7a3f9fec543a-93504854, #w-node-_65b1e46a-f1fb-bc44-019d-7a3f9fec543c-93504854, #w-node-_65b1e46a-f1fb-bc44-019d-7a3f9fec5444-93504854 {
   grid-area: span 1 / span 1 / span 1 / span 1;
 }
 
-#w-node-_95dac4bd-9b80-4676-ae0a-c18e352028ff-bca6b5a5, #w-node-e381e299-4ce1-d895-168d-51c34a0b65ef-bca6b5a5 {
+#w-node-_65b1e46a-f1fb-bc44-019d-7a3f9fec545e-93504854, #w-node-_65b1e46a-f1fb-bc44-019d-7a3f9fec5460-93504854 {
   grid-area: Area;
 }
 
-#w-node-a199bd73-aaf9-6117-3178-8728a85d5cad-bca6b5a5 {
+#w-node-_65b1e46a-f1fb-bc44-019d-7a3f9fec5471-93504854 {
   grid-area: Area-2;
 }
 
-#w-node-_75a4d4e9-2782-7447-93c2-b96dafa9f4b4-bca6b5a5 {
+#w-node-_65b1e46a-f1fb-bc44-019d-7a3f9fec5472-93504854 {
   grid-area: Area-3;
 }
 
-#w-node-_587fad7d-1f9a-5278-b549-06e5d178121f-bca6b5a5 {
+#w-node-_65b1e46a-f1fb-bc44-019d-7a3f9fec5473-93504854 {
   grid-area: Area-4;
 }
