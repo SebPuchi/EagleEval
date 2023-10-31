@@ -302,6 +302,51 @@ export class CollectDataService {
 
     // Prof data points
     const avgCourseOverall = this.calculateAverage(revData, 'course_overall');
+
+    const avgWellOrgnaized = this.calculateAverage(
+      drilldownData,
+      'coursewellorganized'
+    );
+
+    const avgChallenging = this.calculateAverage(
+      drilldownData,
+      'courseintellectuallychallenging'
+    );
+
+    const avgHours = this.calculateAverage(
+      drilldownData,
+      'effortavghoursweeklyc'
+    );
+
+    const avgAttendance = this.calculateAverage(
+      drilldownData,
+      'attendancenecessary'
+    );
+
+    const avgAssignments = this.calculateAverage(
+      drilldownData,
+      'assignmentshelpful'
+    );
+
+    const pageData: CoursePageData = {
+      title: metaData.title,
+      crs_code: metaData.crs_code,
+      subject: metaData.subject,
+      college: metaData.college,
+      desc: metaData.crs_desc,
+      avgOverall: avgCourseOverall,
+      avgOriganized: avgWellOrgnaized,
+      avgChallanging: avgChallenging,
+      avgEffortHours: avgHours,
+      avgAttendance: avgAttendance,
+      avgAssignments: avgAssignments,
+    };
+
+    console.log(pageData);
+    console.log(tableData);
+    // Update professor service
+    this.course.setCoursePageData(pageData);
+    this.course.setprofTableData(tableData);
   }
 
   getCacheProfData(id: string) {

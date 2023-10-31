@@ -35,20 +35,20 @@ export class ClassService {
   private _table_data: BehaviorSubject<ProfTableData[] | null>;
 
   // Prof data setters and getters
-  getProfPageData(): Observable<CoursePageData | null> {
+  getCoursePageData(): Observable<CoursePageData | null> {
     return this._course_data.asObservable();
   }
 
-  setProfPageData(data: CoursePageData | null) {
+  setCoursePageData(data: CoursePageData | null) {
     this._course_data.next(data);
   }
 
   // Course table setters and getters
-  getcrsTableData(): Observable<ProfTableData[] | null> {
+  getprofTableData(): Observable<ProfTableData[] | null> {
     return this._table_data.asObservable();
   }
 
-  setcrsTableData(data: ProfTableData[] | null) {
+  setprofTableData(data: ProfTableData[] | null) {
     this._table_data.next(data);
   }
 }
