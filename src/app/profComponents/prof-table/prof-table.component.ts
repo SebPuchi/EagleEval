@@ -8,8 +8,8 @@ import {CourseTableData, ProfessorService} from "src/app/PageDataService/profess
 })
 export class ProfTableComponent implements OnInit {
 courseData: CourseTableData[] = [];
-// full of objects with the following attribures:
-//  title: string;
+
+//     title: string;
 //     crs_code: string;
 //     course_overall: number;
 //     effort_hours: number;

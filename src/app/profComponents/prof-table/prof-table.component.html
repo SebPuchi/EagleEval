@@ -7,10 +7,10 @@
           <div class="spacerhoriz image classstatsdiv"></div>
           <div class="professorclassstat card" *ngFor="let course of courseData">
             <div class="classnameandcode">
-              <h1 class="classnamehead title">Perspectives on Western Culture I/Perspectives </h1>
+              <h1 class="classnamehead title">{{course.title}} </h1>
               <div class="vertical-divider forclassstat"></div>
               <div class="hide">
-                <h1 class="classnamehead">THEO1090</h1>
+                <h1 class="classnamehead">{{course.crs_code}}</h1>
               </div>
             </div>
             <div class="classnameandcode iphoneadjs">
@@ -28,7 +28,7 @@
               </div>
               <div class="vertical-divider forclassstat"></div>
               <div class="crsovlandprimeknob">
-                <h1 class="avrhours">4.5</h1>
+                <h1 class="avrhours">{{course.effort_hours}}</h1>
                 <h1 class="classnamehead hrs-week">hrs/week</h1>
               </div>
             </div>
