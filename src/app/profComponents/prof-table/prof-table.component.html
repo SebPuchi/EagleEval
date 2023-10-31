@@ -5,7 +5,7 @@
             <h1 class="nameandstatheader">Jeremy Wilkin&#x27;s Class Statistics </h1>
           </div>
           <div class="spacerhoriz image classstatsdiv"></div>
-          <div class="professorclassstat card">
+          <div class="professorclassstat card" *ngFor="let course of courseData">
             <div class="classnameandcode">
               <h1 class="classnamehead title">Perspectives on Western Culture I/Perspectives </h1>
               <div class="vertical-divider forclassstat"></div>
@@ -17,7 +17,7 @@
               <div class="crsovlandprimeknob">
 
                 <p-knob
-                  [(ngModel)]="value"
+                  [(ngModel)]="course.course_overall"
                   [size] = "80"
                   [readonly] = "true"
                   [strokeWidth]="15"
@@ -34,3 +34,4 @@
             </div>
           </div>
         </div>
+        <!-- Everything inside of professorclassstat div will repeat the amount of times for the amount of elements in the imported array  -->

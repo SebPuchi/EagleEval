@@ -1,15 +1,27 @@
-import { Component } from '@angular/core';
+import { Component,OnInit } from '@angular/core';
+import {CourseTableData, ProfessorService} from "src/app/PageDataService/professor.service";
 
 @Component({
   selector: 'app-prof-table',
   templateUrl: './prof-table.component.html',
   styleUrls: ['./prof-table.component.css']
 })
-export class ProfTableComponent {
+export class ProfTableComponent implements OnInit {
+courseData: CourseTableData[] = [];
+// full of objects with the following attribures:
+//  title: string;
+//     crs_code: string;
+//     course_overall: number;
+//     effort_hours: number;
 
-  profName: string = "";
-  value: number = 50;
 
+  constructor(private prof: ProfessorService) {}
 
-
+  ngOnInit() {
+    this.prof.getcrsTableData().subscribe((data: CourseTableData[] | null) => {
+      if (data) {
+        this.courseData = data;
+      }
+    });
+  }
 }
