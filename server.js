@@ -1,7 +1,6 @@
 import "log-timestamp";
 import express from "express";
 import bodyParser from "body-parser";
-import { ConsoleLogger } from "@angular/compiler-cli";
 import compression from "compression";
 import helmet from "helmet";
 import rateLimit from "express-rate-limit";
