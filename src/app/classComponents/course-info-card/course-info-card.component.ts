@@ -7,11 +7,11 @@ import {CoursePageData, ClassService} from "src/app/PageDataService/class.servic
   styleUrls: ['./course-info-card.component.css']
 })
 export class CourseInfoCardComponent implements OnInit {
-  public courseTitle: string = "";
-  public crsSubject: string = "";
-  public crsCode: string = "";
-  public crsCollege: string ="";
-  public crsDesc: string ="";
+  public courseTitle: string = "Not Available";
+  public crsSubject: string = "Not Available";
+  public crsCode: string = "Not Available";
+  public crsCollege: string ="Not Available";
+  public crsDesc: string ="Not Available";
 
   constructor(private course: ClassService) {
     }
