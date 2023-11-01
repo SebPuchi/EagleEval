@@ -282,6 +282,7 @@ export async function findOrCreateAndUpdateCourse(courseModel, crsJSON) {
 }
 
 export async function findOrCreateAndUpdateProf(profModel, profJSON) {
+  //console.log("PROF JSON: ", profJSON);
   try {
     // creat doc form json
     const profDoc = profJSONtoDoc(profJSON);

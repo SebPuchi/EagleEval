@@ -109,9 +109,10 @@ update_router.post(
 
         if (school === "MCAS") {
           // For MCAS, create an array of promises to update departments and professors.
-          const depPromises = result.map((dep) =>
-            updateCollection(dep, Professor, findOrCreateAndUpdateProf)
-          );
+          const depPromises = result.map((dep) => {
+            //console.log("Department data: ", dep);
+            return updateCollection(dep, Professor, findOrCreateAndUpdateProf);
+          });
 
           // Wait for all department updates to complete.
           return Promise.all(depPromises);

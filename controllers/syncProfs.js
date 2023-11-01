@@ -141,7 +141,7 @@ function addKeysToObjects(jsonArray, keysToAdd) {
   return resultArray;
 }
 
-function appendPathToURL(inputPath) {
+function appendPathToURL(inputPath, postfix) {
   if (!inputPath.startsWith("https://www.bc.edu")) {
     // Append "https://www.bc.edu/" to the front of the input string
     inputPath = `https://www.bc.edu${inputPath}`;
@@ -155,7 +155,7 @@ function appendPathToURL(inputPath) {
   }
 
   // Append "people.html" to the pathname
-  parsedURL.pathname = parsedURL.pathname + "/people/faculty-directory.4.json";
+  parsedURL.pathname = parsedURL.pathname + postfix;
 
   // Serialize the updated URL back to a string
   const updatedURL = parsedURL.toString();
@@ -200,6 +200,17 @@ export async function getMcasDeps(pageURL) {
 
   // Convert the concatenated list to JSON format
   let depJSON = unorderedListToJson(combinedLists);
+
+  // Add CS and CHEMISTRY
+  depJSON.push({
+    department: "CS",
+    url: "https://www.bc.edu/bc-web/schools/morrissey/departments/computer-science.html",
+  });
+  depJSON.push({
+    department: "CHEMISTRY",
+    url: "https://www.bc.edu/bc-web/schools/morrissey/departments/chemistry.html",
+  });
+  console.log(depJSON);
 
   return depJSON;
 }
@@ -268,15 +279,72 @@ export async function getMcasProfData(deaprtmentsUrl) {
   try {
     // Scrape departments from BC website
     const deps = await getMcasDeps(deaprtmentsUrl);
+    //const deps = [
+    //  {
+    //    department: "Mathematics",
+    //    url: "https://www.bc.edu/bc-web/schools/mcas/departments/math.html",
+    //  },
+    //];
 
-    const promises = deps.map((dep) => {
+    const allProfData = deps.map(async (dep) => {
+      let prof_data = [];
+
       console.log(`Fetching prof data for MCAS ${dep.department}`);
-      const peopleURL = appendPathToURL(dep.url);
+      let peopleURL = appendPathToURL(dep.url, "/people.4.json");
 
-      return getProfData(peopleURL);
+      let response = await fetch(peopleURL);
+      // Check for wrong json path
+      if (response.status === 300) {
+        console.log("Changing to 3 json for: ", dep.url);
+        peopleURL = appendPathToURL(dep.url, "/people.3.json");
+        response = await fetch(peopleURL);
+      } else if (response.status === 404) {
+        console.error("Error: 404 Not Found ", dep.url);
+        return [];
+      } else if (!response.ok) {
+        // Handle other non-404 errors here if needed
+        console.error(`Error: ${response.status} ${response.statusText}`);
+        return [];
+      }
+      const rawData = await response.json();
+
+      const cleanJson = cleanProfData(rawData);
+
+      for (const category in cleanJson) {
+        const curr_cat_data = cleanProfData(cleanJson[category]);
+        prof_data = prof_data.concat(curr_cat_data);
+      }
+
+      // Add old fauclty method
+      let facultyURL = appendPathToURL(
+        dep.url,
+        "/people/faculty-directory.4.json"
+      );
+      let faculty = await fetch(facultyURL);
+      if (faculty.status === 300) {
+        console.log("Changing to faculty 3 json for: ", dep.url);
+        facultyURL = appendPathToURL(
+          dep.url,
+          "/people/faculty-directory.3.json"
+        );
+        faculty = await fetch(facultyURL);
+      } else if (faculty.status === 404) {
+        console.error("Error: 404 Not Found ", dep.url);
+        return [];
+      } else if (!faculty.ok) {
+        // Handle other non-404 errors here if needed
+        console.error(`Error: ${faculty.status} ${faculty.statusText}`);
+        return [];
+      }
+      const rawFaculty = await faculty.json();
+      const cleanFaculty = cleanProfData(rawFaculty);
+
+      prof_data = prof_data.concat(cleanFaculty);
+
+      return [prof_data];
     });
 
-    return Promise.all(promises);
+    return Promise.all(allProfData);
   } catch (error) {
     console.error("Error getting MCAS profs:", error);
     throw error;
