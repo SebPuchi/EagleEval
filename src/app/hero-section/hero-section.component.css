@@ -1,7 +1,6 @@
 .herosection {
-  height: 90vh;
+  height: 100vh;
   position: relative;
-  overflow: hidden;
 }
 
 video {
@@ -20,7 +19,7 @@ video {
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  padding-top: 56px;
+  padding-top: 80px;
 }
 
 .navsearch {

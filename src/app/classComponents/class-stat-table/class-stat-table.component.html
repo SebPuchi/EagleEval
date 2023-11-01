@@ -1,0 +1,36 @@
+
+
+<div class="profclasstable card">
+  <div class="namewithstats">
+    <h1 class="nameandstatheader">Professor Statistics for this Class </h1>
+  </div>
+  <div class="spacerhoriz image classstatsdiv"></div>
+  <div class="professorclassstat card" *ngFor="let prof of profData" >
+    <div class="classnameandcode">
+      <h1 class="classnamehead title">{{prof.title}} </h1>
+      <div class="vertical-divider forclassstat"></div>
+
+    </div>
+    <div class="classnameandcode iphoneadjs">
+      <div class="crsovlandprimeknob">
+
+        <p-knob
+          [(ngModel)]="prof.prof_overall"
+          [size] = "80"
+          [readonly] = "true"
+          [strokeWidth]="15"
+
+
+        ></p-knob>
+
+      </div>
+      <div class="vertical-divider forclassstat"></div>
+      <div class="crsovlandprimeknob">
+        <h1 class="avrhours">{{prof.explains_material}}</h1>
+        <h1 class="classnamehead hrs-week">content clearly explained</h1>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Everything inside of professorclassstat div will repeat the amount of times for the amount of elements in the imported array  -->
+
