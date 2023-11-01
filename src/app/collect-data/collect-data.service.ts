@@ -82,6 +82,10 @@ export class CollectDataService {
   }
 
   private calculateAverage<T, K extends keyof T>(data: T[], fieldName: K) {
+    if (!data) {
+      console.error('DATA undefined: ', data);
+      return -1;
+    }
     const filteredData = data.filter(
       (item) => typeof item[fieldName] === 'number'
     );
