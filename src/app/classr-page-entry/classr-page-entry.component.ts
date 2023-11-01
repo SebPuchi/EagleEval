@@ -1,6 +1,6 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import {ClassService} from "src/app/PageDataService/class.service";
+import { ClassService } from 'src/app/PageDataService/class.service';
 import { CollectDataService } from '../collect-data/collect-data.service';
 import { Injectable } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
@@ -8,10 +8,10 @@ import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-classr-page-entry',
   templateUrl: './classr-page-entry.component.html',
-  styleUrls: ['./classr-page-entry.component.css']
+  styleUrls: ['./classr-page-entry.component.css'],
 })
 export class ClassrPageEntryComponent {
- constructor(
+  constructor(
     private classService: ClassService,
     private route: ActivatedRoute,
     private data: CollectDataService
@@ -25,6 +25,6 @@ export class ClassrPageEntryComponent {
     const classIdFromRoute = String(routeParams.get('classId'));
 
     // Populate prof data
-    this.data.getCacheProfData(classIdFromRoute);
+    this.data.getCacheCourseData(classIdFromRoute);
   }
 }
