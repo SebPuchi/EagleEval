@@ -6,7 +6,6 @@ import compression from "compression";
 import helmet from "helmet";
 import rateLimit from "express-rate-limit";
 import { dirname } from "path";
-import path from "path";
 import { fileURLToPath } from "url";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -48,12 +47,9 @@ app.use(handleCors);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-// Serve only the static files form the angularapp directory
-app.use(express.static(__dirname + "/src"));
-
-app.get("/*", function (req, res) {
-  res.sendFile(path.join(__dirname + "/src/index.html"));
-});
+// Create link to Angular build directory
+var distDir = __dirname + "/dist/eagle-eval";
+app.use(express.static(distDir));
 
 // Add routes for fetch
 app.use("/api/fetch", fetch_router);
@@ -70,7 +66,7 @@ app.use("/api/cache", cache_router);
 // Add routes for scraping review
 app.use("/api/scrape", scrape_router);
 
-app.listen(process.env.PORT || 3000, () => {
+app.listen(process.env.PORT || 8080, () => {
   createMongooseConnection();
   console.log("Server listening on port 3000");
   // create process listener to close connection on exit
