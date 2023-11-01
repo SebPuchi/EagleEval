@@ -7,6 +7,11 @@ import {
   CourseTableData,
   ProfessorService,
 } from '../PageDataService/professor.service';
+import {
+  CoursePageData,
+  ProfTableData,
+  ClassService,
+} from '../PageDataService/class.service';
 
 interface ProfData {
   _id: string;
@@ -66,7 +71,11 @@ interface DrilldownData {
   providedIn: 'root',
 })
 export class CollectDataService {
-  constructor(private api: ApiService, private prof: ProfessorService) {}
+  constructor(
+    private api: ApiService,
+    private prof: ProfessorService,
+    private course: ClassService
+  ) {}
 
   private convertToPercent(value: number) {
     return value > 0 ? (value - 1) * 25 : 0;
@@ -195,8 +204,7 @@ export class CollectDataService {
         title: currCourseData[0].course_name,
         crs_code: courseCode,
         course_overall: avgCourseOverall,
-        effort_hours:
-          avgEffortHours >= 0 ? Math.round(avgEffortHours / 25 + 1) : -1,
+        effort_hours: avgEffortHours >= 0 ? avgEffortHours / 10 : -1,
       };
 
       tableData.push(currTableRowData);
@@ -247,6 +255,100 @@ export class CollectDataService {
     this.prof.setcrsTableData(tableData);
   }
 
+  private getCourseAvgData(
+    metaData: CourseData,
+    revData: ReviewData[],
+    drilldownData: DrilldownData[]
+  ) {
+    const profSet = new Set<string>();
+
+    let tableData: ProfTableData[] = [];
+
+    // Create a set of all the courses the prof teaches
+    revData.forEach((course) => {
+      const prof = course.instructor;
+
+      profSet.add(prof);
+    });
+    // Data for table
+    const coursesProfData = this.groupBy(revData, 'instructor');
+    const coursesProfDdData = this.groupBy(drilldownData, 'instructor');
+
+    // Loop through professor set and get table averages
+    for (let prof of profSet) {
+      const currProfData = coursesProfData[prof];
+      const currProfDdData = coursesProfDdData[prof];
+
+      const profName = prof;
+      const avgProfOverall = this.calculateAverage(
+        currProfData,
+        'instructor_overall'
+      );
+      const avgExplains = this.calculateAverage(
+        currProfDdData,
+        'instructorclearexplanations'
+      );
+
+      const currTableRowData: ProfTableData = {
+        title: profName,
+        prof_overall: avgProfOverall,
+        explains_material: avgExplains,
+      };
+
+      tableData.push(currTableRowData);
+    }
+    // Sort by course overall score
+    tableData = tableData.sort((a, b) => b.prof_overall - a.prof_overall);
+
+    // Prof data points
+    const avgCourseOverall = this.calculateAverage(revData, 'course_overall');
+
+    const avgWellOrgnaized = this.calculateAverage(
+      drilldownData,
+      'coursewellorganized'
+    );
+
+    const avgChallenging = this.calculateAverage(
+      drilldownData,
+      'courseintellectuallychallenging'
+    );
+
+    const avgHours = this.calculateAverage(
+      drilldownData,
+      'effortavghoursweeklyc'
+    );
+
+    const avgAttendance = this.calculateAverage(
+      drilldownData,
+      'attendancenecessary'
+    );
+
+    const avgAssignments = this.calculateAverage(
+      drilldownData,
+      'assignmentshelpful'
+    );
+
+    const pageData: CoursePageData = {
+      title: metaData.title,
+      crs_code: metaData.crs_code,
+      subject: metaData.subject,
+      college: metaData.college,
+      desc: metaData.crs_desc,
+      avgOverall: avgCourseOverall,
+      avgOriganized: avgWellOrgnaized,
+      avgChallanging: avgChallenging,
+      avgEffortHours: avgHours >= 0 ? avgHours / 10 : -1,
+      avgAttendance: avgAttendance,
+      avgAssignments: avgAssignments,
+    };
+
+    console.log(pageData);
+    console.log(tableData);
+    // Update professor service
+    this.course.setCoursePageData(pageData);
+    this.course.setprofTableData(tableData);
+  }
+
   getCacheProfData(id: string) {
     this.getProfData(id).subscribe((metaData: ProfData) => {
       const name = metaData.title;
@@ -261,9 +363,9 @@ export class CollectDataService {
     });
   }
 
-  getAPIProfData(id: string) {
-    this.getProfData(id).subscribe((metaData: ProfData) => {
-      const name = metaData.title;
+  getAPICourseData(id: string) {
+    this.getCourseData(id).subscribe((metaData: CourseData) => {
+      const name = metaData.crs_code;
 
       this.getReviewsFromAPI(name).subscribe((reviews: ReviewData[]) => {
         const ddObervables: Observable<DrilldownData>[] = [];
@@ -273,8 +375,22 @@ export class CollectDataService {
           );
         }
         forkJoin(ddObervables).subscribe((drilldownData: DrilldownData[]) => {
-          this.getProfAvgData(metaData, reviews, drilldownData);
+          this.getCourseAvgData(metaData, reviews, drilldownData);
         });
+      });
+    });
+  }
+
+  getCacheCourseData(id: string) {
+    this.getCourseData(id).subscribe((metaData: CourseData) => {
+      const name = metaData.crs_code;
+
+      // Join obsevables
+      forkJoin([
+        this.getReviewsFromCache(name),
+        this.getDrilldownFromCache(name),
+      ]).subscribe(([revData, drilldownData]) => {
+        this.getCourseAvgData(metaData, revData, drilldownData);
       });
     });
   }
