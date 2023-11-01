@@ -11,6 +11,7 @@ export class CourseInfoCardComponent implements OnInit {
   public crsSubject: string = "";
   public crsCode: string = "";
   public crsCollege: string ="";
+  public crsDesc: string ="";
 
   constructor(private course: ClassService) {
     }
@@ -25,6 +26,12 @@ export class CourseInfoCardComponent implements OnInit {
              this.courseTitle = data.title;
 
             }
+
+             if(data.desc){
+
+                         this.crsDesc = data.desc;
+
+                        }
 
             if(data.crs_code){
 
