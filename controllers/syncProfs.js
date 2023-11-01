@@ -155,7 +155,7 @@ function appendPathToURL(inputPath) {
   }
 
   // Append "people.html" to the pathname
-  parsedURL.pathname = parsedURL.pathname + "/people/faculty-directory.4.json";
+  parsedURL.pathname = parsedURL.pathname + "/people.4.json";
 
   // Serialize the updated URL back to a string
   const updatedURL = parsedURL.toString();
