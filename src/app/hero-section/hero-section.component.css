@@ -1,6 +1,7 @@
 .herosection {
   height: 90vh;
   position: relative;
+  overflow: hidden;
 }
 
 video {
@@ -23,9 +24,16 @@ video {
 }
 
 .navsearch {
+
+
   margin-top: 26px;
   margin-bottom: 26px;
-  width: 50vw;
+  width: 35vw;
+  height: 65px;
+
+}
+.autocomplete-container {
+
 }
 
 
@@ -41,3 +49,10 @@ video {
 
 }
 
+
+@media screen and (max-width: 450px) {
+  .navsearch {
+    width: 90%;
+  }
+
+}
