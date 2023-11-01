@@ -1,7 +1,4 @@
 // config.js
-import dotenv from "dotenv";
-dotenv.config();
-
 export const config = {
   mongodb: {
     username: process.env.MONGODB_USERNAME,
