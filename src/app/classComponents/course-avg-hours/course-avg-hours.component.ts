@@ -24,9 +24,6 @@ export class CourseAvgHoursComponent implements OnInit {
 
             }
 
-
-
-
           }
 
           //Communciate skeleton

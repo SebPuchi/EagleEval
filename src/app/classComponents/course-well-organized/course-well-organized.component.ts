@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component,OnInit } from '@angular/core';
+import {CoursePageData, ClassService} from "src/app/PageDataService/class.service";
 
 @Component({
   selector: 'app-course-well-organized',
@@ -7,4 +8,26 @@ import { Component } from '@angular/core';
 })
 export class CourseWellOrganizedComponent {
 
-}
+    public organized: number = 0;
+
+
+ constructor(private course: ClassService) {
+    }
+
+    ngOnInit() {
+
+    this.course.getCoursePageData().subscribe((data: CoursePageData | null) => {
+          if (data) {
+
+            if(data.avgOriganized && data.avgOriganized!= -1){
+
+             this.organized = data.avgOriganized;
+
+            }
+
+          }
+        })
+
+    }
+
+  }
