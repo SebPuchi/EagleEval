@@ -1,0 +1,38 @@
+
+
+<div class="profclasstable card">
+  <div class="namewithstats">
+    <h1 class="nameandstatheader">&#x27;s Class Statistics </h1>
+  </div>
+  <div class="spacerhoriz image classstatsdiv"></div>
+  <div class="professorclassstat card" >
+    <div class="classnameandcode">
+      <h1 class="classnamehead title">TITLE </h1>
+      <div class="vertical-divider forclassstat"></div>
+      <div class="hide">
+        <h1 class="classnamehead">CRSCODE</h1>
+      </div>
+    </div>
+    <div class="classnameandcode iphoneadjs">
+      <div class="crsovlandprimeknob">
+
+        <p-knob
+          [(ngModel)]="crsovlandprimeknob"
+          [size] = "80"
+          [readonly] = "true"
+          [strokeWidth]="15"
+
+
+        ></p-knob>
+
+      </div>
+      <div class="vertical-divider forclassstat"></div>
+      <div class="crsovlandprimeknob">
+        <h1 class="avrhours">EFFORT</h1>
+        <h1 class="classnamehead hrs-week">hrs/week</h1>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Everything inside of professorclassstat div will repeat the amount of times for the amount of elements in the imported array  -->
+

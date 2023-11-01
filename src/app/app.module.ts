@@ -48,6 +48,7 @@ import { CourseWellOrganizedComponent } from './classComponents/course-well-orga
 import { CourseIntellectuallyChallengingComponent } from './classComponents/course-intellectually-challenging/course-intellectually-challenging.component';
 import { CourseAssignHelpfulComponent } from './classComponents/course-assign-helpful/course-assign-helpful.component';
 import { ProfTableComponent } from './profComponents/prof-table/prof-table.component';
+import { ClassStatTableComponent } from './classComponents/class-stat-table/class-stat-table.component';
 
 @NgModule({
 	declarations: [
@@ -74,7 +75,8 @@ import { ProfTableComponent } from './profComponents/prof-table/prof-table.compo
   CourseWellOrganizedComponent,
   CourseIntellectuallyChallengingComponent,
   CourseAssignHelpfulComponent,
-  ProfTableComponent
+  ProfTableComponent,
+  ClassStatTableComponent
 	],
 	imports: [
 		BrowserModule,
