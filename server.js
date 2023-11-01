@@ -5,11 +5,6 @@ import { ConsoleLogger } from "@angular/compiler-cli";
 import compression from "compression";
 import helmet from "helmet";
 import rateLimit from "express-rate-limit";
-import { dirname } from "path";
-import { fileURLToPath } from "url";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
 
 // ROUTES
 import { fetch_router } from "./routes/fetch.js";
@@ -38,7 +33,7 @@ const limiter = rateLimit({
 app.use(limiter);
 
 // Block bad requests
-app.use(helmet());
+//app.use(helmet());
 
 // handling CORS
 app.use(handleCors);
@@ -48,7 +43,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // Create link to Angular build directory
-var distDir = __dirname + "/dist/eagle-eval";
+var distDir = "./dist/eagle-eval";
 app.use(express.static(distDir));
 
 // Add routes for fetch
@@ -66,7 +61,7 @@ app.use("/api/cache", cache_router);
 // Add routes for scraping review
 app.use("/api/scrape", scrape_router);
 
-app.listen(process.env.PORT || 8080, () => {
+app.listen(process.env.PORT || 3000, () => {
   createMongooseConnection();
   console.log("Server listening on port 3000");
   // create process listener to close connection on exit
