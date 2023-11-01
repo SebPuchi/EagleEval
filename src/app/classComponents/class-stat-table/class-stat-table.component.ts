@@ -8,10 +8,25 @@ import {ProfTableData,ClassService} from "src/app/PageDataService/class.service"
 })
 export class ClassStatTableComponent implements OnInit{
 
-  public crsovlandprimeknob: number = 10;
+profData: ProfTableData[] = [];
 
-   ngOnInit() {
-   console.log("hellow");
-   }
 
+
+
+    constructor(private classname: ClassService) {}
+
+  ngOnInit() {
+       this.classname.getprofTableData().subscribe((data: ProfTableData[] | null) => {
+         if (data) {
+           this.profData = data;
+
+           // Replace -1 with 'NaN' in effort_hours
+
+         }
+       });
+
+
+
+
+     }
 }
