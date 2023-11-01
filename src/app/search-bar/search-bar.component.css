@@ -1,10 +1,9 @@
-.p-autocomplete-panel {
-  position: absolute;
-  top: 100%; /* Position the panel below the input */
-  left: 0;
-  right: 0;
-  max-height: 200px; /* Set a maximum height for the panel, you can adjust this value as needed */
-  overflow-y: auto; /* Add vertical scroll when needed */
-  z-index: 1000; /* Adjust the z-index as needed */
+.ng-tns-c3177733119-0 {
+  min-width: 334px;
+  transform-origin: center top;
+  top: 48px;
+  left: 0px;
+  max-width: 100%;
+  z-index: 1001;
 
-  }
+}
