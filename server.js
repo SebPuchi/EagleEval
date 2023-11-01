@@ -5,6 +5,11 @@ import { ConsoleLogger } from "@angular/compiler-cli";
 import compression from "compression";
 import helmet from "helmet";
 import rateLimit from "express-rate-limit";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // ROUTES
 import { fetch_router } from "./routes/fetch.js";
@@ -43,7 +48,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // Create link to Angular build directory
-var distDir = "./dist/eagle-eval";
+const distDir = __dirname + "/dist/eagle-eval";
 app.use(express.static(distDir));
 
 // Add routes for fetch
