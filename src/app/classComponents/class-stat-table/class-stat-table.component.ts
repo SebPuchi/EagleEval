@@ -20,7 +20,13 @@ profData: ProfTableData[] = [];
          if (data) {
            this.profData = data;
 
-           // Replace -1 with 'NaN' in effort_hours
+            //in my profData, how can I replae all -1 with NaN if for the explains material attributre?
+             this.profData.forEach((item) => {
+                      item.explains_material = item.explains_material === -1 ? NaN : item.explains_material;
+                    });
+
+
+
 
          }
        });
