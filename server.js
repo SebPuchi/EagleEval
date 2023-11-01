@@ -2,6 +2,9 @@ import "log-timestamp";
 import express from "express";
 import bodyParser from "body-parser";
 import { ConsoleLogger } from "@angular/compiler-cli";
+import compression from "compression";
+import helmet from "helmet";
+import rateLimit from "express-rate-limit";
 
 // ROUTES
 import { fetch_router } from "./routes/fetch.js";
@@ -18,6 +21,19 @@ import {
 import { handleCors } from "./middleware/cors.js";
 
 const app = express();
+
+// Compress responses
+app.use(compression());
+
+// Block ddos attempts
+const limiter = rateLimit({
+  windowMs: 1 * 60 * 100,
+  max: 100,
+});
+app.use(limiter);
+
+// Block bad requests
+app.use(helmet());
 
 // handling CORS
 app.use(handleCors);

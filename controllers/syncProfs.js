@@ -210,7 +210,6 @@ export async function getMcasDeps(pageURL) {
     department: "CHEMISTRY",
     url: "https://www.bc.edu/bc-web/schools/morrissey/departments/chemistry.html",
   });
-  console.log(depJSON);
 
   return depJSON;
 }
@@ -279,12 +278,6 @@ export async function getMcasProfData(deaprtmentsUrl) {
   try {
     // Scrape departments from BC website
     const deps = await getMcasDeps(deaprtmentsUrl);
-    //const deps = [
-    //  {
-    //    department: "Mathematics",
-    //    url: "https://www.bc.edu/bc-web/schools/mcas/departments/math.html",
-    //  },
-    //];
 
     const allProfData = deps.map(async (dep) => {
       let prof_data = [];
