@@ -24,8 +24,6 @@ export class ClassScoreKnobComponent implements OnInit {
 
            this.value = data.avgOverall;
 
-           console.log(this.value);
-
           }else{
           this.value = NaN;
           this.isDisabled = true;
