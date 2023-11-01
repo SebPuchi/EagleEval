@@ -5,6 +5,12 @@ import { ConsoleLogger } from "@angular/compiler-cli";
 import compression from "compression";
 import helmet from "helmet";
 import rateLimit from "express-rate-limit";
+import { dirname } from "path";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 // ROUTES
 import { fetch_router } from "./routes/fetch.js";
@@ -41,6 +47,13 @@ app.use(handleCors);
 // handle parsing post body
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+
+// Serve only the static files form the angularapp directory
+app.use(express.static(__dirname + "/src"));
+
+app.get("/*", function (req, res) {
+  res.sendFile(path.join(__dirname + "/src/index.html"));
+});
 
 // Add routes for fetch
 app.use("/api/fetch", fetch_router);
