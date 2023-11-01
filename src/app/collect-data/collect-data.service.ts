@@ -248,8 +248,6 @@ export class CollectDataService {
       avgAvailable: avgAvailable,
       avgEnthusiastic: avgEnthusiastic,
     };
-    console.log(pageData);
-    console.log(tableData);
     // Update professor service
     this.prof.setProfPageData(pageData);
     this.prof.setcrsTableData(tableData);
@@ -342,8 +340,6 @@ export class CollectDataService {
       avgAssignments: avgAssignments,
     };
 
-    console.log(pageData);
-    console.log(tableData);
     // Update professor service
     this.course.setCoursePageData(pageData);
     this.course.setprofTableData(tableData);
