@@ -337,7 +337,7 @@ export class CollectDataService {
       avgOverall: avgCourseOverall,
       avgOriganized: avgWellOrgnaized,
       avgChallanging: avgChallenging,
-      avgEffortHours: avgHours,
+      avgEffortHours: avgHours >= 0 ? avgHours / 10 : -1,
       avgAttendance: avgAttendance,
       avgAssignments: avgAssignments,
     };
