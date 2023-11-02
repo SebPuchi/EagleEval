@@ -19,9 +19,9 @@ export class CourseIntellectuallyChallengingComponent implements OnInit {
       if (data) {
         if (data.avgChallanging && data.avgChallanging != -1) {
           this.challenge = data.avgChallanging;
-        } else {
-          this.challenge = 0;
         }
+      } else {
+        this.challenge = 0;
       }
     });
   }
