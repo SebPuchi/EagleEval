@@ -18,9 +18,9 @@ export class ClearMaterialComponent implements OnInit {
       if (data) {
         if (data.avgExplains) {
           this.clearMaterialValue = data.avgExplains;
-        } else {
-          this.clearMaterialValue = 0;
         }
+      } else {
+        this.clearMaterialValue = 0;
       }
 
       //Communciate skeleton

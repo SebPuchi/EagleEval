@@ -19,9 +19,9 @@ export class CourseWellOrganizedComponent {
       if (data) {
         if (data.avgOriganized && data.avgOriganized != -1) {
           this.organized = data.avgOriganized;
-        } else {
-          this.organized = 0;
         }
+      } else {
+        this.organized = 0;
       }
     });
   }

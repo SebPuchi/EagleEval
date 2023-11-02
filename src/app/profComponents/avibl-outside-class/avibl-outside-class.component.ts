@@ -18,9 +18,9 @@ export class AviblOutsideClassComponent implements OnInit {
       if (data) {
         if (data.avgAvailable) {
           this.avlbOutsdClassValue = data.avgAvailable;
-        } else {
-          this.avlbOutsdClassValue = 0;
         }
+      } else {
+        this.avlbOutsdClassValue = 0;
       }
 
       //Communciate skeleton

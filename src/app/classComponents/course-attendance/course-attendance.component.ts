@@ -19,9 +19,9 @@ export class CourseAttendanceComponent implements OnInit {
       if (data) {
         if (data.avgAttendance && data.avgAttendance != -1) {
           this.avg_Attendance = data.avgAttendance;
-        } else {
-          this.avg_Attendance = 0;
         }
+      } else {
+        this.avg_Attendance = 0;
       }
     });
   }

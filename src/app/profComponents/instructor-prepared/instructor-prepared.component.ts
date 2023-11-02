@@ -18,9 +18,9 @@ export class InstructorPreparedComponent implements OnInit {
       if (data) {
         if (data.avgPrepared) {
           this.instructorPreparedValue = data.avgPrepared;
-        } else {
-          this.instructorPreparedValue = 0;
         }
+      } else {
+        this.instructorPreparedValue = 0;
       }
 
       //Communciate skeleton

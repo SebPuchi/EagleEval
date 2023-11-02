@@ -19,9 +19,9 @@ export class CourseAssignHelpfulComponent implements OnInit {
       if (data) {
         if (data.avgAssignments && data.avgAssignments != -1) {
           this.assing_helpful = data.avgAssignments;
-        } else {
-          this.assing_helpful = 0;
         }
+      } else {
+        this.assing_helpful = 0;
       }
     });
   }

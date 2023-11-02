@@ -18,9 +18,9 @@ export class EnthCourseMaterialComponent implements OnInit {
       if (data) {
         if (data.avgEnthusiastic) {
           this.enthCourseValue = data.avgEnthusiastic;
-        } else {
-          this.enthCourseValue = 0;
         }
+      } else {
+        this.enthCourseValue = 0;
       }
 
       //Communciate skeleton

@@ -19,9 +19,9 @@ export class CourseAvgHoursComponent implements OnInit {
       if (data) {
         if (data.avgEffortHours && data.avgEffortHours != -1) {
           this.avgHours = data.avgEffortHours;
-        } else {
-          this.avgHours = 0;
         }
+      } else {
+        this.avgHours = 0;
       }
 
       //Communciate skeleton
