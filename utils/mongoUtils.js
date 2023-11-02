@@ -149,7 +149,8 @@ export async function searchReviews(model, query) {
     return model.find(pipeline).exec();
   } else {
     // If the query doesn't match the course code pattern, split it into words
-    const nameArr = query.split(" ");
+    const Arr = query.split(" ");
+    const nameArr = [Arr[0], Arr[Arr.length - 1]];
 
     // Initialize an array to store permutations of instructor names
     const permutations = [];
