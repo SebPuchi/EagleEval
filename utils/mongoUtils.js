@@ -174,7 +174,7 @@ export async function searchReviews(model, query) {
     //    $in: caseInsensitive,
     //  },
     //};
-    const formattedName = query.replace(/\S\.\S/g, "").replace(/\s+/g, " ");
+    const formattedName = query.replace(/\S\./g, "").replace(/\s+/g, " ");
     console.log(formattedName.trim());
 
     const pipeline = {
