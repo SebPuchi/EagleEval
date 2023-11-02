@@ -177,7 +177,7 @@ export async function searchReviews(model, query) {
     const formattedName = query.replace(/\S\.\S/g, "");
 
     const pipeline = {
-      instructor: formattedName,
+      instructor: new RegExp(formattedName, "i"),
     };
 
     // Return the result of the instructor name search
