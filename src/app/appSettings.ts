@@ -1,3 +1,3 @@
 export class AppSettings {
-  public static API_ENDPOINT = 'https://www.eagleeval.com/api/';
+  public static API_ENDPOINT = window.location.hostname;
 }
