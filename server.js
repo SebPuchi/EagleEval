@@ -25,6 +25,7 @@ import {
 import { handleCors } from "./middleware/cors.js";
 
 const app = express();
+const private_api = express();
 
 // Compress responses
 app.use(compression());
@@ -54,7 +55,7 @@ app.use(express.static(distDir));
 app.use("/api/fetch", fetch_router);
 
 // Add routes for updating mongodb
-app.use("/api/update", update_router);
+private_api.use("/api/update", update_router);
 
 // Add routes for searching database
 app.use("/api/search", search_router);
@@ -63,11 +64,19 @@ app.use("/api/search", search_router);
 app.use("/api/cache", cache_router);
 
 // Add routes for scraping review
-app.use("/api/scrape", scrape_router);
+private_api.use("/api/scrape", scrape_router);
 
 app.listen(process.env.PORT || 3000, () => {
   createMongooseConnection();
-  console.log("Server listening on port 3000");
+  console.log("Server listening on port ", process.env.PORT || "3000");
+  // create process listener to close connection on exit
+  closeMongooseConnection();
+});
+
+// Private routes only accessible locally
+private_api.listen(8080, () => {
+  createMongooseConnection();
+  console.log("Private API listening on port 8080");
   // create process listener to close connection on exit
   closeMongooseConnection();
 });
