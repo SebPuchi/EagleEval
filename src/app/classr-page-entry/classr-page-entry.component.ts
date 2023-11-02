@@ -21,10 +21,14 @@ export class ClassrPageEntryComponent {
     this.classService.setCoursePageData(null);
 
     // First get the product id from the current route.
-    const routeParams = this.route.snapshot.paramMap;
-    const classIdFromRoute = String(routeParams.get('classId'));
+    this.route.paramMap.subscribe((routeParams) => {
+      // Set prof data to null
+      this.classService.setCoursePageData(null);
 
-    // Populate prof data
-    this.data.getCacheCourseData(classIdFromRoute);
+      const id = String(routeParams.get('classId'));
+
+      // Populate prof data
+      this.data.getCacheCourseData(id);
+    });
   }
 }

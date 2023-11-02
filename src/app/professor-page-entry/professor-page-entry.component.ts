@@ -21,10 +21,14 @@ export class ProfessorPageEntryComponent {
     this.professorService.setProfPageData(null);
 
     // First get the product id from the current route.
-    const routeParams = this.route.snapshot.paramMap;
-    const profIdFromRoute = String(routeParams.get('profId'));
+    this.route.paramMap.subscribe((routeParams) => {
+      // Set prof data to null
+      this.professorService.setProfPageData(null);
 
-    // Populate prof data
-    this.data.getCacheProfData(profIdFromRoute);
+      const id = String(routeParams.get('profId'));
+
+      // Populate prof data
+      this.data.getCacheProfData(id);
+    });
   }
 }

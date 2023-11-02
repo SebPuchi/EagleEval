@@ -24,31 +24,27 @@ interface CourseData {
   styleUrls: ['./search-bar.component.css'],
 })
 export class SearchBarComponent {
-@ViewChild('autoComplete', { static: true }) autoComplete: AutoComplete | undefined;
-
+  @ViewChild('autoComplete', { static: true }) autoComplete:
+    | AutoComplete
+    | undefined;
 
   selectedResult: string = '';
-
 
   results: any[] = [];
 
   profs: ProfData[] = [];
   courses: CourseData[] = [];
-  placeHolder: string = "Professor or Class name";
+  placeHolder: string = 'Professor or Class name';
 
-
-  constructor(private apiService: ApiService,
-  public _pageService: PageServiceService) {}
-
-
-
+  constructor(
+    private apiService: ApiService,
+    public _pageService: PageServiceService
+  ) {}
 
   route($event: any) {
-    console.log('EVENT: ', $event);
     // Search profs
     for (const prof of this.profs) {
       if (prof.title == $event) {
-        console.log(`Routing to ${$event} prof page`);
         this._pageService.setShowProfPage(prof._id);
       }
     }
@@ -56,7 +52,6 @@ export class SearchBarComponent {
     for (const crs of this.courses) {
       if (crs.title == $event) {
         this._pageService.setShowClassPage(crs._id);
-        console.log(`Routing to ${$event} course page`);
       }
     }
   }
