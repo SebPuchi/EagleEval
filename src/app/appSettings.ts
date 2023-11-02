@@ -1,3 +1,3 @@
 export class AppSettings {
-  public static API_ENDPOINT = window.location.hostname;
+  public static API_ENDPOINT = window.location.hostname + '/api/';
 }
