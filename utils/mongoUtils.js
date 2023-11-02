@@ -148,31 +148,36 @@ export async function searchReviews(model, query) {
     // Return the result of the search
     return model.find(pipeline).exec();
   } else {
-    // If the query doesn't match the course code pattern, split it into words
-    const Arr = query.split(" ");
-    const nameArr = [Arr[0], Arr[Arr.length - 1]];
+    //// If the query doesn't match the course code pattern, split it into words
+    //const Arr = query.split(" ");
+    //const nameArr = [Arr[0], Arr[Arr.length - 1]];
 
-    // Initialize an array to store permutations of instructor names
-    const permutations = [];
+    //// Initialize an array to store permutations of instructor names
+    //const permutations = [];
 
-    // Generate permutations of instructor names from the query
-    for (let i = 0; i < nameArr.length; i++) {
-      for (let j = 0; j < nameArr.length; j++) {
-        if (i !== j) {
-          // Combine two different names for permutations
-          permutations.push(nameArr[i] + " " + nameArr[j]);
-        }
-      }
-    }
+    //// Generate permutations of instructor names from the query
+    //for (let i = 0; i < nameArr.length; i++) {
+    //  for (let j = 0; j < nameArr.length; j++) {
+    //    if (i !== j) {
+    //      // Combine two different names for permutations
+    //      permutations.push(nameArr[i] + " " + nameArr[j]);
+    //    }
+    //  }
+    //}
 
-    const caseInsensitive = permutations.map((str) => {
-      return new RegExp(str, "i");
-    });
-    // Create a pipeline for searching instructors by name permutations
+    //const caseInsensitive = permutations.map((str) => {
+    //  return new RegExp(str, "i");
+    //});
+    //// Create a pipeline for searching instructors by name permutations
+    //const pipeline = {
+    //  instructor: {
+    //    $in: caseInsensitive,
+    //  },
+    //};
+    const formattedName = query.replace(/\S\.\S/g, "");
+
     const pipeline = {
-      instructor: {
-        $in: caseInsensitive,
-      },
+      instructor: formattedName,
     };
 
     // Return the result of the instructor name search
