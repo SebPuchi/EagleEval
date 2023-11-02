@@ -79,9 +79,9 @@ function drilldownJsonToDoc(ddJson) {
       ? ddJson["coursewellorganized(c)"]
       : undefined,
     courseintellectuallychallenging: !isNaN(
-      ddJson["courseintellectuallychallanging(c)"]
+      ddJson["courseintellectuallychallenging(c)"]
     )
-      ? ddJson["courseintellectuallychallanging(c)"]
+      ? ddJson["courseintellectuallychallenging(c)"]
       : undefined,
     effortavghoursweeklyc: !isNaN(ddJson["effortavghoursweeklyc"])
       ? ddJson["effortavghoursweeklyc"]
