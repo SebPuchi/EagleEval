@@ -6,10 +6,7 @@ import { config } from "../config/mongoConfig.js";
 // Access MongoDB username and password
 const username = config.mongodb.username;
 const password = config.mongodb.password;
-
-// Digital Ocean mongodb url
-const databaseURL =
-  "mongodb+srv://eagleevaldata.gxxyol0.mongodb.net/?retryWrites=true&w=majority";
+const databaseURL = config.mongodb.databaseURL;
 
 // Function to connect to the database
 export async function connectToDatabase() {
