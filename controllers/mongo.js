@@ -17,7 +17,7 @@ export async function connectToDatabase() {
     await mongoose.connect(databaseURL, {
       user: username,
       pass: password,
-      dbName: "dev",
+      dbName: "prod",
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });

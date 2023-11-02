@@ -8,7 +8,7 @@ export const cleanKeysAndRemoveNonASCII = (inputArray) => {
     for (const key in jsonObject) {
       if (jsonObject.hasOwnProperty(key)) {
         const cleanedKey = key
-          //.replace(/[^\x00-\x7F]+/g, "") // Remove non-ASCII characters
+          .replace(/[^\x00-\x7F]+/g, "") // Remove non-ASCII characters
           .replace(/\s+/g, "") // Remove white spaces
           .toLowerCase(); // Convert to lowercase
         cleanedObject[cleanedKey] = jsonObject[key];
