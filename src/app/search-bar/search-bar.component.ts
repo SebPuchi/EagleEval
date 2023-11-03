@@ -88,9 +88,7 @@ export class SearchBarComponent {
 
           // Return array for titles
           return Array.from(result, (r) => {
-            return r.hasOwnProerty('crs_code')
-              ? `${r.title} (${r.crs_code})`
-              : r.title;
+            return r.crs_code ? `${r.title} (${r.crs_code})` : r.title;
           });
         })
       )
