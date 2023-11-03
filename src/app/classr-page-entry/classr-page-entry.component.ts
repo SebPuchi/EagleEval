@@ -29,6 +29,8 @@ export class ClassrPageEntryComponent {
 
       // Populate prof data
       this.data.getCacheCourseData(id);
+      // Get course data from API
+      this.data.getAPICourseData(id);
     });
   }
 }

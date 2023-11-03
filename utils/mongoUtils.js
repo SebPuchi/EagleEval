@@ -1,4 +1,5 @@
 import { parse } from "dotenv";
+import unidecode from "unidecode";
 
 function trimJsonValues(jsonObj) {
   if (typeof jsonObj !== "object") {
@@ -175,10 +176,9 @@ export async function searchReviews(model, query) {
     //  },
     //};
     const formattedName = query.replace(/\S\./g, "").replace(/\s+/g, " ");
-    console.log(formattedName.trim());
 
     const pipeline = {
-      instructor: new RegExp(formattedName, "i"),
+      instructor: new RegExp(unidecode(formattedName), "i"),
     };
 
     // Return the result of the instructor name search
