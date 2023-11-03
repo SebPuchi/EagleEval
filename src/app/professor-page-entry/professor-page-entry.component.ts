@@ -29,8 +29,6 @@ export class ProfessorPageEntryComponent {
 
       // Populate prof data
       this.data.getCacheProfData(id);
-      // Get API prof data
-      this.data.getAPIProfData(id);
     });
   }
 }
