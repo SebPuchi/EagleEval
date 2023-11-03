@@ -42,6 +42,8 @@ export class SearchBarComponent {
   ) {}
 
   route($event: any) {
+    const regex = /\(([^)]+)\)$/; // This regex matches text inside parentheses at the end of the string
+
     // Search profs
     for (const prof of this.profs) {
       if (prof.title == $event) {
@@ -50,7 +52,8 @@ export class SearchBarComponent {
     }
     // Search courses
     for (const crs of this.courses) {
-      if (crs.title == $event) {
+      const match = $event.match(regex);
+      if (crs.crs_code == match[1]) {
         this._pageService.setShowClassPage(crs._id);
       }
     }
@@ -85,7 +88,9 @@ export class SearchBarComponent {
 
           // Return array for titles
           return Array.from(result, (r) => {
-            return r.crs_code ? `${r.title} (${r.crs_code})` : r.title;
+            return r.hasOwnProerty('crs_code')
+              ? `${r.title} (${r.crs_code})`
+              : r.title;
           });
         })
       )
