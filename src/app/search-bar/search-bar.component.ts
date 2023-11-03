@@ -48,6 +48,7 @@ export class SearchBarComponent {
     for (const prof of this.profs) {
       if (prof.title == $event) {
         this._pageService.setShowProfPage(prof._id);
+        return;
       }
     }
     // Search courses
@@ -55,6 +56,7 @@ export class SearchBarComponent {
       const match = $event.match(regex);
       if (crs.crs_code == match[1]) {
         this._pageService.setShowClassPage(crs._id);
+        return;
       }
     }
   }
