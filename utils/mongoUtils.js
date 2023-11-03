@@ -1,5 +1,5 @@
-import { parse } from "dotenv";
 import unidecode from "unidecode";
+import mongoose from "mongoose";
 
 function trimJsonValues(jsonObj) {
   if (typeof jsonObj !== "object") {
@@ -187,7 +187,15 @@ export async function searchReviews(model, query) {
 }
 
 export async function searchById(model, id) {
-  return model.findById(id).exec();
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    console.error("invalid id: ", id);
+    return null;
+  }
+  const result = model.findById(id).exec();
+  if (!result) {
+    return null;
+  }
+  return result;
 }
 
 export async function findOrCreateReviews(revModel, revData) {

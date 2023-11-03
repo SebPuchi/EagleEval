@@ -26,7 +26,7 @@ cache_router.post(
       console.log("Searching prof collection for: " + id);
 
       const result = await searchById(Professor, id);
-      console.log("Successfully got prof data for: ", id);
+      if (result) console.log("Successfully got prof data for: ", id);
 
       return res.json(result);
     }
