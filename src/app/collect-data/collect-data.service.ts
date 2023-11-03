@@ -349,6 +349,24 @@ export class CollectDataService {
     this.course.setprofTableData(tableData);
   }
 
+  getAPIProfData(id: string) {
+    this.getProfData(id).subscribe((metaData: ProfData) => {
+      const name = metaData.title;
+
+      this.getReviewsFromAPI(name).subscribe((reviews: ReviewData[]) => {
+        const ddObervables: Observable<DrilldownData>[] = [];
+        for (const review of reviews) {
+          ddObervables.push(
+            this.getDrilldownFromAPI(review.course_code, review.instructor)
+          );
+        }
+        forkJoin(ddObervables).subscribe((drilldownData: DrilldownData[]) => {
+          this.getProfAvgData(metaData, reviews, drilldownData);
+        });
+      });
+    });
+  }
+
   getCacheProfData(id: string) {
     this.getProfData(id).subscribe((metaData: ProfData) => {
       const name = metaData.title;
