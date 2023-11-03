@@ -84,7 +84,9 @@ export class SearchBarComponent {
           result = result.sort((a, b) => b.score - a.score);
 
           // Return array for titles
-          return Array.from(result, (r) => r.title);
+          return Array.from(result, (r) => {
+            return r.crs_code ? `${r.title} (${r.crs_code})` : r.title;
+          });
         })
       )
       .subscribe((data) => {
