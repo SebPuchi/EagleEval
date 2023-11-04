@@ -66,9 +66,9 @@ app.use("/api/cache", cache_router);
 // Add routes for scraping review
 private_api.use("/api/scrape", scrape_router);
 
-app.listen(process.env.PORT || 3000, () => {
+app.listen(process.env.PORT || 80, () => {
   createMongooseConnection();
-  console.log("Server listening on port ", process.env.PORT || "3000");
+  console.log("Server listening on port ", process.env.PORT || "80");
   // create process listener to close connection on exit
   closeMongooseConnection();
 });
