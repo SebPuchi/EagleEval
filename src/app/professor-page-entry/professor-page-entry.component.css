@@ -244,6 +244,12 @@
                          "Area";
   }
 
+  .contentwrapper {
+
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
 
 }
 
