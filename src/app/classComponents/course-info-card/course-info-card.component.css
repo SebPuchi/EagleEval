@@ -137,7 +137,6 @@
 }
 
 .profinfodiv.card.classinfo {
-  height: auto;
   margin-top: 0;
   margin-bottom: 0;
   margin-right: 0;
@@ -370,8 +369,47 @@
                          "Area";
   }
 
+  .profinfodiv.card {
+    height: auto;
+    overflow: hidden;
+  }
+
+  .contentwrapper {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .heading-9 {
+    font-size: 60x;
+  }
 
 }
+
+@media screen and (max-width: 400px) {
+  .dynamicprofcontent {
+    grid-template-columns: 1fr;
+    grid-template-areas: "."
+                         "Area";
+  }
+
+  .profinfodiv.card {
+    height: auto;
+    overflow: hidden;
+  }
+
+  .contentwrapper {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .heading-9 {
+    font-size: 60px;
+  }
+
+}
+
+
+
 
 @media screen and (max-width: 767px) {
   .card {
