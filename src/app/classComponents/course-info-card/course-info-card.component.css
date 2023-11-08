@@ -339,7 +339,7 @@
   margin-bottom: 0;
   margin-right: 13px;
   font-family: Inter, sans-serif;
-  font-size: 90px;
+  font-size: 70px;
 }
 
 .hourcontent {
@@ -380,13 +380,36 @@
   }
 
   .heading-9 {
+    font-size: 70px;
+  }
+
+}
+
+@media screen and (max-width: 400px) {
+  .dynamicprofcontent {
+    grid-template-columns: 1fr;
+    grid-template-areas: "."
+                         "Area";
+  }
+
+  .profinfodiv.card {
+    height: auto;
+    overflow: hidden;
+  }
+
+  .contentwrapper {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .heading-9 {
     font-size: 65px;
   }
 
-
-
-
 }
+
+
+
 
 @media screen and (max-width: 767px) {
   .card {

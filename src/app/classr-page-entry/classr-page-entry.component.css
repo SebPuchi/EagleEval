@@ -334,7 +334,7 @@
   margin-bottom: 0;
   margin-right: 13px;
   font-family: Inter, sans-serif;
-  font-size: 90px;
+  font-size: 70px;
 }
 
 .hourcontent {
@@ -356,22 +356,51 @@
 .heading-11.hrsweekly {
   font-size: 48px;
 }
-
 @media screen and (max-width: 991px) {
   .dynamicprofcontent {
     grid-template-columns: 1fr;
-    grid-template-areas:
-      "."
-      "Area";
+    grid-template-areas: "."
+                         "Area";
+  }
+
+  .profinfodiv.card {
+    height: auto;
+    overflow: hidden;
   }
 
   .contentwrapper {
-
     padding-left: 15px;
     padding-right: 15px;
   }
+
+  .heading-9 {
+    font-size: 70px;
+  }
+
 }
 
+@media screen and (max-width: 400px) {
+  .dynamicprofcontent {
+    grid-template-columns: 1fr;
+    grid-template-areas: "."
+                         "Area";
+  }
+
+  .profinfodiv.card {
+    height: auto;
+    overflow: hidden;
+  }
+
+  .contentwrapper {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .heading-9 {
+    font-size: 70px;
+  }
+
+}
 @media screen and (max-width: 767px) {
   .card {
     box-shadow: 0 2px 12px rgba(20, 20, 43, 0.04);

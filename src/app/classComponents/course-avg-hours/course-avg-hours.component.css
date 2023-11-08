@@ -258,7 +258,7 @@
   margin-bottom: 0;
   margin-right: 13px;
   font-family: Inter, sans-serif;
-  font-size: 90px;
+  font-size: 70px;
 }
 
 .hourcontent {
@@ -308,6 +308,10 @@
   .profinfodiv.card.adjustedclass {
     justify-content: flex-start;
   }
+
+    .heading-9 {
+      font-size: 70px;
+    }
 
 
 }
