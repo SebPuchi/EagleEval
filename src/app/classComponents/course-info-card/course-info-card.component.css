@@ -137,7 +137,6 @@
 }
 
 .profinfodiv.card.classinfo {
-  height: auto;
   margin-top: 0;
   margin-bottom: 0;
   margin-right: 0;
@@ -369,6 +368,22 @@
     grid-template-areas: "."
                          "Area";
   }
+
+  .profinfodiv.card {
+    height: auto;
+    overflow: hidden;
+  }
+
+  .contentwrapper {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .heading-9 {
+    font-size: 65px;
+  }
+
+
 
 
 }
