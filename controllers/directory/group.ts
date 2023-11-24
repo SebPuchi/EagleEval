@@ -1,4 +1,4 @@
-import { IProfessor } from '../models/professor';
+import { IProfessor } from '../../models/professor';
 
 class Group {
   private name: string;
