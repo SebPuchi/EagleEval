@@ -1,10 +1,9 @@
-import convertHtmlToJson from '../controllers/directory/scrape'; // Replace with the actual file name
+import convertHtmlToJson from '../controllers/directory/scrape';
+import html from './testDirPage.html';
 
 describe('convertHtmlToJson', () => {
   test('it should parse table and list HTML into JSON objects', () => {
-    const rawHtml = `
-      <!-- Your sample HTML here -->
-    `;
+    const rawHtml = html;
 
     const { tableData, listData } = convertHtmlToJson(rawHtml);
 

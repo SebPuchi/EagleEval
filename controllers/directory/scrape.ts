@@ -1,7 +1,13 @@
 import Group from './group';
 import { IProfessor } from '../../models/professor';
 
-interface TableData {
+/**
+ * Converts raw HTML data into structured JSON objects representing table and list data.
+ *
+ * @param {string} rawHtml - The raw HTML data to be parsed.
+ * @returns {{ tableData: TableData[]; listData: ListData }} - An object containing table and list data.
+ */
+export interface TableData {
   name: string;
   roles: string[];
   phone: string;
@@ -9,7 +15,7 @@ interface TableData {
   link: string;
 }
 
-interface ListData {
+export interface ListData {
   departments: { name: string; link: string }[];
 }
 
