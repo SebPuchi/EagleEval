@@ -1,21 +1,21 @@
-import consoleStamp from "console-stamp";
+import consoleStamp from 'console-stamp';
 import {
   connectToDatabase,
   closeDatabaseConnection,
-} from "../controllers/mongo.js";
+} from '../controllers/mongo';
 
 // Create a middleware function to close the Mongoose connection
 export const closeMongooseConnection = () => {
   // action after response
-  var afterResponse = function () {
+  const afterResponse = () => {
     // any other clean ups
     closeDatabaseConnection().then(() => {
-      console.log("Closed mongodb connection.");
+      console.log('Closed mongodb connection.');
     });
   };
 
   // hooks to execute after response
-  process.on("exit", afterResponse);
+  process.on('exit', afterResponse);
 };
 
 // Middleware to connect to the database
