@@ -9,7 +9,7 @@ import { Document, Model, Types } from 'mongoose';
  * @param {any} updateData - The data to update the document with.
  * @returns {Promise<T | null>} - A Promise that resolves to the updated document or null if not found.
  */
-async function findAndUpdateDocument<T extends Document>(
+export async function findAndUpdateDocument<T extends Document>(
   model: Model<T>,
   condition: any,
   updateData: any
@@ -40,11 +40,11 @@ async function findAndUpdateDocument<T extends Document>(
  * @param {P} parameter - The parameter field to search in.
  * @returns {Promise<T[]>} - A Promise that resolves to an array of documents matching the search criteria.
  */
-async function searchForId<T extends Document, P extends keyof T>(
+export async function searchForId<T extends Document, P extends keyof T>(
   id: string,
   model: Model<T>,
   parameter: P
-): Promise<T[]> {
+): Promise<T[] | null> {
   try {
     // Verify if the provided ID is a valid ObjectId
     if (!Types.ObjectId.isValid(id)) {

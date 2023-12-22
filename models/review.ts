@@ -18,9 +18,8 @@ const reviewSchema: Schema<IReview> = new Schema({
   professor_id: {
     type: Schema.Types.ObjectId,
     ref: 'Professor',
-    required: true,
   },
-  course_id: { type: Schema.Types.ObjectId, ref: 'Course', required: true },
+  course_id: { type: Schema.Types.ObjectId, ref: 'Course' },
   semester: String,
   department: String,
   school: { type: String, required: true },

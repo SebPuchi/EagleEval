@@ -53,7 +53,7 @@ const genBody = (code: string, instructor: string): string => {
 /**
  * Retrieves more detailed data for each review entry.
  *
- * @param code - The code parameter.
+ * @param code - The course code parameter.
  * @param instructor - The instructor parameter.
  * @returns A Promise that resolves to the detailed data or null if no data is found.
  */
