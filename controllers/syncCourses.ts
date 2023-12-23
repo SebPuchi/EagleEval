@@ -11,6 +11,7 @@ import {
   removeKeysFromArray,
   removeDuplicateObjects,
 } from '../utils/fetchUtils';
+import { ICourse } from 'models/course';
 
 const COURSE_DATA_URLS: string[] = [
   'https://bcweb.bc.edu/aem/coursesfall.json',
@@ -61,9 +62,9 @@ async function fetchJsonsFromUrls(urlArray: string[]): Promise<any[]> {
 /**
  * Processes new course data from the BC website.
  *
- * @returns {Promise<any[]>} - A Promise that resolves to an array of parsed and cleaned JSON data.
+ * @returns {Promise<ICourse[]>} - A Promise that resolves to an array of parsed and cleaned JSON data.
  */
-export async function processNewData(): Promise<any[]> {
+export async function fetchCourseData(): Promise<ICourse[]> {
   const uneeded_keys: string[] = [
     'course_id',
     'comments',
@@ -84,7 +85,7 @@ export async function processNewData(): Promise<any[]> {
 
   const new_json_data = fetchJsonsFromUrls(COURSE_DATA_URLS);
 
-  const parsed_json: any[] = [];
+  const courses: ICourse[] = [];
 
   console.log('Getting course data from BC site');
 
@@ -92,9 +93,9 @@ export async function processNewData(): Promise<any[]> {
     for (const result of results) {
       let clean_json = removeKeysFromArray(result.payload, uneeded_keys);
       let trimmed_json = removeDuplicateObjects(clean_json);
-      parsed_json.push(trimmed_json);
+      courses.push(<ICourse>trimmed_json);
     }
   });
 
-  return parsed_json;
+  return courses;
 }

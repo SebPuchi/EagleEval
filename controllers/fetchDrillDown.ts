@@ -5,6 +5,7 @@ import {
   removeKeysFromArray,
   cleanKeysAndRemoveNonASCII,
 } from '../utils/fetchUtils';
+import { IDrilldown } from 'models/drilldown';
 
 interface RequestBody {
   strUiCultureIn: string;
@@ -60,7 +61,7 @@ const genBody = (code: string, instructor: string): string => {
 export const getDrillDown = async (
   code: string,
   instructor: string
-): Promise<any | null> => {
+): Promise<IDrilldown | null> => {
   // Data values to exclude in output
   const uneeded_keys: string[] = [
     'learningobjectivesclear(c)',
@@ -100,5 +101,5 @@ export const getDrillDown = async (
   // Remove uneeded keys in json
   let result = removeKeysFromArray(clean_json, uneeded_keys);
 
-  return result;
+  return <IDrilldown>result;
 };

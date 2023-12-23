@@ -11,14 +11,30 @@ import { Types } from 'mongoose';
 export default function cacheReview(
   reviewData: IReview
 ): Promise<IReview | null> {
+  // Assert that at least one of professor_id or course_id is a valid value
+  if (!(reviewData.professor_id || reviewData.course_id)) {
+    throw new Error(
+      'At least one of professor_id or course_id must be provided.'
+    );
+  }
   /**
-   * The filter object used to identify the document in the ReviewModel.
-   * @type {{ [key: string]: Schema.Types.ObjectId | string }}
+   * Constructs a Mongoose filter to find documents with specific criteria.
+   *
+   * @param {string} professorId - The value for the 'professor_id' field that documents must match.
+   * @param {string} courseId - The value for the 'course_id' field that documents must match at least one of.
+   * @param {string} semester - The value for the 'semester' field that documents must match at least one of.
+   * @returns {Object} - Mongoose filter object.
    */
-  const filter: { [key: string]: Types.ObjectId | string | undefined } = {
-    professor_id: reviewData.professor_id,
-    course_id: reviewData.course_id,
-    semester: reviewData.semester,
+  const filter = {
+    $and: [
+      { professor_id: reviewData.professor_id },
+      {
+        $or: [
+          { course_id: reviewData.course_id },
+          { semester: reviewData.semester },
+        ],
+      },
+    ],
   };
 
   // Call the findAndUpdateDocument function to perform the caching operation.

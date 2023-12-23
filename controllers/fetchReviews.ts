@@ -1,10 +1,10 @@
-import fetch from 'node-fetch';
+import fetch, { isRedirect } from 'node-fetch';
 import HtmlTableToJson from '../utils/HtmlTableToJson';
 import {
   removeKeysFromArray,
   cleanKeysAndRemoveNonASCII,
 } from '../utils/fetchUtils';
-import { raw } from 'body-parser';
+import { IReview } from 'models/review';
 
 interface ReviewBody {
   strUiCultureIn: string;
@@ -22,7 +22,11 @@ interface ReviewBody {
   pageSize: string;
 }
 
-// Function to generate the request body for the POST request to Avalanche Blue.
+/**
+ * Generates the request body for the POST request to Avalanche Blue.
+ * @param query - The query string to include in the request body.
+ * @returns A JSON string representing the request body.
+ */
 const genBody = (query: string): string => {
   // Define the request body as a TypeScript object.
   let body: ReviewBody = {
@@ -44,8 +48,12 @@ const genBody = (query: string): string => {
   return JSON.stringify(body);
 };
 
-// Async function to fetch reviews from the BC Avalanche Blue API, parse the response, and return review data as JSON.
-export const getReviews = async (query: string): Promise<any> => {
+/**
+ * Fetches reviews from the BC Avalanche Blue API, parses the response, and returns review data as JSON.
+ * @param query - The query string for fetching reviews.
+ * @returns A Promise that resolves to the review data as JSON.
+ */
+export const getReviews = async (query: string): Promise<IReview | null> => {
   // Data values to exclude in output
   const uneeded_keys: string[] = [
     'dpt_ins_overall',
@@ -84,5 +92,5 @@ export const getReviews = async (query: string): Promise<any> => {
   // Remove uneeded keys in json
   let result = removeKeysFromArray(clean_json, uneeded_keys);
 
-  return result;
+  return <IReview>result;
 };

@@ -8,7 +8,7 @@
  * @param {any[]} inputArray - The array of JSON objects to clean.
  * @returns {any[]} - A new array of cleaned JSON objects.
  */
-export const cleanKeysAndRemoveNonASCII = (inputArray: any[]): any[] => {
+export const cleanKeysAndRemoveNonASCII = (inputArray: any[]): any => {
   return inputArray.map((jsonObject) => {
     const cleanedObject: { [key: string]: any } = {};
     for (const key in jsonObject) {
@@ -34,7 +34,7 @@ export const cleanKeysAndRemoveNonASCII = (inputArray: any[]): any[] => {
 export const removeKeysFromArray = (
   arr: any[],
   keysToRemove: string[]
-): any[] => {
+): any => {
   // Use the map method to create a new array with the specified keys removed
   const newArray = arr.map((obj) => {
     // Create a copy of the original object to avoid modifying it directly
@@ -60,7 +60,7 @@ export const removeKeysFromArray = (
  * @param {any[]} arr - The array of objects to remove duplicates from.
  * @returns {any[]} - A new array with duplicate objects removed.
  */
-export const removeDuplicateObjects = (arr: any[]): any[] => {
+export const removeDuplicateObjects = (arr: any[]): any => {
   const uniqueObjects: any[] = [];
   const seenObjects = new Set<string>();
 

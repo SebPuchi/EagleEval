@@ -11,6 +11,9 @@ import { Types } from 'mongoose';
 export default function cacheDrilldown(
   ddData: IDrilldown
 ): Promise<IDrilldown | null> {
+  if (!ddData.review_id) {
+    throw new Error('review_id must be set for drilldown object');
+  }
   /**
    * The filter object used to identify the document in the DrilldownModel.
    * @type {Record<string, Schema.Types.ObjectId>}
