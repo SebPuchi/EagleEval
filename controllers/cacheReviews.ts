@@ -1,11 +1,11 @@
-import ReviewModel, { IReview } from 'models/review';
-import { findAndUpdateDocument } from 'utils/mongoUtils';
+import ReviewModel, { IReview } from '../models/review';
+import { findAndUpdateDocument } from '../utils/mongoUtils';
 import { Types } from 'mongoose';
 
 /**
  * Caches review data by updating or creating a document in the ReviewModel.
  *
- * @param {any} reviewData - The review data to be cached.
+ * @param {IReview} reviewData - The review data to be cached.
  * @returns {Promise<IReview | null>} - A promise that resolves to the updated or created review document, or null if not found.
  */
 export default function cacheReview(

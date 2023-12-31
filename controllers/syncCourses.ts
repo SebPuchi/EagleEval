@@ -11,7 +11,9 @@ import {
   removeKeysFromArray,
   removeDuplicateObjects,
 } from '../utils/fetchUtils';
-import { ICourse } from 'models/course';
+import Course, { ICourse } from 'models/course';
+import { findAndUpdateDocument } from 'utils/mongoUtils';
+import { Types } from 'mongoose';
 
 const COURSE_DATA_URLS: string[] = [
   'https://bcweb.bc.edu/aem/coursesfall.json',
@@ -98,4 +100,29 @@ export async function fetchCourseData(): Promise<ICourse[]> {
   });
 
   return courses;
+}
+
+/**
+ * Update course collection in database
+ *
+ * @param {[ICourse[]]} - Array of new course data
+ * @returns {Promise<void>}
+ */
+export async function updateCourseCollection(
+  courseData: ICourse[]
+): Promise<void> {
+  let promises: Promise<ICourse>[] = [];
+
+  // loop through each course
+  for (const course of courseData) {
+    const filter: Record<string, string> = {
+      code: course.code,
+    };
+
+    promises.push(
+      <Promise<ICourse>>findAndUpdateDocument(Course, filter, course)
+    );
+  }
+  console.log('Updating course data in mongoDB');
+  Promise.all(promises);
 }

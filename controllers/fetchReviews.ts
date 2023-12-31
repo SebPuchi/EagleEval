@@ -4,7 +4,7 @@ import {
   removeKeysFromArray,
   cleanKeysAndRemoveNonASCII,
 } from '../utils/fetchUtils';
-import { IReview } from 'models/review';
+import { IReview } from '../models/review';
 
 interface ReviewBody {
   strUiCultureIn: string;
@@ -53,7 +53,7 @@ const genBody = (query: string): string => {
  * @param query - The query string for fetching reviews.
  * @returns A Promise that resolves to the review data as JSON.
  */
-export const getReviews = async (query: string): Promise<IReview | null> => {
+export const getReviews = async (query: string): Promise<IReview[] | null> => {
   // Data values to exclude in output
   const uneeded_keys: string[] = [
     'dpt_ins_overall',
@@ -92,5 +92,5 @@ export const getReviews = async (query: string): Promise<IReview | null> => {
   // Remove uneeded keys in json
   let result = removeKeysFromArray(clean_json, uneeded_keys);
 
-  return <IReview>result;
+  return <IReview[]>result;
 };

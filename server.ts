@@ -1,25 +1,22 @@
 import 'log-timestamp';
-import * as express from 'express';
+import express, { Express, Request, Response } from 'express';
 import * as bodyParser from 'body-parser';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
-import * as path from 'path';
-import { fileURLToPath } from 'url';
 
 // Import routes and middleware
 import { fetch_router } from './routes/fetch';
+/*
 import { update_router } from './routes/update';
 import { search_router } from './routes/search';
 import { cache_router } from './routes/cache';
 import { scrape_router } from './routes/scrape';
+*/
 import {
   createMongooseConnection,
   closeMongooseConnection,
 } from './middleware/mongoConnection';
 import { handleCors } from './middleware/cors';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 // Express application
 const app = express();
@@ -40,12 +37,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // Create link to Angular build directory
-const distDir = path.join(__dirname, '/dist/eagle-eval');
-app.use(express.static(distDir));
+//const distDir = path.join(__dirname, '/dist/eagle-eval');
+//app.use(express.static(distDir));
 
 // Add routes for fetch
 app.use('/api/fetch', fetch_router);
-
+/*
 // Add routes for updating mongodb
 private_api.use('/api/update', update_router);
 
@@ -57,7 +54,7 @@ app.use('/api/cache', cache_router);
 
 // Add routes for scraping review
 private_api.use('/api/scrape', scrape_router);
-
+*/
 const port = process.env['PORT'] || 80;
 const privatePort = 8080;
 

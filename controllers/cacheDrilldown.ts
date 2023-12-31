@@ -1,5 +1,5 @@
-import DrilldownModel, { IDrilldown } from 'models/drilldown';
-import { findAndUpdateDocument } from 'utils/mongoUtils';
+import DrilldownModel, { IDrilldown } from '../models/drilldown';
+import { findAndUpdateDocument } from '../utils/mongoUtils';
 import { Types } from 'mongoose';
 
 /**

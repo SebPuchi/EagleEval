@@ -35,7 +35,7 @@ export async function connectToDatabase(): Promise<void> {
       {
         user: username,
         pass: password,
-        dbName: 'prod',
+        dbName: 'dev',
         useNewUrlParser: true,
         useUnifiedTopology: true,
       } as ConnectOptions

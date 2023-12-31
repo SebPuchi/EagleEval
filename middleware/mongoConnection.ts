@@ -1,4 +1,3 @@
-import consoleStamp from 'console-stamp';
 import {
   connectToDatabase,
   closeDatabaseConnection,
