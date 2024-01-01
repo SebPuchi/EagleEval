@@ -1,5 +1,6 @@
 // fetch.js - Fetch routes module
 import express, { Request, Response } from 'express';
+import { Types } from 'mongoose';
 
 import { getReviews } from '../controllers/fetchReviews';
 import { getDrillDown } from '../controllers/fetchDrillDown';
@@ -33,11 +34,18 @@ fetch_router.get('/drilldown', async (req: Request, res: Response) => {
   // Query paramters for prof and course code
   const prof = (req.query['prof'] as string) || null;
   const course = (req.query['course'] as string) || null;
+  const semester = (req.query['semster'] as string) || null;
+  const review_id = (req.query['id'] as any) || null;
 
-  if (prof && course) {
+  if (prof && course && semester && review_id) {
     console.log('Searching for ' + prof + ' ' + course + ' drilldown');
 
-    let fetch_response: IDrilldown[] | null = await getDrillDown(course, prof);
+    let fetch_response: IDrilldown | null = await getDrillDown(
+      course,
+      prof,
+      semester,
+      <Types.ObjectId>review_id
+    );
 
     if (fetch_response) {
       console.log('Successfully fetched drilldown for ' + prof + ' ' + course);

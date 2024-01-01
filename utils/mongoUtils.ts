@@ -1,23 +1,23 @@
-import { Document, Model, Types } from 'mongoose';
+import { Document, Model, Types, FilterQuery } from 'mongoose';
 
 /**
  * Finds and updates (upserts) a document based on the provided condition.
  *
  * @template T - The type of the Mongoose document.
  * @param {Model<T>} model - The Mongoose model.
- * @param {any} condition - The condition to find the document.
+ * @param {FilterQuery<Document>} filter - The filter criteria to find the document.
  * @param {any} updateData - The data to update the document with.
  * @returns {Promise<T | null>} - A Promise that resolves to the updated document or null if not found.
  */
 export async function findAndUpdateDocument<T extends Document>(
   model: Model<T>,
-  condition: any,
+  filter: FilterQuery<T>,
   updateData: any
 ): Promise<T | null> {
   try {
     // Find and update (upsert) the document
     const updatedDocument = await model.findOneAndUpdate(
-      condition,
+      filter,
       updateData,
       { new: true, upsert: true } // Set upsert option to true
     );
@@ -88,4 +88,34 @@ export async function searchById<T extends Document>(
   }
 
   return result;
+}
+
+/**
+ * Finds a document in the provided Mongoose model based on the provided filter and returns its ID.
+ *
+ * @param {Model<Document>} model - The Mongoose model to search for the document.
+ * @param {FilterQuery<Document>} filter - The filter criteria to find the document.
+ * @returns {Promise<Types.ObjectId | null>} A Promise that resolves to the ID of the matching document, or null if no document is found.
+ * @throws {Error} If an error occurs during the document retrieval process.
+ */
+export async function findDocumentIdByFilter<T extends Document>(
+  model: Model<T>,
+  filter: FilterQuery<T>
+): Promise<Types.ObjectId | null> {
+  try {
+    // Find the document based on the provided filter
+    const document = await model.findOne(filter);
+
+    // If no document is found, return null
+    if (!document) {
+      return null;
+    }
+
+    // Return the ID of the matching document
+    return <Types.ObjectId>document._id;
+  } catch (error) {
+    // Handle errors (log, throw, etc.)
+    console.error('Error finding document:', error);
+    throw error;
+  }
 }

@@ -1,5 +1,6 @@
 import HtmlTableToJson from '../utils/HtmlTableToJson';
 import fetch from 'node-fetch';
+import { Types } from 'mongoose';
 // Import fetch utils
 import {
   removeKeysFromArray,
@@ -56,12 +57,16 @@ const genBody = (code: string, instructor: string): string => {
  *
  * @param code - The course code parameter.
  * @param instructor - The instructor parameter.
+ * @param semester - Semster of the review.
+ * @param review_id - The id of the parent review document.
  * @returns A Promise that resolves to the detailed data or null if no data is found.
  */
 export const getDrillDown = async (
   code: string,
-  instructor: string
-): Promise<IDrilldown[] | null> => {
+  instructor: string,
+  semester: string,
+  review_id: Types.ObjectId
+): Promise<IDrilldown | null> => {
   // Data values to exclude in output
   const uneeded_keys: string[] = [
     'learningobjectivesclear(c)',
@@ -101,5 +106,17 @@ export const getDrillDown = async (
   // Remove uneeded keys in json
   let result = removeKeysFromArray(clean_json, uneeded_keys);
 
-  return <IDrilldown[]>result;
+  let match = null;
+  for (const document of result) {
+    if (document.semester === semester) {
+      match = document;
+      match.review_id = review_id;
+    }
+  }
+
+  if (!match) {
+    return null;
+  }
+
+  return <IDrilldown>match;
 };

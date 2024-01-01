@@ -1,10 +1,14 @@
 import fetch, { isRedirect } from 'node-fetch';
+import { FilterQuery, Types } from 'mongoose';
 import HtmlTableToJson from '../utils/HtmlTableToJson';
 import {
   removeKeysFromArray,
   cleanKeysAndRemoveNonASCII,
 } from '../utils/fetchUtils';
 import { IReview } from '../models/review';
+import ProfessorModel, { IProfessor } from '../models/professor';
+import CourseModel, { ICourse } from '../models/course';
+import { findDocumentIdByFilter } from '../utils/mongoUtils';
 
 interface ReviewBody {
   strUiCultureIn: string;
@@ -56,6 +60,11 @@ const genBody = (query: string): string => {
 export const getReviews = async (query: string): Promise<IReview[] | null> => {
   // Data values to exclude in output
   const uneeded_keys: string[] = [
+    'course_code',
+    'course_name',
+    'department',
+    'school',
+    'instructor',
     'dpt_ins_overall',
     'dpt_crs_overall',
     'ratio',
@@ -89,8 +98,29 @@ export const getReviews = async (query: string): Promise<IReview[] | null> => {
   // Clean JSON keys
   let clean_json = cleanKeysAndRemoveNonASCII(json_objects);
 
+  // Search mongo db for course and prof doc ids
+  const prof_filter: FilterQuery<IProfessor> = {
+    name: clean_json['instructor'],
+  };
+  const prof_id: Types.ObjectId | null = await findDocumentIdByFilter(
+    ProfessorModel,
+    prof_filter
+  );
+
+  const course_filter: FilterQuery<ICourse> = {
+    code: clean_json['course_code'],
+  };
+  const course_id: Types.ObjectId | null = await findDocumentIdByFilter(
+    CourseModel,
+    course_filter
+  );
+
   // Remove uneeded keys in json
   let result = removeKeysFromArray(clean_json, uneeded_keys);
+
+  // Add ids to result
+  result.professor_id = prof_id;
+  result.course_id = course_id;
 
   return <IReview[]>result;
 };
