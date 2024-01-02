@@ -108,7 +108,7 @@ export const getReviews = async (query: string): Promise<IReview[] | null> => {
   );
 
   const course_filter: FilterQuery<ICourse> = {
-    code: clean_json['course_code'],
+    code: clean_json['course_code'].slice(0, 8),
   };
   const course_id: Types.ObjectId | null = await findDocumentIdByFilter(
     CourseModel,

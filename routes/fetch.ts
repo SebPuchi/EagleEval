@@ -41,9 +41,6 @@ fetch_router.get('/drilldown', async (req: Request, res: Response) => {
     console.log('Searching for ' + prof + ' ' + course + ' drilldown');
 
     let fetch_response: IDrilldown | null = await getDrillDown(
-      course,
-      prof,
-      semester,
       <Types.ObjectId>review_id
     );
 

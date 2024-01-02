@@ -5,7 +5,7 @@ import mongoose, { Schema, Types, Document } from 'mongoose';
 export interface IReview extends Document {
   professor_id: Types.ObjectId;
   course_id: Types.ObjectId;
-  semester?: string;
+  semester: string;
   instructor_overall?: number;
   course_overall?: number;
 }

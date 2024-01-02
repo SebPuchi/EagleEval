@@ -69,12 +69,12 @@ export async function searchForId<T extends Document, P extends keyof T>(
  *
  * @template T - The type of the Mongoose document.
  * @param {Model<T>} model - The Mongoose model.
- * @param {string} id - The ID of the document to search for.
+ * @param {Types.ObjectId} id - The ID of the document to search for.
  * @returns {Promise<T | null>} - A Promise that resolves to the found document or null if not found.
  */
 export async function searchById<T extends Document>(
   model: Model<T>,
-  id: string
+  id: Types.ObjectId
 ): Promise<T | null> {
   if (!Types.ObjectId.isValid(id)) {
     console.error('Invalid ID: ', id);

@@ -7,6 +7,11 @@ import {
   cleanKeysAndRemoveNonASCII,
 } from '../utils/fetchUtils';
 import { IDrilldown } from '../models/drilldown';
+import ReviewMode, { IReview } from '../models/review';
+import CourseModel, { ICourse } from '../models/course';
+import ProfessorModel, { IProfessor } from '../models/professor';
+import { searchById } from '../utils/mongoUtils';
+import ReviewModel from '../models/review';
 
 interface RequestBody {
   strUiCultureIn: string;
@@ -55,18 +60,39 @@ const genBody = (code: string, instructor: string): string => {
 /**
  * Retrieves more detailed data for each review entry.
  *
- * @param code - The course code parameter.
- * @param instructor - The instructor parameter.
- * @param semester - Semster of the review.
  * @param review_id - The id of the parent review document.
  * @returns A Promise that resolves to the detailed data or null if no data is found.
  */
 export const getDrillDown = async (
-  code: string,
-  instructor: string,
-  semester: string,
   review_id: Types.ObjectId
 ): Promise<IDrilldown | null> => {
+  // Get search parames from mongo docs
+  const parent_review: IReview | null = await searchById(
+    ReviewModel,
+    review_id
+  );
+
+  if (parent_review) {
+    var semester: string = parent_review.semester;
+    const prof: IProfessor | null = await searchById(
+      ProfessorModel,
+      parent_review.professor_id
+    );
+    const course: ICourse | null = await searchById(
+      CourseModel,
+      parent_review.course_id
+    );
+    if (prof && course) {
+      var code: string = course.code;
+      var instructor: string = prof.name;
+    } else {
+      console.log('Parent review does not have prof and course id set');
+      return null;
+    }
+  } else {
+    console.log('Review id not found when getting drilldown for ' + review_id);
+    return null;
+  }
   // Data values to exclude in output
   const uneeded_keys: string[] = [
     'learningobjectivesclear(c)',
