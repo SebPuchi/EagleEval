@@ -32,26 +32,23 @@ fetch_router.get('/reviews', async (req: Request, res: Response) => {
 
 fetch_router.get('/drilldown', async (req: Request, res: Response) => {
   // Query paramters for prof and course code
-  const prof = (req.query['prof'] as string) || null;
-  const course = (req.query['course'] as string) || null;
-  const semester = (req.query['semster'] as string) || null;
   const review_id = (req.query['id'] as any) || null;
 
-  if (prof && course && semester && review_id) {
-    console.log('Searching for ' + prof + ' ' + course + ' drilldown');
+  if (review_id) {
+    console.log('Searching for drilldown: ID - ' + review_id);
 
     let fetch_response: IDrilldown | null = await getDrillDown(
       <Types.ObjectId>review_id
     );
 
     if (fetch_response) {
-      console.log('Successfully fetched drilldown for ' + prof + ' ' + course);
+      console.log('Successfully got data for drilldown: ID - ' + review_id);
 
       return res.json(fetch_response);
     } else {
-      return res.send('No drilldown found for ' + prof + ' ' + course);
+      return res.send('No data for for drilldown: ID - ' + review_id);
     }
   } else {
-    return res.send('Query string must include prof and course');
+    return res.send('Query string must include parent review id');
   }
 });

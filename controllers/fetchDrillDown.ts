@@ -74,16 +74,19 @@ export const getDrillDown = async (
 
   if (parent_review) {
     var semester: string = parent_review.semester;
+    // Get prof document from mongo
     const prof: IProfessor | null = await searchById(
       ProfessorModel,
       parent_review.professor_id
     );
+    // Get course document from mongo
     const course: ICourse | null = await searchById(
       CourseModel,
       parent_review.course_id
     );
     if (prof && course) {
-      var code: string = course.code;
+      // code includes course id and section combined
+      var code: string = course.code + parent_review.section;
       var instructor: string = prof.name;
     } else {
       console.log('Parent review does not have prof and course id set');
@@ -133,6 +136,7 @@ export const getDrillDown = async (
   let result = removeKeysFromArray(clean_json, uneeded_keys);
 
   let match = null;
+  // Find correct review data by matching semester
   for (const document of result) {
     if (document.semester === semester) {
       match = document;

@@ -1,3 +1,4 @@
+import { JSDOM } from 'jsdom';
 import Group from './group';
 import { IProfessor } from '../../models/professor';
 
@@ -23,8 +24,11 @@ function convertHtmlToJson(rawHtml: string): {
   tableData: TableData[];
   listData: ListData;
 } {
-  const parser = new DOMParser();
-  const doc = parser.parseFromString(rawHtml, 'text/html');
+  const dom = new JSDOM(rawHtml);
+  const window = dom.window;
+
+  // Access the document and other DOM APIs
+  const doc = window.document;
 
   // Extract table data
   const tableRows = doc.querySelectorAll('tr');

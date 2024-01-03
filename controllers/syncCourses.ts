@@ -11,8 +11,8 @@ import {
   removeKeysFromArray,
   removeDuplicateObjects,
 } from '../utils/fetchUtils';
-import Course, { ICourse } from 'models/course';
-import { findAndUpdateDocument } from 'utils/mongoUtils';
+import Course, { ICourse } from '../models/course';
+import { findAndUpdateDocument } from '../utils/mongoUtils';
 import { Types } from 'mongoose';
 
 const COURSE_DATA_URLS: string[] = [
@@ -69,6 +69,9 @@ async function fetchJsonsFromUrls(urlArray: string[]): Promise<any[]> {
 export async function fetchCourseData(): Promise<ICourse[]> {
   const uneeded_keys: string[] = [
     'course_id',
+    'dept_code',
+    'crs_number',
+    'crs_desc',
     'comments',
     'xlist',
     'coreq',
@@ -87,18 +90,21 @@ export async function fetchCourseData(): Promise<ICourse[]> {
 
   const new_json_data = fetchJsonsFromUrls(COURSE_DATA_URLS);
 
-  const courses: ICourse[] = [];
+  let courses: ICourse[] = [];
 
   console.log('Getting course data from BC site');
 
   await new_json_data.then((results) => {
     for (const result of results) {
+      for (const course of result.payload) {
+        course.code = course.course_id.substring(0, 8);
+        course.description = course.crs_desc;
+      }
       let clean_json = removeKeysFromArray(result.payload, uneeded_keys);
       let trimmed_json = removeDuplicateObjects(clean_json);
-      courses.push(<ICourse>trimmed_json);
+      courses = courses.concat(<ICourse[]>trimmed_json);
     }
   });
-
   return courses;
 }
 
@@ -124,5 +130,5 @@ export async function updateCourseCollection(
     );
   }
   console.log('Updating course data in mongoDB');
-  Promise.all(promises);
+  await Promise.all(promises);
 }

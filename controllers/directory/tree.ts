@@ -15,25 +15,28 @@ function buildTree(rootUrl: string, name: string): Group {
   let root = new Group(name);
 
   // Get data for the root group from the directory
-  const rootHTMLPromise: Promise<string> = fillAndSubmitForm(rootUrl);
+  const rootHTMLPromise: Promise<string[]> = fillAndSubmitForm(rootUrl);
   rootHTMLPromise
     .then((rootHTML) => {
-      // Parse HTML into JSON objects of group members and owned groups
-      const { tableData, listData } = convertHtmlToJson(rootHTML);
+      console.log(rootHTML);
+      for (const page of rootHTML) {
+        // Parse HTML into JSON objects of group members and owned groups
+        const { tableData, listData } = convertHtmlToJson(page);
 
-      for (const tableEntry of tableData) {
-        const newProf: IProfessor = <IProfessor>{
-          name: tableEntry.name,
-          title: tableEntry.roles,
-          phone: tableEntry.phone,
-          photoLink: tableEntry.photoUrl,
-        };
-        root.addMember(newProf);
-      }
+        for (const tableEntry of tableData) {
+          const newProf: IProfessor = <IProfessor>{
+            name: tableEntry.name,
+            title: tableEntry.roles,
+            phone: tableEntry.phone,
+            photoLink: tableEntry.photoUrl,
+          };
+          root.addMember(newProf);
+        }
 
-      // Recursively fill the tree
-      for (const listItem of listData.departments) {
-        root.addSubgroup(buildTree(listItem.link, listItem.name));
+        // Recursively fill the tree
+        for (const listItem of listData.departments) {
+          root.addSubgroup(buildTree(listItem.link, listItem.name));
+        }
       }
     })
     .catch((error) => {

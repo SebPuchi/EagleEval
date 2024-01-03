@@ -98,29 +98,32 @@ export const getReviews = async (query: string): Promise<IReview[] | null> => {
   // Clean JSON keys
   let clean_json = cleanKeysAndRemoveNonASCII(json_objects);
 
-  // Search mongo db for course and prof doc ids
-  const prof_filter: FilterQuery<IProfessor> = {
-    name: clean_json['instructor'],
-  };
-  const prof_id: Types.ObjectId | null = await findDocumentIdByFilter(
-    ProfessorModel,
-    prof_filter
-  );
+  for (const review of clean_json) {
+    // Search mongo db for course and prof doc ids
+    const prof_filter: FilterQuery<IProfessor> = {
+      name: review['instructor'],
+    };
+    const prof_id: Types.ObjectId | null = await findDocumentIdByFilter(
+      ProfessorModel,
+      prof_filter
+    );
 
-  const course_filter: FilterQuery<ICourse> = {
-    code: clean_json['course_code'].slice(0, 8),
-  };
-  const course_id: Types.ObjectId | null = await findDocumentIdByFilter(
-    CourseModel,
-    course_filter
-  );
+    const course_filter: FilterQuery<ICourse> = {
+      code: review['course_code'].substring(0, 8),
+    };
+    const course_id: Types.ObjectId | null = await findDocumentIdByFilter(
+      CourseModel,
+      course_filter
+    );
+
+    review.section = review['course_code'].substring(8);
+    // Add ids to result
+    review.professor_id = prof_id;
+    review.course_id = course_id;
+  }
 
   // Remove uneeded keys in json
   let result = removeKeysFromArray(clean_json, uneeded_keys);
-
-  // Add ids to result
-  result.professor_id = prof_id;
-  result.course_id = course_id;
 
   return <IReview[]>result;
 };

@@ -3,7 +3,7 @@ import mongoose, { Schema, Document } from 'mongoose';
 
 // Define the Course Interface
 export interface ICourse extends Document {
-  name: string;
+  title: string;
   code: string;
   college: string;
   subject: string;
@@ -12,7 +12,7 @@ export interface ICourse extends Document {
 
 // Define the Course Schema
 const courseSchema: Schema<ICourse> = new Schema({
-  name: { type: String, required: true },
+  title: { type: String, required: true },
   code: { type: String, required: true },
   college: { type: String, required: true },
   subject: { type: String, required: true },

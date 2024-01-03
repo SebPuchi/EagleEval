@@ -6,6 +6,7 @@ export interface IReview extends Document {
   professor_id: Types.ObjectId;
   course_id: Types.ObjectId;
   semester: string;
+  section: number;
   instructor_overall?: number;
   course_overall?: number;
 }
@@ -23,6 +24,7 @@ const reviewSchema: Schema<IReview> = new Schema({
     required: true,
   },
   semester: String,
+  section: Number,
   instructor_overall: Number,
   course_overall: Number,
 });

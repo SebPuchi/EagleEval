@@ -2,10 +2,10 @@ import cacheDrilldown from './cacheDrilldown';
 import cacheReview from './cacheReviews';
 import { getReviews } from './fetchReviews';
 import { getDrillDown } from './fetchDrillDown';
-import DrilldownModel, { IDrilldown } from 'models/drilldown';
-import ReviewModel, { IReview } from 'models/review';
-import ProfessorModel, { IProfessor } from 'models/professor';
-import CourseModel, { ICourse } from 'models/course';
+import DrilldownModel, { IDrilldown } from '../models/drilldown';
+import ReviewModel, { IReview } from '../models/review';
+import ProfessorModel, { IProfessor } from '../models/professor';
+import CourseModel, { ICourse } from '../models/course';
 import { Types, Model, Document } from 'mongoose';
 
 // define consts for batch processing
@@ -53,7 +53,7 @@ async function scrapeReviews<T extends Document>(
 
         console.log('Getting reviews for ', name);
         // Fetch reviews for the current item
-        let reviewData: IReview | null = await getReviews(name);
+        let reviewData: IReview[] | null = await getReviews(name);
 
         if (reviewData != null) {
           // Set the ID in the review data

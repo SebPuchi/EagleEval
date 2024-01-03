@@ -6,8 +6,8 @@ import rateLimit from 'express-rate-limit';
 
 // Import routes and middleware
 import { fetch_router } from './routes/fetch';
-/*
 import { update_router } from './routes/update';
+/*
 import { search_router } from './routes/search';
 import { cache_router } from './routes/cache';
 import { scrape_router } from './routes/scrape';
@@ -42,9 +42,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 // Add routes for fetch
 app.use('/api/fetch', fetch_router);
-/*
+
 // Add routes for updating mongodb
 private_api.use('/api/update', update_router);
+/*
 
 // Add routes for searching database
 app.use('/api/search', search_router);
