@@ -1,5 +1,6 @@
 import puppeteer from 'puppeteer';
 import { config } from '../../config/BCLoginConfig';
+import { next } from 'cheerio/lib/api/traversing';
 
 // BC username and password
 const username: string | undefined = config.bcAuth.username;
@@ -50,22 +51,23 @@ async function fillAndSubmitForm(targetParam: string): Promise<string[]> {
     await page.waitForNavigation();
 
     // Specify the selector for the button you want to check
-    const buttonSelector = 'a.footable-page-link[name="›"]';
+    const disabledButtonSelector: string =
+      'li.footable-page-nav.disabled[data-page="next"] a.footable-page-link';
+    const buttonSelector: string =
+      'li.footable-page-nav[data-page="next"] a.footable-page-link';
 
-    // Use page.evaluate to check if the button has the .disabled style
-    const buttonDisabled = await page.evaluate((selector) => {
-      const button = document.querySelector(selector);
-      return button && button.classList.contains('disabled');
-    }, buttonSelector);
+    let nextPageButtonDisabled = await page.$(disabledButtonSelector);
 
-    while (!buttonDisabled) {
+    while (!nextPageButtonDisabled) {
       pages.push(await page.content());
 
-      //click to next page
+      // click to next page
       await page.click(buttonSelector);
+
+      nextPageButtonDisabled = await page.$(disabledButtonSelector);
     }
-    // Add last page to list
-    pages.push(await page.content());
+    // Capture a screenshot of the entire page
+    await page.screenshot({ path: 'fullPageScreenshot.png' });
 
     // Get the raw HTML of the redirected page
     return pages;

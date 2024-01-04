@@ -22,6 +22,8 @@ function buildTree(rootUrl: string, name: string): Group {
       for (const page of rootHTML) {
         // Parse HTML into JSON objects of group members and owned groups
         const { tableData, listData } = convertHtmlToJson(page);
+        console.log(tableData);
+        console.log(listData);
 
         for (const tableEntry of tableData) {
           const newProf: IProfessor = <IProfessor>{
