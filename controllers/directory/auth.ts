@@ -1,6 +1,5 @@
 import puppeteer from 'puppeteer';
 import { config } from '../../config/BCLoginConfig';
-import { next } from 'cheerio/lib/api/traversing';
 
 // BC username and password
 const username: string | undefined = config.bcAuth.username;
@@ -66,8 +65,8 @@ async function fillAndSubmitForm(targetParam: string): Promise<string[]> {
 
       nextPageButtonDisabled = await page.$(disabledButtonSelector);
     }
-    // Capture a screenshot of the entire page
-    await page.screenshot({ path: 'fullPageScreenshot.png' });
+    // Add last page
+    pages.push(await page.content());
 
     // Get the raw HTML of the redirected page
     return pages;

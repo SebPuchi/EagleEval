@@ -1,6 +1,6 @@
 import Group from './group';
 import fillAndSubmitForm from './auth';
-import convertHtmlToJson from './scrape';
+import convertHtmlToJson, { ListData } from './scrape';
 import { IProfessor } from '../../models/professor';
 
 /**
@@ -8,9 +8,10 @@ import { IProfessor } from '../../models/professor';
  *
  * @param {string} rootUrl - The URL of the root group in the directory.
  * @param {string} name - The name of the root group.
+ * @param {number} depth - The current layer of the tree (default = 0)
  * @returns {Group} - The root of the tree structure representing the directory.
  */
-function buildTree(rootUrl: string, name: string): Group {
+function buildTree(rootUrl: string, name: string, depth: number = 0): Group {
   // Create root group
   let root = new Group(name);
 
@@ -18,12 +19,12 @@ function buildTree(rootUrl: string, name: string): Group {
   const rootHTMLPromise: Promise<string[]> = fillAndSubmitForm(rootUrl);
   rootHTMLPromise
     .then((rootHTML) => {
-      console.log(rootHTML);
+      let allListData: ListData = { departments: [] };
+
       for (const page of rootHTML) {
         // Parse HTML into JSON objects of group members and owned groups
         const { tableData, listData } = convertHtmlToJson(page);
-        console.log(tableData);
-        console.log(listData);
+        allListData.departments.concat(listData.departments);
 
         for (const tableEntry of tableData) {
           const newProf: IProfessor = <IProfessor>{
@@ -34,11 +35,12 @@ function buildTree(rootUrl: string, name: string): Group {
           };
           root.addMember(newProf);
         }
-
-        // Recursively fill the tree
-        for (const listItem of listData.departments) {
-          root.addSubgroup(buildTree(listItem.link, listItem.name));
-        }
+      }
+      // Print currrent layer of tree
+      root.print(depth);
+      // Recursively fill the tree
+      for (const listItem of allListData.departments) {
+        root.addSubgroup(buildTree(listItem.link, listItem.name, depth + 1));
       }
     })
     .catch((error) => {

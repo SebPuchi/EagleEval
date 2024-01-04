@@ -61,7 +61,7 @@ function convertHtmlToJson(rawHtml: string): {
     const name = listItem.textContent || '';
     const link = listItem.getAttribute('href') || '';
     // Check if all values are empty before adding to the array
-    if (name || link) {
+    if (name || (link && link != '#')) {
       departments.push({ name, link });
     }
   });
