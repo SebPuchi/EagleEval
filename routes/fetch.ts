@@ -23,7 +23,9 @@ fetch_router.get('/reviews', async (req: Request, res: Response) => {
 
       return res.json(fetch_response);
     } else {
-      return res.send('No reviews found for ' + query);
+      console.log('No reviews found for ' + query);
+
+      return res.send('No reviews found');
     }
   } else {
     return res.send('Query string must not be emptry');
