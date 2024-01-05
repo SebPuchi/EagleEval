@@ -58,10 +58,15 @@ function convertHtmlToJson(rawHtml: string): {
   const departments: { name: string; link: string }[] = [];
 
   listItems.forEach((listItem) => {
+    const path = listItem.getAttribute('href');
+
     const name = listItem.textContent || '';
-    const link = listItem.getAttribute('href') || '';
+    const link =
+      path && path != '#'
+        ? 'https://services.bc.edu/directorysearch/main/' + path
+        : '';
     // Check if all values are empty before adding to the array
-    if (name || (link && link != '#')) {
+    if (name && link) {
       departments.push({ name, link });
     }
   });

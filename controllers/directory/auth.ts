@@ -56,9 +56,12 @@ async function fillAndSubmitForm(targetParam: string): Promise<string[]> {
       'li.footable-page-nav[data-page="next"] a.footable-page-link';
 
     let nextPageButtonDisabled = await page.$(disabledButtonSelector);
+    let nextPageButton = await page.$(buttonSelector);
 
-    while (!nextPageButtonDisabled) {
+    while (!nextPageButtonDisabled && nextPageButton) {
       pages.push(await page.content());
+      // Take a screenshot and save it to a file
+      await page.screenshot({ path: 'screenshot.png' });
 
       // click to next page
       await page.click(buttonSelector);
