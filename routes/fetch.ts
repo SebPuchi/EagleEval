@@ -48,7 +48,9 @@ fetch_router.get('/drilldown', async (req: Request, res: Response) => {
 
       return res.json(fetch_response);
     } else {
-      return res.send('No data for for drilldown: ID - ' + review_id);
+      console.log('No data for for drilldown: ID - ' + review_id);
+
+      return res.send('No data for for review id');
     }
   } else {
     return res.send('Query string must include parent review id');
