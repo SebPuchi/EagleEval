@@ -32,6 +32,10 @@ update_router.post('/profs', async (req: Request, res: Response) => {
   //'https://services.bc.edu/directorysearch/pickList!displayInput.action?tabIndexNumber=1&peopleSearchFilter=BC+Community&peopleSearch=&peopleSearchSelect=BC+Community&deptSearch=computer+science&groupEmailSearch=&googleResponse=&searchKey=';
   try {
     const tree: Group = await buildTree(rootURL, 'CSOM');
+
+    console.log('Updating mongo with new data');
+    await tree.updateMongo();
+
     return res.send('Successfully updating prof data');
   } catch (error) {
     console.error('Error updating prof data: ' + error);

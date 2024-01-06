@@ -1,6 +1,5 @@
 import ReviewModel, { IReview } from '../models/review';
 import { findAndUpdateDocument } from '../utils/mongoUtils';
-import { Types } from 'mongoose';
 
 /**
  * Caches review data by updating or creating a document in the ReviewModel.

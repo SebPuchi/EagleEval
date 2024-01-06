@@ -37,9 +37,13 @@ function convertHtmlToJson(rawHtml: string): {
   tableRows.forEach((row) => {
     const name = row.querySelector('.bc-mugshot a')?.textContent || '';
     const roles: string[] = [];
-    const roleElements = row.querySelectorAll('td[headers="title"] div');
+    const roleElements = row.querySelectorAll(
+      'td[headers="title"] div[tabindex="0"]'
+    );
     roleElements.forEach((roleElement) => {
-      roles.push(roleElement.textContent || '');
+      if (roleElement.textContent) {
+        roles.push(roleElement.textContent.trim());
+      }
     });
     const phone = row.querySelector('td[headers="phone"] a')?.textContent || '';
     const photoUrl =

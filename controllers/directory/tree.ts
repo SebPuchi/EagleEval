@@ -38,6 +38,7 @@ async function buildTree(
         phone: tableEntry.phone,
         photoLink: tableEntry.photoUrl,
       };
+
       root.addMember(newProf);
     }
   }

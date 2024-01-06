@@ -19,10 +19,14 @@ export async function findAndUpdateDocument<T extends Document>(
     const updatedDocument = await model.findOneAndUpdate(
       filter,
       updateData,
-      { new: true, upsert: true } // Set upsert option to true
+      { new: true, upsert: true, includeResultMetadata: true } // Set upsert option to true
     );
 
-    return updatedDocument;
+    if (!updatedDocument.lastErrorObject?.updatedExisting) {
+      console.log('Creating new document');
+    }
+
+    return updatedDocument.value;
   } catch (error) {
     // Handle errors appropriately
     console.error('Error finding and updating document:', error);

@@ -1,4 +1,5 @@
 import { IProfessor } from '../../models/professor';
+import { updateProf } from '../syncProfs';
 
 class Group {
   private name: string;
@@ -62,6 +63,22 @@ class Group {
     for (const subgroup of this.subgroups) {
       subgroup.print(depth + 1);
     }
+  }
+
+  // Recursive function to call async function on all IProfessor members and resolve promises
+  async updateMongo(): Promise<void> {
+    // Call the async function on each IProfessor member and store the promises
+    const promises = this.members.map((member) => updateProf(member));
+
+    // Recursively call the function on subgroups and merge their promises
+    const subgroupPromises = this.subgroups.map((subgroup) =>
+      subgroup.updateMongo()
+    );
+
+    const allPromises = promises.concat(subgroupPromises);
+
+    // Resolve all promises using Promise.all
+    await Promise.all(allPromises);
   }
 }
 

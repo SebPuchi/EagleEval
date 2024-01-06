@@ -60,8 +60,6 @@ async function fillAndSubmitForm(targetParam: string): Promise<string[]> {
 
     while (!nextPageButtonDisabled && nextPageButton) {
       pages.push(await page.content());
-      // Take a screenshot and save it to a file
-      await page.screenshot({ path: 'screenshot.png' });
 
       // click to next page
       await page.click(buttonSelector);
