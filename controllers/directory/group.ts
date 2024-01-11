@@ -1,3 +1,4 @@
+import CourseModel from '../../models/course';
 import { IProfessor } from '../../models/professor';
 import { updateProf } from '../syncProfs';
 
