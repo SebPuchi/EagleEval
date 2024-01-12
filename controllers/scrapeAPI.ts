@@ -56,11 +56,13 @@ async function scrapeReviews<T extends Document>(
         let reviewData: IReview[] | null = await getReviews(name);
 
         if (reviewData != null) {
-          // Set the ID in the review data
-          setId(reviewData, id);
+          for (const review of reviewData) {
+            // Set the ID in the review data
+            setId(review, id);
 
-          // Cache the reviews
-          promises.push(cacheReview(reviewData));
+            // Cache the reviews
+            promises.push(cacheReview(review));
+          }
         }
       }
 

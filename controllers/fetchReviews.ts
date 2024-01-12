@@ -101,7 +101,7 @@ export const getReviews = async (query: string): Promise<IReview[] | null> => {
   for (const review of clean_json) {
     // Search mongo db for course and prof doc ids
     const prof_filter: FilterQuery<IProfessor> = {
-      name: review['instructor'],
+      name: { $regex: new RegExp(review['instructor'], 'i') },
     };
     const prof_id: Types.ObjectId | null = await findDocumentIdByFilter(
       ProfessorModel,

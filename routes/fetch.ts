@@ -23,8 +23,6 @@ fetch_router.get('/reviews', async (req: Request, res: Response) => {
 
       return res.json(fetch_response);
     } else {
-      console.log('No reviews found for ' + query);
-
       return res.send('No reviews found');
     }
   } else {
