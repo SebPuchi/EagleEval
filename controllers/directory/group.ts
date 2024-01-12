@@ -55,7 +55,7 @@ class Group {
   print(depth: number = 0): void {
     const indentation = '  |'.repeat(depth);
     //const branchSymbol = depth === 0 ? '' : ' '; // Add a vertical bar and double dash for non-root nodes
-    console.log(`${indentation.slice(0, -1)}${this.name}`);
+    console.log(`${indentation}${this.name}`);
 
     for (const member of this.members) {
       console.log(`${indentation}  |-- ${member.name}`);

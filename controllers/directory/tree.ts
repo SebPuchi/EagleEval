@@ -32,7 +32,7 @@ async function buildTree(
   let root = new Group(name);
 
   // Set school based on name
-  if ((depth = 1)) {
+  if (depth == 1) {
     // Update school
     switch (name) {
       case 'Carroll School of Management':
@@ -88,7 +88,10 @@ async function buildTree(
 
         // Only get more data if group is child of a school
         if (school) {
-          moreProfData = await getProfDataFromBCWebsite(name, school);
+          moreProfData = await getProfDataFromBCWebsite(
+            tableEntry.name,
+            school
+          );
         } else {
           moreProfData = null;
         }
@@ -98,7 +101,7 @@ async function buildTree(
           title: tableEntry.roles,
           phone: tableEntry.phone,
           email: moreProfData ? moreProfData.email : undefined,
-          address: moreProfData ? moreProfData.address : undefined,
+          office: moreProfData ? moreProfData.office : undefined,
           education: moreProfData ? moreProfData.education : undefined,
           photoLink: moreProfData ? moreProfData.photoLink : undefined,
         };
@@ -107,7 +110,7 @@ async function buildTree(
       }
     }
   }
-  console.log('School:', school);
+
   // Print currrent layer of tree
   root.print(depth);
 

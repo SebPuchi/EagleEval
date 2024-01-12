@@ -4,6 +4,7 @@ import ProfessorModel, { IProfessor } from '../models/professor';
 import axios from 'axios';
 import * as cheerio from 'cheerio';
 import puppeteer from 'puppeteer';
+import { json } from 'body-parser';
 
 // Directory pages html
 // MCAS - https://www.bc.edu/content/bc-web/schools/morrissey/faculty/mcas-directory/jcr:content/facultyList/faculty-list.items.html
@@ -15,9 +16,18 @@ import puppeteer from 'puppeteer';
 
 export interface FacultyInfo {
   email: string;
-  address: string;
+  office: string;
   education: string[];
   photoLink: string;
+}
+
+interface FacultyJSON {
+  education: string[];
+  office: string;
+  profileImage: {
+    fileReference: string;
+  };
+  email: string;
 }
 
 const SchoolDirectory: Record<string, Record<string, string>> = {};
@@ -72,14 +82,26 @@ function extractProfessors(html: string): Record<string, string> {
   return professors;
 }
 
+/**
+ * Asynchronously searches for a school in the directory based on the provided name and URL.
+ * If the school is found, returns the corresponding information.
+ * If not found, extracts professors' information from the provided URL, updates the directory, and returns the information.
+ *
+ * @param name - The name of the school to search for.
+ * @param url - The URL of the school directory.
+ * @returns A Promise that resolves to the information of the school if found, or null if not found.
+ */
 async function searchSchoolDirectory(
   name: string,
   url: string
 ): Promise<string | null> {
+  // Check if the directory for the given URL exists, otherwise initialize it
   const directory =
-    SchoolDirectory[url] || extractProfessors(await urlToHtml(url));
+    SchoolDirectory[url] ||
+    (SchoolDirectory[url] = extractProfessors(await urlToHtml(url)));
 
-  return directory[name];
+  // Return the information for the provided school name
+  return directory[name] || null;
 }
 
 /**
@@ -108,11 +130,12 @@ async function urlToHtml(url: string): Promise<string> {
  */
 async function urlToJson(url: string): Promise<any | null> {
   try {
-    const modifiedUrl = url.replace(/\.html$/, '.3.json');
+    const modifiedUrl = 'https://bc.edu' + url.replace(/\.html$/, '.3.json');
 
     const response = await axios.get(modifiedUrl);
-    const html = response.data;
-    return html;
+    const json = response.data;
+
+    return json;
   } catch (error) {
     console.error('Error:', error);
     return null;
@@ -125,26 +148,22 @@ async function urlToJson(url: string): Promise<any | null> {
  * @returns An object containing the professor's address, education, and photo link, or null if the information is not available.
  */
 function extractFacultyInfo(jsonObject: any): FacultyInfo | null {
-  const prof: FacultyInfo = {
-    email: '',
-    address: '',
-    education: [],
-    photoLink: '',
-  };
-  if (!jsonObject || !jsonObject.jcr || !jsonObject.jcr.content) {
+  try {
+    // Parse the JSON and extract relevant information
+    const facultyInfo: FacultyJSON = jsonObject['jcr:content'];
+
+    const details = {
+      education: facultyInfo?.education,
+      office: facultyInfo?.office,
+      photoLink: facultyInfo?.profileImage?.fileReference,
+      email: facultyInfo?.email,
+    };
+
+    return details;
+  } catch (error) {
+    console.error('Error parsing JSON:', error);
     return null;
   }
-
-  const content = jsonObject.jcr.content;
-
-  prof.email = content.email || undefined;
-  prof.photoLink =
-    content.profileImage?.fileReference ||
-    'https://bc.edu/content/dam/bc1/schools/mcas/Faculty%20Directory/no-profile-image_335x400px.jpg';
-  prof.address = content.office || undefined;
-  prof.education = content.education || undefined;
-
-  return prof;
 }
 
 /**
@@ -157,13 +176,18 @@ export async function getProfDataFromBCWebsite(
   name: string,
   school: School
 ): Promise<FacultyInfo | null> {
-  const url = await searchSchoolDirectory(name, school);
+  try {
+    const url = await searchSchoolDirectory(name, school);
 
-  if (url) {
-    const json = await urlToJson(url);
+    if (url) {
+      const json = await urlToJson(url);
 
-    return extractFacultyInfo(json);
-  } else {
+      return extractFacultyInfo(json);
+    } else {
+      return null;
+    }
+  } catch (error) {
+    console.log(`Error getting prof data from website ${name} :${error}`);
     return null;
   }
 }

@@ -7,7 +7,7 @@ export interface IProfessor extends Document {
   title?: string[];
   phone?: string;
   email?: string;
-  address?: string;
+  office?: string;
   education?: string[];
   photoLink?: string;
 }
@@ -18,7 +18,7 @@ const professorSchema: Schema<IProfessor> = new Schema({
   title: { type: [String] },
   email: String,
   phone: String,
-  address: String,
+  office: String,
   education: { type: [String] },
   photoLink: String,
 });
