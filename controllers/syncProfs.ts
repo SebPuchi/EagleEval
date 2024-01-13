@@ -3,16 +3,7 @@ import { School } from './directory/tree';
 import ProfessorModel, { IProfessor } from '../models/professor';
 import axios from 'axios';
 import * as cheerio from 'cheerio';
-import puppeteer from 'puppeteer';
-import { json } from 'body-parser';
-
-// Directory pages html
-// MCAS - https://www.bc.edu/content/bc-web/schools/morrissey/faculty/mcas-directory/jcr:content/facultyList/faculty-list.items.html
-// CSOM - https://www.bc.edu/content/bc-web/schools/carroll-school/faculty-research/faculty-expertise/jcr:content/facultyList/faculty-list.items.html
-// SSW - https://www.bc.edu/content/bc-web/schools/ssw/faculty/faculty-expertise/jcr:content/facultyList/faculty-list.items.html
-// CSON - https://www.bc.edu/content/bc-web/schools/cson/faculty-research/faculty-directory/jcr:content/facultyList/faculty-list.items.html
-// Lynch - https://www.bc.edu/content/bc-web/schools/lynch-school/faculty-research/faculty-directory-expertise/jcr:content/facultyList/faculty-list.items.html
-// WCAS - https://www.bc.edu/content/bc-web/schools/wcas/faculty-research/faculty-directory/jcr:content/facultyList/faculty-list.items.html
+import unidecode from 'unidecode';
 
 export interface FacultyInfo {
   email: string;
@@ -74,7 +65,9 @@ function extractProfessors(html: string): Record<string, string> {
     const lastName =
       $(element).find('h3 a').attr('data-last-name')?.trim() || '';
 
-    const name = `${firstName} ${lastName}`;
+    const name = unidecode(
+      `${firstName} ${lastName}`.replace(/\s[A-Za-z]\./, '')
+    );
 
     // Extract professor's link from the 'href' attribute of the anchor tag within 'h3'
     const link = $(element).find('h3 a').attr('href') || '';

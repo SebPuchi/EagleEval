@@ -13,7 +13,6 @@ import {
 } from '../utils/fetchUtils';
 import Course, { ICourse } from '../models/course';
 import { findAndUpdateDocument } from '../utils/mongoUtils';
-import { Types } from 'mongoose';
 
 const COURSE_DATA_URLS: string[] = [
   'https://bcweb.bc.edu/aem/coursesfall.json',
