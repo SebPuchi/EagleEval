@@ -153,7 +153,7 @@ function extractFacultyInfo(jsonObject: any): FacultyInfo | null {
     const details = {
       education: facultyInfo?.education,
       office: facultyInfo?.office,
-      photoLink: 'https://bc.edu' + facultyInfo?.profileImage?.fileReference,
+      photoLink: facultyInfo?.profileImage?.fileReference,
       email: facultyInfo?.email,
     };
 

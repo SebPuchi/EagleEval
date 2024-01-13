@@ -89,7 +89,7 @@ async function buildTree(
         office: moreProfData ? moreProfData.office : undefined,
         education: moreProfData ? moreProfData.education : undefined,
         photoLink: moreProfData
-          ? moreProfData.photoLink
+          ? 'htpps://bc.edu' + moreProfData.photoLink
           : 'https://bc.edu/content/dam/bc1/schools/mcas/Faculty%20Directory/no-profile-image_335x400px.jpg',
       };
 
