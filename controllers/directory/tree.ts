@@ -72,45 +72,29 @@ async function buildTree(
     allListData = listData;
 
     for (const tableEntry of tableData) {
-      // Convert all titles to lowercase for case-insensitive comparison
-      const lowercasedTitles: string[] = tableEntry.roles.map((title) =>
-        title.toLowerCase()
-      );
+      let moreProfData: FacultyInfo | null;
 
-      // Check if the array contains 'professor', 'instructor', or is empty
-      if (
-        lowercasedTitles.some((str) => str.includes('prof')) ||
-        lowercasedTitles.some((str) => str.includes('instructor')) ||
-        lowercasedTitles.some((str) => str.includes('lecturer')) ||
-        lowercasedTitles.length === 0
-      ) {
-        let moreProfData: FacultyInfo | null;
-
-        // Only get more data if group is child of a school
-        if (school) {
-          moreProfData = await getProfDataFromBCWebsite(
-            tableEntry.name,
-            school
-          );
-        } else {
-          moreProfData = null;
-        }
-
-        const newProf: IProfessor = <IProfessor>{
-          name: tableEntry.name,
-          title: tableEntry.roles,
-          phone: tableEntry.phone,
-          email: moreProfData ? moreProfData.email : undefined,
-          office: moreProfData ? moreProfData.office : undefined,
-          education: moreProfData ? moreProfData.education : undefined,
-          photoLink: moreProfData ? moreProfData.photoLink : undefined,
-        };
-
-        root.addMember(newProf);
+      // Only get more data if group is child of a school
+      if (school) {
+        moreProfData = await getProfDataFromBCWebsite(tableEntry.name, school);
+      } else {
+        moreProfData = null;
       }
+
+      const newProf: IProfessor = <IProfessor>{
+        name: tableEntry.name,
+        title: tableEntry.roles,
+        phone: tableEntry.phone,
+        email: moreProfData ? moreProfData.email : undefined,
+        office: moreProfData ? moreProfData.office : undefined,
+        education: moreProfData ? moreProfData.education : undefined,
+        photoLink: moreProfData ? moreProfData.photoLink : undefined,
+      };
+
+      root.addMember(newProf);
+      //}
     }
   }
-
   // Print currrent layer of tree
   root.print(depth);
 
