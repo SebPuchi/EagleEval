@@ -88,7 +88,9 @@ async function buildTree(
         email: moreProfData ? moreProfData.email : undefined,
         office: moreProfData ? moreProfData.office : undefined,
         education: moreProfData ? moreProfData.education : undefined,
-        photoLink: moreProfData ? moreProfData.photoLink : undefined,
+        photoLink: moreProfData
+          ? moreProfData.photoLink
+          : 'https://bc.edu/content/dam/bc1/schools/mcas/Faculty%20Directory/no-profile-image_335x400px.jpg',
       };
 
       root.addMember(newProf);

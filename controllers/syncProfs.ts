@@ -69,7 +69,12 @@ function extractProfessors(html: string): Record<string, string> {
   // Iterate over each element with class 'person-list-expertise'
   $('.person-list-expertise').each((index, element) => {
     // Extract professor's name from the anchor tag within 'h3'
-    const name = $(element).find('h3 a').text().trim();
+    const firstName =
+      $(element).find('h3 a').attr('data-first-name')?.trim() || '';
+    const lastName =
+      $(element).find('h3 a').attr('data-last-name')?.trim() || '';
+
+    const name = `${firstName} ${lastName}`;
 
     // Extract professor's link from the 'href' attribute of the anchor tag within 'h3'
     const link = $(element).find('h3 a').attr('href') || '';
@@ -155,7 +160,7 @@ function extractFacultyInfo(jsonObject: any): FacultyInfo | null {
     const details = {
       education: facultyInfo?.education,
       office: facultyInfo?.office,
-      photoLink: facultyInfo?.profileImage?.fileReference,
+      photoLink: 'https://bc.edu' + facultyInfo?.profileImage?.fileReference,
       email: facultyInfo?.email,
     };
 
