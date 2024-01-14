@@ -33,7 +33,7 @@ async function fillAndSubmitForm(targetParam: string): Promise<string[]> {
   try {
     // URL encode the target parameter
     const encodedTargetParam = encodeURIComponent(targetParam);
-    const pageURL = `https://login.bc.edu/nidp/idff/sso?id=94&sid=1&option=credential&sid=1&target=${encodedTargetParam}`;
+    const pageURL = `https://login.bc.edu/nidp/app/login?option=credential&target=${encodedTargetParam}`;
 
     // Navigate to the form page with the encoded target query parameter
     await page.goto(pageURL);

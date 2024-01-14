@@ -83,12 +83,12 @@ async function buildTree(
 
       const newProf: IProfessor = <IProfessor>{
         name: tableEntry.name,
-        title: tableEntry.roles,
-        phone: tableEntry.phone,
+        title: tableEntry.roles || undefined,
+        phone: tableEntry.phone || undefined,
         email: moreProfData ? moreProfData.email : undefined,
         office: moreProfData ? moreProfData.office : undefined,
         education: moreProfData ? moreProfData.education : undefined,
-        photoLink: moreProfData
+        photoLink: moreProfData?.photoLink
           ? 'https://bc.edu' + moreProfData.photoLink
           : 'https://bc.edu/content/dam/bc1/schools/mcas/Faculty%20Directory/no-profile-image_335x400px.jpg',
       };
