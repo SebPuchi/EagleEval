@@ -1,7 +1,7 @@
 import CourseModel from '../models/course';
 import ProfessorModel from '../models/professor';
 
-interface AutocompleteSearchResult {
+export interface AutocompleteSearchResult {
   _id: string;
   title: string;
   crs_code?: string;
@@ -29,7 +29,7 @@ export async function autocompleteCourseSearch(
             {
               autocomplete: {
                 query: query,
-                path: 'crs_code',
+                path: 'code',
                 tokenOrder: 'any',
                 fuzzy: { maxEdits: 1, prefixLength: 1, maxExpansions: 256 },
               },
@@ -37,7 +37,7 @@ export async function autocompleteCourseSearch(
             {
               text: {
                 query: query,
-                path: ['title', 'crs_code'],
+                path: ['title', 'code'],
                 fuzzy: { maxEdits: 1, prefixLength: 0, maxExpansions: 50 },
               },
             },
@@ -74,7 +74,7 @@ export async function autocompleteProfSearch(
             {
               autocomplete: {
                 query: query,
-                path: 'title',
+                path: 'name',
                 tokenOrder: 'any',
                 fuzzy: { maxEdits: 1, prefixLength: 0, maxExpansions: 50 },
               },
@@ -82,7 +82,7 @@ export async function autocompleteProfSearch(
             {
               text: {
                 query: query,
-                path: 'title',
+                path: 'name',
                 fuzzy: { maxEdits: 1, prefixLength: 0, maxExpansions: 50 },
               },
             },
