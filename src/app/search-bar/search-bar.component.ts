@@ -7,14 +7,14 @@ import { AutoComplete } from 'primeng/autocomplete';
 
 interface ProfData {
   _id: string;
-  title: string;
+  name: string;
   score: number;
 }
 
 interface CourseData {
   _id: string;
   title: string;
-  crs_code: string;
+  code: string;
   score: number;
 }
 
@@ -46,7 +46,7 @@ export class SearchBarComponent {
 
     // Search profs
     for (const prof of this.profs) {
-      if (prof.title == $event) {
+      if (prof.name == $event) {
         this._pageService.setShowProfPage(prof._id);
         return;
       }
@@ -54,7 +54,7 @@ export class SearchBarComponent {
     // Search courses
     for (const crs of this.courses) {
       const match = $event.match(regex);
-      if (crs.crs_code == match[1]) {
+      if (crs.code == match[1]) {
         this._pageService.setShowClassPage(crs._id);
         return;
       }
@@ -90,7 +90,7 @@ export class SearchBarComponent {
 
           // Return array for titles
           return Array.from(result, (r) => {
-            return r.crs_code ? `${r.title} (${r.crs_code})` : r.title;
+            return r.code ? `${r.title} (${r.code})` : r.name;
           });
         })
       )

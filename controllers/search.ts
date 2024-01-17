@@ -5,7 +5,7 @@ export interface AutocompleteSearchResult {
   _id: string;
   name?: string;
   title?: string;
-  crs_code?: string;
+  code?: string;
   score: { $meta: 'searchScore' };
 }
 
