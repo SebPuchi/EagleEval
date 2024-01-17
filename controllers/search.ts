@@ -1,34 +1,44 @@
-import { Course } from "../models/courseSchema.js";
-import { Professor } from "../models/profSchema.js";
+import CourseModel from '../models/course';
+import ProfessorModel from '../models/professor';
+
+export interface AutocompleteSearchResult {
+  _id: string;
+  name?: string;
+  title?: string;
+  crs_code?: string;
+  score: { $meta: 'searchScore' };
+}
 
 // Autocomplete search for courses
-export async function autocompleteCourseSearch(query) {
-  const agg = [
+export async function autocompleteCourseSearch(
+  query: string
+): Promise<AutocompleteSearchResult[]> {
+  const agg: any[] = [
     {
       $search: {
-        index: "searchCourses",
+        index: 'searchCourses',
         compound: {
           should: [
             {
               autocomplete: {
                 query: query,
-                path: "title",
-                tokenOrder: "any",
+                path: 'title',
+                tokenOrder: 'any',
                 fuzzy: { maxEdits: 1, prefixLength: 0, maxExpansions: 50 },
               },
             },
             {
               autocomplete: {
                 query: query,
-                path: "crs_code",
-                tokenOrder: "any",
+                path: 'code',
+                tokenOrder: 'any',
                 fuzzy: { maxEdits: 1, prefixLength: 1, maxExpansions: 256 },
               },
             },
             {
               text: {
                 query: query,
-                path: ["title", "crs_code"],
+                path: ['title', 'code'],
                 fuzzy: { maxEdits: 1, prefixLength: 0, maxExpansions: 50 },
               },
             },
@@ -43,35 +53,38 @@ export async function autocompleteCourseSearch(query) {
       $project: {
         _id: 1,
         title: 1,
-        crs_code: 1,
-        score: { $meta: "searchScore" },
+        code: 1,
+        score: { $meta: 'searchScore' },
       },
     },
   ];
 
-  return await Course.aggregate(agg);
+  return await CourseModel.aggregate<AutocompleteSearchResult>(agg);
 }
 
 // Autocomplete search for professors
-export async function autocompleteProfSearch(query) {
-  const agg = [
+export async function autocompleteProfSearch(
+  query: string
+): Promise<AutocompleteSearchResult[]> {
+  const agg: any[] = [
     {
       $search: {
-        index: "searchProfs",
+        //index: 'searchProfs',
+        index: 'default',
         compound: {
           should: [
             {
               autocomplete: {
                 query: query,
-                path: "title",
-                tokenOrder: "any",
+                path: 'name',
+                tokenOrder: 'any',
                 fuzzy: { maxEdits: 1, prefixLength: 0, maxExpansions: 50 },
               },
             },
             {
               text: {
                 query: query,
-                path: "title",
+                path: 'name',
                 fuzzy: { maxEdits: 1, prefixLength: 0, maxExpansions: 50 },
               },
             },
@@ -83,9 +96,9 @@ export async function autocompleteProfSearch(query) {
       $limit: 5,
     },
     {
-      $project: { _id: 1, title: 1, score: { $meta: "searchScore" } },
+      $project: { _id: 1, name: 1, score: { $meta: 'searchScore' } },
     },
   ];
 
-  return await Professor.aggregate(agg);
+  return await ProfessorModel.aggregate<AutocompleteSearchResult>(agg);
 }
