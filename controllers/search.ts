@@ -3,7 +3,8 @@ import ProfessorModel from '../models/professor';
 
 export interface AutocompleteSearchResult {
   _id: string;
-  title: string;
+  name?: string;
+  title?: string;
   crs_code?: string;
   score: { $meta: 'searchScore' };
 }
@@ -52,7 +53,7 @@ export async function autocompleteCourseSearch(
       $project: {
         _id: 1,
         title: 1,
-        crs_code: 1,
+        code: 1,
         score: { $meta: 'searchScore' },
       },
     },
@@ -68,7 +69,8 @@ export async function autocompleteProfSearch(
   const agg: any[] = [
     {
       $search: {
-        index: 'searchProfs',
+        //index: 'searchProfs',
+        index: 'default',
         compound: {
           should: [
             {
@@ -94,7 +96,7 @@ export async function autocompleteProfSearch(
       $limit: 5,
     },
     {
-      $project: { _id: 1, title: 1, score: { $meta: 'searchScore' } },
+      $project: { _id: 1, name: 1, score: { $meta: 'searchScore' } },
     },
   ];
 

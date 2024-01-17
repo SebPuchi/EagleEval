@@ -1,31 +1,41 @@
-// Search.ts - Router for autocomplete search
 import express, { Request, Response } from 'express';
-
 import {
   AutocompleteSearchResult,
   autocompleteCourseSearch,
   autocompleteProfSearch,
 } from '../controllers/search';
 
-export const search_router = express.Router();
+const search_router = express.Router();
 
-search_router.get('/search/profs', async (req: Request, res: Response) => {
+const handleSearch = async (
+  req: Request,
+  res: Response,
+  searchFunction: (query: string) => Promise<AutocompleteSearchResult[]>,
+  type: string
+) => {
   try {
-    // Get prof name as query paramter
     const query = (req.query['name'] as string) || null;
 
     if (query) {
-      const search_results: AutocompleteSearchResult[] =
-        await autocompleteProfSearch(query);
+      const searchResults = await searchFunction(query);
 
       console.log(`Found search results for ${query}`);
-
-      return res.json(search_results);
+      return res.json(searchResults);
     } else {
-      return res.send('Query paramter "name" must not be empoty');
+      return res.send(`Query parameter "name" must not be empty for ${type}`);
     }
   } catch (error) {
-    console.log(`Error searching for prof: ${error}`);
-    return res.send('Error searching for professor');
+    console.log(`Error searching for ${type}: ${error}`);
+    return res.send(`Error searching for ${type}`);
   }
+};
+
+search_router.get('/profs', async (req, res) => {
+  await handleSearch(req, res, autocompleteProfSearch, 'professor');
 });
+
+search_router.get('/course', async (req, res) => {
+  await handleSearch(req, res, autocompleteCourseSearch, 'course');
+});
+
+export { search_router };
