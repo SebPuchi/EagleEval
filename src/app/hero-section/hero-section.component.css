@@ -38,7 +38,7 @@ video {
 
 .herosectionunderlay {
   margin-top: -5px;
-  height: 1000vh;
+  height: 10vh;
   background-color: #c5bfb0;
 }
 @media screen and (max-width: 991px) {
