@@ -1,5 +1,4 @@
 
-
 .descriptionhm {
 margin-top: 150px;
   z-index: -1;
@@ -7,14 +6,6 @@ margin-top: 150px;
   flex-direction: column;
   align-items: center;
   display: block;
-}
-
-
-.heading {
-  color: #fff;
-  font-family: Roboto, sans-serif;
-  font-weight: 400;
-  line-height: 44px;
 }
 
 
@@ -36,11 +27,6 @@ margin-top: 150px;
   font-size: 12px;
 }
 
-.hero1-image {
-  z-index: -1;
-  margin-top: -3px;
-  position: relative;
-}
 
 .heading-5 {
   margin-bottom: 20px;
@@ -48,11 +34,6 @@ margin-top: 150px;
   font-weight: 400;
   line-height: 44px;
 
-}
-
-.navsearch {
-  margin-top: 26px;
-  margin-bottom: 26px;
 }
 
 .subsection {
@@ -87,58 +68,7 @@ margin-top: 150px;
 }
 
 @media screen and (max-width: 991px) {
-  .herowrapperlogotext {
-    padding-top: 79px;
-  }
 
-  .wrap {
-    width: 645px;
-  }
-
-  .wrap.w80 {
-    width: 650px;
-    padding-left: 0;
-    padding-right: 0;
-  }
-
-  .content1-item-description {
-    text-align: center;
-    margin-bottom: 30px;
-    padding-right: 0;
-  }
-
-  .decoline {
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
-  }
-
-  .content1-image.content1-image2 {
-    background-position: 50% 62%;
-  }
-
-  ._4-col-2 {
-    width: 100%;
-    margin-bottom: 20px;
-    margin-left: auto;
-    margin-right: auto;
-    display: inline-block;
-  }
-
-  ._4-col-2._4-col-last {
-    margin-bottom: 0;
-    margin-right: auto;
-  }
-
-  .content1-items {
-    flex-direction: column;
-    margin-bottom: -30px;
-  }
-
-  .headline-8-col {
-    width: auto;
-    text-align: center;
-  }
 
   .hero1-headline-wrapper {
     width: 100%;
@@ -153,41 +83,6 @@ margin-top: 150px;
   }
 }
 
-@media screen and (max-width: 767px) {
-  .crestimageholder {
-    width: 15vh;
-    height: 15vh;
-    margin-top: 23px;
-  }
 
-  .image {
-    width: 70vw;
-  }
 
-  .wrap {
-    width: 100%;
-    padding-left: 20px;
-    padding-right: 20px;
-  }
-
-  .wrap.w80, .subonewrap {
-    width: 100%;
-  }
-}
-
-@media screen and (max-width: 479px) {
-  .navbar {
-    height: 8vh;
-  }
-
-  .crestimageholder {
-    width: 10vh;
-    height: 10vh;
-    margin-top: 19px;
-  }
-
-  .image {
-    width: 95%;
-  }
-}
 
