@@ -4,6 +4,7 @@ import HtmlTableToJson from '../utils/HtmlTableToJson';
 import {
   removeKeysFromArray,
   cleanKeysAndRemoveNonASCII,
+  checkAndSetUndefinedIfString,
 } from '../utils/fetchUtils';
 import { IReview } from '../models/review';
 import ProfessorModel, { IProfessor } from '../models/professor';
@@ -115,6 +116,11 @@ export const getReviews = async (query: string): Promise<IReview[] | null> => {
       CourseModel,
       course_filter
     );
+
+    review.instructor_overall = checkAndSetUndefinedIfString(
+      review.instructor_overall
+    );
+    review.course_overall = checkAndSetUndefinedIfString(review.course_overall);
 
     review.section = review['course_code'].substring(8);
     // Add ids to result

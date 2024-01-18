@@ -7,8 +7,8 @@ export interface IReview extends Document {
   course_id: Types.ObjectId;
   semester: string;
   section: number;
-  instructor_overall?: number;
-  course_overall?: number;
+  instructor_overall?: number | undefined;
+  course_overall?: number | undefined;
 }
 
 // Define the Review Schema
@@ -25,8 +25,8 @@ const reviewSchema: Schema<IReview> = new Schema({
   },
   semester: String,
   section: Number,
-  instructor_overall: Number,
-  course_overall: Number,
+  instructor_overall: Number || undefined,
+  course_overall: Number || undefined,
 });
 
 // Create the Review model

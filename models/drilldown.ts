@@ -4,29 +4,29 @@ import mongoose, { Schema, Types, Document } from 'mongoose';
 // Define the Drilldown Interface
 export interface IDrilldown extends Document {
   review_id: Types.ObjectId;
-  coursewellorganized?: number;
-  courseintellectuallychallenging?: number;
-  effortavghoursweeklyc?: number;
-  attendancenecessary?: number;
-  assignmentshelpful?: number;
-  instructorprepared?: number;
-  instructorclearexplanations?: number;
-  availableforhelpoutsideofclass?: number;
-  stimulatedinterestinthesubjectmatter?: number;
+  coursewellorganized?: number | undefined;
+  courseintellectuallychallenging?: number | undefined;
+  effortavghoursweeklyc?: number | undefined;
+  attendancenecessary?: number | undefined;
+  assignmentshelpful?: number | undefined;
+  instructorprepared?: number | undefined;
+  instructorclearexplanations?: number | undefined;
+  availableforhelpoutsideofclass?: number | undefined;
+  stimulatedinterestinthesubjectmatter?: number | undefined;
 }
 
 // Define the Drilldown Schema
 const drilldownSchema: Schema<IDrilldown> = new Schema({
   review_id: { type: Schema.Types.ObjectId, ref: 'Review', required: true },
-  coursewellorganized: Number,
-  courseintellectuallychallenging: Number,
-  effortavghoursweeklyc: Number,
-  attendancenecessary: Number,
-  assignmentshelpful: Number,
-  instructorprepared: Number,
-  instructorclearexplanations: Number,
-  availableforhelpoutsideofclass: Number,
-  stimulatedinterestinthesubjectmatter: Number,
+  coursewellorganized: Number || undefined,
+  courseintellectuallychallenging: Number || undefined,
+  effortavghoursweeklyc: Number || undefined,
+  attendancenecessary: Number || undefined,
+  assignmentshelpful: Number || undefined,
+  instructorprepared: Number || undefined,
+  instructorclearexplanations: Number || undefined,
+  availableforhelpoutsideofclass: Number || undefined,
+  stimulatedinterestinthesubjectmatter: Number || undefined,
 });
 
 // Create the Drilldown model
