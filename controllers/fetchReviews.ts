@@ -122,7 +122,7 @@ export const getReviews = async (query: string): Promise<IReview[] | null> => {
     );
     review.course_overall = checkAndSetUndefinedIfString(review.course_overall);
 
-    review.section = review['course_code'].substring(8);
+    review.section = review['course_code'].substring(8, 10);
     // Add ids to result
     review.professor_id = prof_id;
     review.course_id = course_id;

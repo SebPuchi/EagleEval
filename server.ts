@@ -16,6 +16,11 @@ import {
   closeMongooseConnection,
 } from './middleware/mongoConnection';
 import { handleCors } from './middleware/cors';
+import path from 'path';
+const __dirname = path.resolve();
+
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 // Express application
 const app = express();
@@ -39,8 +44,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // Create link to Angular build directory
-//const distDir = path.join(__dirname, '/dist/eagle-eval');
-//app.use(express.static(distDir));
+const distDir = path.join(__dirname, '/dist/eagle-eval');
+app.use(express.static(distDir));
 
 // Add routes for fetch
 app.use('/api/fetch', fetch_router);

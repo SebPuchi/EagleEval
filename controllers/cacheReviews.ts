@@ -25,15 +25,12 @@ export default function cacheReview(
    * @returns {Object} - Mongoose filter object.
    */
   const filter = {
-    $and: [
-      { professor_id: reviewData.professor_id },
-      {
-        $or: [
-          { course_id: reviewData.course_id },
-          { semester: reviewData.semester },
-        ],
-      },
-    ],
+    professor_id: reviewData.professor_id,
+    course_id: reviewData.course_id,
+    semester: reviewData.semester,
+    section: reviewData.section,
+    instructor_overall: reviewData.instructor_overall,
+    course_overall: reviewData.course_overall,
   };
 
   // Call the findAndUpdateDocument function to perform the caching operation.

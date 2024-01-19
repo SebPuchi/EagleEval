@@ -63,13 +63,14 @@ async function scrapeReviews<T extends Document>(
             setId(review, id);
 
             // Cache the reviews
-            promises.push(cacheReview(review));
+            //promises.push(cacheReview(review));
+            promises.push(ReviewModel.create(review));
           }
         }
       }
 
       // Wait for all reviews to be cached before starting the next batch
-      console.log(`Caching batch ${i} of ${count}`);
+      console.log(`Caching batch ${i} of ${batches}`);
       await Promise.all(promises);
     }
   } catch (error) {
