@@ -3,6 +3,7 @@ import express, { Express, Request, Response } from 'express';
 import bodyParser from 'body-parser';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
+import path from 'path';
 
 // Import routes and middleware
 import { fetch_router } from './routes/fetch';
@@ -17,6 +18,12 @@ import {
   closeMongooseConnection,
 } from './middleware/mongoConnection';
 import { handleCors } from './middleware/cors';
+
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 // Express application
 const app = express();
@@ -40,8 +47,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // Create link to Angular build directory
-//const distDir = path.join(__dirname, '/dist/eagle-eval');
-//app.use(express.static(distDir));
+const distDir = path.join(__dirname, '/dist/eagle-eval');
+app.use(express.static(distDir));
 
 // Add routes for fetch
 app.use('/api/fetch', fetch_router);

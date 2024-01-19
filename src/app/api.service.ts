@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
@@ -8,11 +9,13 @@ export class ApiService {
   constructor(private http: HttpClient) {}
 
   getSearchResults(query: any, url: string) {
-    // Define the data you want to send in the request body (if any)
-    const data = { search_query: query.query }; // Modify this as per your API's requirements
+    // Add safe, URL encoded search parameter if there is a search term
+    const options = query
+      ? { params: new HttpParams().set('name', query.query) }
+      : {};
 
     // Send the POST request using the HttpClient's post method
-    return this.http.post<any>(url, data);
+    return this.http.get<any>(url, options);
   }
 
   getSearchById(id: string, url: string) {
