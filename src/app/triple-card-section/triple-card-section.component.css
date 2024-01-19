@@ -24,7 +24,7 @@
   display: block
 }
 .wrap.w80 {
-  width: 100%;
+  width: auto;
   background-color: #5c0d0f;
   padding: 40px 25px;
   overflow: hidden
