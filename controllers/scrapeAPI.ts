@@ -63,8 +63,7 @@ async function scrapeReviews<T extends Document>(
             setId(review, id);
 
             // Cache the reviews
-            //promises.push(cacheReview(review));
-            promises.push(ReviewModel.create(review));
+            promises.push(cacheReview(review));
           }
         }
       }
