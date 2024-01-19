@@ -3,6 +3,7 @@ import express, { Express, Request, Response } from 'express';
 import bodyParser from 'body-parser';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
+import path from 'path';
 
 // Import routes and middleware
 import { fetch_router } from './routes/fetch';
@@ -21,6 +22,12 @@ const __dirname = path.resolve();
 
 import * as dotenv from 'dotenv';
 dotenv.config();
+
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 // Express application
 const app = express();

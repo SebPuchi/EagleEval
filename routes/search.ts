@@ -17,6 +17,7 @@ const handleSearch = async (
     const query = (req.query['name'] as string) || null;
 
     if (query) {
+      console.log(`Searching for ${type}: ${query}`);
       const searchResults = await searchFunction(query);
 
       console.log(`Found search results for ${query}`);
@@ -34,7 +35,7 @@ search_router.get('/profs', async (req, res) => {
   await handleSearch(req, res, autocompleteProfSearch, 'professor');
 });
 
-search_router.get('/course', async (req, res) => {
+search_router.get('/courses', async (req, res) => {
   await handleSearch(req, res, autocompleteCourseSearch, 'course');
 });
 
