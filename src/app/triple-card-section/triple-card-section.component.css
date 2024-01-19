@@ -49,19 +49,19 @@
 }
 .content1-image.content1-image3 {
   height: 450px;
-  background-image: url('https://www.bc.edu/content/dam/bc1/schools/carroll/news/2019/Catalyst%20photo%204.jpg');
+  background-image: url('/assets/Catalyst-photo-4-p-2000.jpg');
   background-position: 70%;
   background-size: cover
 }
 .content1-image.content1-image2 {
   height: 450px;
-  background-image: url('https://www.usnews.com/object/image/00000174-c71d-db16-ad76-cf5fdfe10000/c21roadbos-bc.bos_bc.JPG?update-time=1601068808168&size=responsive640');
+  background-image: url('/assets/courses.jpeg');
   background-position: 50%;
   background-size: cover
 }
 .content1-image.content1-image1 {
   height: 450px;
-  background-image: url('https://www.bc.edu/content/bc-web/schools/mcas/departments/theology/people/faculty-directory/jeremy-wilkins/_jcr_content/profileImage.img.png');
+  background-image: url('/assets/JeremyWilkins.jpeg');
   background-position: 50% 20%;
   background-size: cover
 }
