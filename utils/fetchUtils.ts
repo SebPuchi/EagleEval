@@ -74,3 +74,7 @@ export const removeDuplicateObjects = (arr: any[]): any => {
 
   return uniqueObjects;
 };
+
+export function checkAndSetUndefinedIfString(value: any): string | undefined {
+  return isNaN(Number(value)) ? undefined : value;
+}

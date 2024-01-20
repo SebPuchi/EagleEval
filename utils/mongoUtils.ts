@@ -16,17 +16,13 @@ export async function findAndUpdateDocument<T extends Document>(
 ): Promise<T | null> {
   try {
     // Find and update (upsert) the document
-    const updatedDocument = await model.findOneAndUpdate(
+    const updatedDocument = model.findOneAndUpdate(
       filter,
       updateData,
-      { new: true, upsert: true, includeResultMetadata: true } // Set upsert option to true
+      { new: true, upsert: true } // Set upsert option to true
     );
 
-    if (!updatedDocument.lastErrorObject?.updatedExisting) {
-      console.log('Creating new document');
-    }
-
-    return updatedDocument.value;
+    return updatedDocument;
   } catch (error) {
     // Handle errors appropriately
     console.error('Error finding and updating document:', error);

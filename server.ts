@@ -9,10 +9,9 @@ import path from 'path';
 import { fetch_router } from './routes/fetch';
 import { update_router } from './routes/update';
 import { search_router } from './routes/search';
-/*
-import { cache_router } from './routes/cache';
 import { scrape_router } from './routes/scrape';
-*/
+//import { cache_router } from './routes/cache';
+
 import {
   createMongooseConnection,
   closeMongooseConnection,
@@ -58,13 +57,13 @@ private_api.use('/api/update', update_router);
 
 // Add routes for searching database
 app.use('/api/search', search_router);
-/*
+
 // Add routes for cached reviews
-app.use('/api/cache', cache_router);
+//app.use('/api/cache', cache_router);
 
 // Add routes for scraping review
 private_api.use('/api/scrape', scrape_router);
-*/
+
 const port = process.env['PORT'] || 80;
 const privatePort = 8080;
 

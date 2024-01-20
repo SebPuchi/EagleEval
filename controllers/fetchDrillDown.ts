@@ -7,11 +7,10 @@ import {
   cleanKeysAndRemoveNonASCII,
 } from '../utils/fetchUtils';
 import { IDrilldown } from '../models/drilldown';
-import ReviewMode, { IReview } from '../models/review';
-import CourseModel, { ICourse } from '../models/course';
-import ProfessorModel, { IProfessor } from '../models/professor';
+import { IReview } from '../models/review';
 import { searchById } from '../utils/mongoUtils';
 import ReviewModel from '../models/review';
+import { checkAndSetUndefinedIfString } from '../utils/fetchUtils';
 
 interface RequestBody {
   strUiCultureIn: string;
@@ -74,24 +73,8 @@ export const getDrillDown = async (
 
   if (parent_review) {
     var semester: string = parent_review.semester;
-    // Get prof document from mongo
-    const prof: IProfessor | null = await searchById(
-      ProfessorModel,
-      parent_review.professor_id
-    );
-    // Get course document from mongo
-    const course: ICourse | null = await searchById(
-      CourseModel,
-      parent_review.course_id
-    );
-    if (prof && course) {
-      // code includes course id and section combined
-      var code: string = course.code + parent_review.section;
-      var instructor: string = prof.name;
-    } else {
-      console.log('Parent review does not have prof and course id set');
-      return null;
-    }
+    var prof: string = parent_review.prof;
+    var course: string = parent_review.code;
   } else {
     console.log('Review id not found when getting drilldown for ' + review_id);
     return null;
@@ -103,7 +86,20 @@ export const getDrillDown = async (
     'instructorreturnedassignments(i)',
     'timelyfeedback(i)',
     'meaningfulfeedback(i)',
-    // ... (remaining keys)
+    'seminaraworthwhileexperience(i)',
+    'seminarasamethodtoadvisefreshmen(i)',
+    'asanacademicadvisor(i)',
+    'asacourseinstructor(i)',
+    'readingsanddiscussionswereinterestinganduseful(i)',
+    'waytolearnaboutclassmates(i)',
+    'learningapplicablebeyondcourse(c)',
+    'motivatedmetodomybestwork(i)',
+    'instructorenthusiastic(i)',
+    'coursefollowedsyllabus(c)',
+    'instructorrespectfulofstudents(i)',
+    'workrequired(c)',
+    'courseoverall(c)',
+    'instructoroverall(i)',
   ];
 
   // Send a POST request to the specified URL with the generated request body and headers.
@@ -111,7 +107,7 @@ export const getDrillDown = async (
     'https://avalanche.bc.edu/BPI/fbview-WebService.asmx/getFbvGrid',
     {
       method: 'post',
-      body: genBody(code, instructor),
+      body: genBody(course, prof),
       headers: { 'Content-Type': 'application/json; charset=UTF-8' },
     }
   );
@@ -125,7 +121,7 @@ export const getDrillDown = async (
 
   // Check if no results are returned
   if (Object.keys(json_objects[0]).length <= 1) {
-    console.log('No data found for ' + code + ' ' + instructor);
+    console.log('No data found for ' + course + ' ' + prof);
     return null;
   }
 
@@ -135,18 +131,46 @@ export const getDrillDown = async (
   // Remove uneeded keys in json
   let result = removeKeysFromArray(clean_json, uneeded_keys);
 
-  let match = null;
   // Find correct review data by matching semester
   for (const document of result) {
     if (document.semester === semester) {
-      match = document;
-      match.review_id = review_id;
+      let new_document: any = {};
+      new_document.review_id = review_id;
+
+      new_document.coursewellorganized = checkAndSetUndefinedIfString(
+        document['coursewellorganized(c)']
+      );
+      new_document.courseintellectuallychallenging =
+        checkAndSetUndefinedIfString(
+          document['courseintellectuallychallenging(c)']
+        );
+      new_document.effortavghoursweekly = checkAndSetUndefinedIfString(
+        document['effortavghoursweeklyc']
+      );
+      new_document.attendancenecessary = checkAndSetUndefinedIfString(
+        document['attendancenecessary(c)']
+      );
+      new_document.assignmentshelpful = checkAndSetUndefinedIfString(
+        document['assignmentshelpful(c)']
+      );
+      new_document.instructorprepared = checkAndSetUndefinedIfString(
+        document['instructorprepared(i)']
+      );
+      new_document.instructorclearexplanations = checkAndSetUndefinedIfString(
+        document['instructorclearexplanations(i)']
+      );
+      new_document.availableforhelpoutsideofclass =
+        checkAndSetUndefinedIfString(
+          document['availableforhelpoutsideofclass(i)']
+        );
+      new_document.stimulatedinterestinthesubjectmatter =
+        checkAndSetUndefinedIfString(
+          document['stimulatedinterestinthesubjectmatter(i)']
+        );
+
+      return <IDrilldown>new_document;
     }
   }
 
-  if (!match) {
-    return null;
-  }
-
-  return <IDrilldown>match;
+  return null;
 };

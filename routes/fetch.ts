@@ -1,56 +1,126 @@
-// fetch.js - Fetch routes module
 import express, { Request, Response } from 'express';
-import { Types } from 'mongoose';
-
 import { getReviews } from '../controllers/fetchReviews';
 import { getDrillDown } from '../controllers/fetchDrillDown';
-import { IReview } from '../models/review';
-import { IDrilldown } from '../models/drilldown';
+import ReviewModel, { IReview } from '../models/review';
+import DrilldownModel, { IDrilldown } from '../models/drilldown';
+import ProfessorModel, { IProfessor } from '../models/professor';
+import CourseModel, { ICourse } from '../models/course';
+import { searchById, searchForId } from 'utils/mongoUtils';
 
-export const fetch_router = express.Router();
+const fetch_router = express.Router();
 
+// Reusable function for handling database searches
+const handleDatabaseSearch = async (
+  res: Response,
+  model: any,
+  id: any,
+  field: string
+) => {
+  if (!id) {
+    return res.send('Query params must include "id"');
+  }
+
+  console.log(`Searching database for ${field} id: ${id}`);
+
+  const data = await searchById(model, id);
+
+  if (data) {
+    console.log(`Successfully got ${field} data for id: ${id}`);
+    return res.json(data);
+  } else {
+    console.log(`No ${field} found for id: ${id}`);
+    return res.json(null);
+  }
+};
+
+// Reviews Route
 fetch_router.get('/reviews', async (req: Request, res: Response) => {
-  // Access query parameters using req.query
   const query = (req.query['search'] as string) || null;
 
   if (query) {
     console.log('Searching for', query);
 
-    let fetch_response: IReview[] | null = await getReviews(query);
+    const fetchResponse: IReview[] | null = await getReviews(query);
 
-    if (fetch_response) {
+    if (fetchResponse) {
       console.log('Successfully fetched reviews for', query);
-
-      return res.json(fetch_response);
+      return res.json(fetchResponse);
     } else {
       return res.send('No reviews found');
     }
   } else {
-    return res.send('Query string must not be emptry');
+    return res.send('Query string must not be empty');
   }
 });
 
+// Drilldown Route
 fetch_router.get('/drilldown', async (req: Request, res: Response) => {
-  // Query paramters for prof and course code
-  const review_id = (req.query['id'] as any) || null;
+  const reviewId = req.query['id'] as any | null;
 
-  if (review_id) {
-    console.log('Searching for drilldown: ID - ' + review_id);
+  if (reviewId) {
+    console.log(`Searching for drilldown: ID - ${reviewId}`);
 
-    let fetch_response: IDrilldown | null = await getDrillDown(
-      <Types.ObjectId>review_id
-    );
+    const fetchResponse: IDrilldown | null = await getDrillDown(reviewId);
 
-    if (fetch_response) {
-      console.log('Successfully got data for drilldown: ID - ' + review_id);
-
-      return res.json(fetch_response);
+    if (fetchResponse) {
+      console.log(`Successfully got data for drilldown: ID - ${reviewId}`);
+      return res.json(fetchResponse);
     } else {
-      console.log('No data for for drilldown: ID - ' + review_id);
-
-      return res.send('No data for for review id');
+      console.log(`No data for drilldown: ID - ${reviewId}`);
+      return res.send('No data for review id');
     }
   } else {
     return res.send('Query string must include parent review id');
   }
 });
+
+// Database Routes
+fetch_router.get('/database/prof', async (req: Request, res: Response) => {
+  return handleDatabaseSearch(res, ProfessorModel, req.query['id'], 'prof');
+});
+
+fetch_router.get('/database/course', async (req: Request, res: Response) => {
+  return handleDatabaseSearch(res, CourseModel, req.query['id'], 'course');
+});
+
+fetch_router.get(
+  '/database/review/prof',
+  async (req: Request, res: Response) => {
+    const id = req.query['id'] as any;
+    return searchForIdHandler(res, id, ReviewModel, 'professor_id');
+  }
+);
+
+fetch_router.get(
+  '/database/review/course',
+  async (req: Request, res: Response) => {
+    const id = req.query['id'] as any;
+    return searchForIdHandler(res, id, ReviewModel, 'course_id');
+  }
+);
+
+fetch_router.get('/database/drilldown', async (req: Request, res: Response) => {
+  const id = req.query['id'] as any;
+  return searchForIdHandler(res, id, DrilldownModel, 'review_id');
+});
+
+// Reusable function for handling review/course/professor search by ID
+const searchForIdHandler = async (
+  res: Response,
+  id: any,
+  model: any,
+  field: string
+) => {
+  if (id) {
+    const reviews: IReview[] | null = await searchForId(
+      id,
+      model,
+      <keyof IReview>field
+    );
+    return res.json(reviews);
+  } else {
+    return res.send('Query params must include "id"');
+  }
+};
+
+export { fetch_router };

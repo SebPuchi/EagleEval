@@ -1,3 +1,6 @@
+import * as dotenv from 'dotenv';
+dotenv.config();
+
 interface MongoDBConfig {
   username: string | undefined;
   password: string | undefined;

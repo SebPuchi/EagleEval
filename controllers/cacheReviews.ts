@@ -24,16 +24,20 @@ export default function cacheReview(
    * @param {string} semester - The value for the 'semester' field that documents must match at least one of.
    * @returns {Object} - Mongoose filter object.
    */
+  //const filter = {
+  //  professor_id: reviewData.professor_id,
+  //  course_id: reviewData.course_id,
+  //  prof: reviewData.prof,
+  //  code: reviewData.code,
+  //  semester: reviewData.semester,
+  //  section: reviewData.section,
+  //  instructor_overall: reviewData.instructor_overall,
+  //  course_overall: reviewData.course_overall,
+  //};
   const filter = {
-    $and: [
-      { professor_id: reviewData.professor_id },
-      {
-        $or: [
-          { course_id: reviewData.course_id },
-          { semester: reviewData.semester },
-        ],
-      },
-    ],
+    semester: reviewData.semester,
+    code: reviewData.code,
+    prof: reviewData.prof,
   };
 
   // Call the findAndUpdateDocument function to perform the caching operation.
