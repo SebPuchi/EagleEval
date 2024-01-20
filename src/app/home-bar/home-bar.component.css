@@ -22,12 +22,7 @@
 }
 
 @media screen and (max-width: 991px) {
-  .dynamicprofcontent {
-    grid-template-columns: 1fr;
-    grid-template-areas:
-      "."
-      "Area";
-  }
+
 
   .logo-holder {
     width: 55px;
@@ -41,48 +36,10 @@
   }
 }
 
-@media screen and (max-width: 767px) {
-  .card {
-    box-shadow: 0 2px 12px rgba(20, 20, 43, 0.04);
-  }
-}
 
 @media screen and (max-width: 479px) {
   .navbar {
     height: 12vh;
-  }
-
-  .professorimagenamediv.card {
-    height: 500px;
-  }
-
-  .dataspecificgridwrap {
-    grid-template:
-      "."
-      "Area"
-      "Area-2"
-      "Area-3"
-      "Area-4"
-      "."
-      / 1fr;
-  }
-
-  .knobdata.card {
-    margin-left: 0;
-  }
-
-  .sliderdatadiv.card {
-    margin-left: 0;
-    margin-right: 0;
-  }
-
-  .profinfodiv.card {
-    margin-right: 0;
-  }
-
-  .sliderheadings {
-    font-size: 12px;
-    line-height: 15px;
   }
 
   .logo-holder {
@@ -91,31 +48,3 @@
   }
 }
 
-#w-node-c87be3b7-c141-005e-9f22-f1ade205e490-bca6b5a5 {
-  grid-area: span 1 / span 1 / span 1 / span 1;
-  align-self: center;
-  justify-self: center;
-}
-
-#w-node-_1f2ae32f-a360-e950-5bea-c98badf7a3f2-bca6b5a5,
-#w-node-aa7a8a2f-c845-0fce-f654-85ceb364e554-bca6b5a5,
-#w-node-e211b9d4-0e08-2720-9313-0428ac4843e1-bca6b5a5 {
-  grid-area: span 1 / span 1 / span 1 / span 1;
-}
-
-#w-node-_95dac4bd-9b80-4676-ae0a-c18e352028ff-bca6b5a5,
-#w-node-e381e299-4ce1-d895-168d-51c34a0b65ef-bca6b5a5 {
-  grid-area: Area;
-}
-
-#w-node-a199bd73-aaf9-6117-3178-8728a85d5cad-bca6b5a5 {
-  grid-area: Area-2;
-}
-
-#w-node-_75a4d4e9-2782-7447-93c2-b96dafa9f4b4-bca6b5a5 {
-  grid-area: Area-3;
-}
-
-#w-node-_587fad7d-1f9a-5278-b549-06e5d178121f-bca6b5a5 {
-  grid-area: Area-4;
-}

@@ -1,48 +1,62 @@
 <app-home-bar></app-home-bar>
 
-<div class="mainsection">
-  <div class="contentwrapper">
-    <div class="w-layout-grid dynamicprofcontent">
-      <app-prof-card></app-prof-card>
+<body>
+<section class="contentwrapper">
+  <div class="w-layout-grid dynamicprofgrid">
+    <div id="w-node-d9f8d9d4-fd1f-09b9-4f0d-5f74494a2159-b68642c4" class="card">
+      <div class="profimgdatawrapper">
+        <div class="professordividertop"></div>
+        <div class="card professorimg"></div>
+        <div class="professordividerbtm"></div>
+        <div class="whitecard whitecontact">
+          <div class="professorinfowrapper">
 
-      <div
-        id="w-node-_1f2ae32f-a360-e950-5bea-c98badf7a3f2-bca6b5a5"
-        class="card"
-      >
-        <div class="w-layout-grid dataspecificgridwrap">
-          <app-score-knob></app-score-knob>
-          <app-prof-contact></app-prof-contact>
+            <!-- contact / education-->
+            
+            <app-contact-edu></app-contact-edu>
 
-          <div
-            id="w-node-_95dac4bd-9b80-4676-ae0a-c18e352028ff-bca6b5a5"
-            class="sliderdatadiv card"
-          >
-            <app-instructor-prepared></app-instructor-prepared>
-          </div>
-
-          <div
-            id="w-node-a199bd73-aaf9-6117-3178-8728a85d5cad-bca6b5a5"
-            class="sliderdatadiv card"
-          >
-            <app-clear-material></app-clear-material>
-          </div>
-          <div
-            id="w-node-_75a4d4e9-2782-7447-93c2-b96dafa9f4b4-bca6b5a5"
-            class="sliderdatadiv card"
-          >
-            <app-avibl-outside-class></app-avibl-outside-class>
-          </div>
-          <div
-            id="w-node-_587fad7d-1f9a-5278-b549-06e5d178121f-bca6b5a5"
-            class="sliderdatadiv card bottomslider"
-          >
-            <app-enth-course-material></app-enth-course-material>
+            <!-- ******************** -->
           </div>
         </div>
       </div>
     </div>
+    <div id="w-node-e1d71806-b979-52f8-f44f-7e04e8858948-b68642c4" class="card">
+      <div class="w-layout-grid profdatagrid">
+        <div id="w-node-eabfb9ca-8044-14b0-125e-cbca8a67454b-b68642c4" class="whitecard">
 
-    <app-prof-table></app-prof-table>
+
+
+          <!-- Knob Score / Quad Value divs -->
+          
+          <app-main-data-card></app-main-data-card>
+
+          <!-- ******************************** -->
+
+
+        </div>
+        <div id="w-node-dfff5bd2-9150-0e9f-1075-ee38b2732c08-b68642c4" class="whitecard">
+
+
+          <!-- Class table for professor div Components -->
+
+          <app-class-data-prof></app-class-data-prof>
+
+      
+
+          <!-- *************************** -->
+        </div>
+      </div>
+    </div>
   </div>
-</div>
+</section>
+
+</body>
+
+
+
+
+
+
+
+
 <app-footer></app-footer>

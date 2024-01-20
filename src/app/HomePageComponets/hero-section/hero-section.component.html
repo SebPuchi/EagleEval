@@ -1,0 +1,32 @@
+<div class="herosection">
+  <video
+    loop
+    muted
+    autoplay
+    playsinline
+    oncanplay="this.play()"
+    onloadedmetadata="this.muted = true"
+    class="video"
+  >
+    <source src="./assets/HEROSECTIONGASS1.mp4" type="video/mp4" />
+    Your browser does not support the video tag.
+  </video>
+  <div class="herowrapperlogotext">
+    <img
+      src="./assets/Eagle-Eval-logos_white.png"
+      loading="lazy"
+      sizes="(max-width: 479px) 95vw, (max-width: 767px) 70vw, 50vw"
+      srcset="
+        ./assets/Eagle-Eval-logos_white-p-500.png 500w,
+        ./assets/Eagle-Eval-logos_white-p-800.png 800w,
+        ./assets/Eagle-Eval-logos_white.png       884w
+      "
+      alt=""
+      class="image"
+    />
+    <div class="navsearch">
+        <app-search-bar></app-search-bar>
+    </div>
+  </div>
+  <div class="herosectionunderlay"></div>
+</div>
