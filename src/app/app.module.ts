@@ -33,7 +33,7 @@ import { KnobModule } from 'primeng/knob';
 
 import { ProfessorService } from 'src/app/PageDataService/professor.service';
 import { ClassService } from 'src/app/PageDataService/class.service';
-import { ScoreKnobComponent } from './profComponents/score-knob/score-knob.component';
+
 
 import { ClassScoreKnobComponent } from './classComponents/class-score-knob/class-score-knob.component';
 import { CourseInfoCardComponent } from './classComponents/course-info-card/course-info-card.component';
@@ -57,7 +57,6 @@ import { ContactEDUComponent } from './profComponents/contact-edu/contact-edu.co
   SearchBarComponent,
   HomePageComponent,
   routingComponents,
-  ScoreKnobComponent,
   ClassScoreKnobComponent,
   CourseInfoCardComponent,
   CourseAvgHoursComponent,
