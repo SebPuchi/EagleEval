@@ -35,6 +35,7 @@
     margin-top: 0;
     margin-bottom: 0;
     font-size: 40px;
+    font-family: Inter, sans-serif;
   }
   
   .dynamicprofgrid {
@@ -101,7 +102,7 @@
     height: auto;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     display: flex;
   }
   
@@ -301,6 +302,8 @@
   
   .crsdesct {
     font-family: Inter, sans-serif;
+    line-height: 25px;
+    
   }
   
   @media screen and (max-width: 991px) {
@@ -323,6 +326,7 @@
   
     .nameandstatheader {
       font-size: 30px;
+      
     }
   
     .professorscorebarwrapper {

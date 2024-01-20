@@ -44,6 +44,7 @@ import { CourseIntellectuallyChallengingComponent } from './classComponents/cour
 import { CourseAssignHelpfulComponent } from './classComponents/course-assign-helpful/course-assign-helpful.component';
 
 import { ClassStatTableComponent } from './classComponents/class-stat-table/class-stat-table.component';
+import { ContactEDUComponent } from './profComponents/contact-edu/contact-edu.component';
 
 @NgModule({
 	declarations: [
@@ -64,7 +65,8 @@ import { ClassStatTableComponent } from './classComponents/class-stat-table/clas
   CourseWellOrganizedComponent,
   CourseIntellectuallyChallengingComponent,
   CourseAssignHelpfulComponent,
-  ClassStatTableComponent
+  ClassStatTableComponent,
+  ContactEDUComponent
 	],
 	imports: [
 		BrowserModule,

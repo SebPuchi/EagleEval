@@ -11,6 +11,9 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./professor-page-entry.component.css'],
 })
 export class ProfessorPageEntryComponent {
+  //Professor image will now load in with basic html
+  professorImgURL: string = "";
+
   constructor(
     private professorService: ProfessorService,
     private route: ActivatedRoute,
