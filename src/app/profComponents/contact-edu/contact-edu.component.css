@@ -16,13 +16,7 @@
   font-size: 14px;
   font-style: italic
 }
-.fildwidthdiv {
-  width: 100%;
-  height: 2px;
-  background-color: rgba(172,172,172,.52);
-  margin-top: 10px;
-  margin-bottom: 10px
-}
+
 .data {
   margin-top: 5px;
   margin-bottom: 5px;

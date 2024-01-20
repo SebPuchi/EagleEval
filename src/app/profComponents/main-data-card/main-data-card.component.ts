@@ -7,7 +7,15 @@ import { Component,OnInit } from '@angular/core';
 })
 export class MainDataCardComponent {
 
-  value: number | undefined = 50;
+  professorOvl: number | undefined = 50;
+
+  instructorPrepared: number | undefined = 50;
+  clearMaterial: number | undefined = 50;
+  outsideClass: number | undefined = 50;
+  enthusiastic: number | undefined = 50;
+
+
+
 
 
 }
