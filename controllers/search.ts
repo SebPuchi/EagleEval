@@ -69,7 +69,6 @@ export async function autocompleteProfSearch(
   const agg: any[] = [
     {
       $search: {
-        //index: 'searchProfs',
         index: 'devSearchProfs',
         compound: {
           should: [

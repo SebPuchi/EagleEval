@@ -136,16 +136,22 @@ export async function scrapeDrilldown(): Promise<void> {
 
         console.log('Getting drilldown for ', id);
         // Fetch reviews for the current item
-        const drilldownData: IDrilldown | null = await getDrillDown(id);
+        const drilldownData: Promise<IDrilldown | null> = getDrillDown(id);
 
-        if (drilldownData != null) {
-          // Cache the reviews
-          promises.push(cacheDrilldown(drilldownData));
+        // Add the reviews
+        promises.push(drilldownData);
+      }
+
+      const reviews = await Promise.all(promises);
+
+      // Wait for all reviews to be cached before starting the next batch
+      console.log(`Caching batch ${i} of ${batches}`);
+
+      for (const review of reviews) {
+        if (review) {
+          await cacheDrilldown(review);
         }
       }
-      // Wait for all reviews to be cached before starting the next batch
-      console.log(`Caching batch ${i} of ${count}`);
-      await Promise.all(promises);
     }
   } catch (error) {
     // Handle any errors that occur during the scraping process

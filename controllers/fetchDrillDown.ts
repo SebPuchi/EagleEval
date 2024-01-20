@@ -12,6 +12,7 @@ import CourseModel, { ICourse } from '../models/course';
 import ProfessorModel, { IProfessor } from '../models/professor';
 import { searchById } from '../utils/mongoUtils';
 import ReviewModel from '../models/review';
+import { checkAndSetUndefinedIfString } from '../utils/fetchUtils';
 
 interface RequestBody {
   strUiCultureIn: string;
@@ -86,7 +87,11 @@ export const getDrillDown = async (
     );
     if (prof && course) {
       // code includes course id and section combined
-      var code: string = course.code + parent_review.section;
+      var code: string = `${course.code}${
+        parent_review.section < 10
+          ? `0${parent_review.section}`
+          : parent_review.section
+      }`;
       var instructor: string = prof.name;
     } else {
       console.log('Parent review does not have prof and course id set');
@@ -103,7 +108,20 @@ export const getDrillDown = async (
     'instructorreturnedassignments(i)',
     'timelyfeedback(i)',
     'meaningfulfeedback(i)',
-    // ... (remaining keys)
+    'seminaraworthwhileexperience(i)',
+    'seminarasamethodtoadvisefreshmen(i)',
+    'asanacademicadvisor(i)',
+    'asacourseinstructor(i)',
+    'readingsanddiscussionswereinterestinganduseful(i)',
+    'waytolearnaboutclassmates(i)',
+    'learningapplicablebeyondcourse(c)',
+    'motivatedmetodomybestwork(i)',
+    'instructorenthusiastic(i)',
+    'coursefollowedsyllabus(c)',
+    'instructorrespectfulofstudents(i)',
+    'workrequired(c)',
+    'courseoverall(c)',
+    'instructoroverall(i)',
   ];
 
   // Send a POST request to the specified URL with the generated request body and headers.
@@ -135,18 +153,46 @@ export const getDrillDown = async (
   // Remove uneeded keys in json
   let result = removeKeysFromArray(clean_json, uneeded_keys);
 
-  let match = null;
   // Find correct review data by matching semester
   for (const document of result) {
     if (document.semester === semester) {
-      match = document;
-      match.review_id = review_id;
+      let new_document: any = {};
+      new_document.review_id = review_id;
+
+      new_document.coursewellorganized = checkAndSetUndefinedIfString(
+        document['coursewellorganized(c)']
+      );
+      new_document.courseintellectuallychallenging =
+        checkAndSetUndefinedIfString(
+          document['courseintellectuallychallenging(c)']
+        );
+      new_document.effortavghoursweekly = checkAndSetUndefinedIfString(
+        document['effortavghoursweeklyc']
+      );
+      new_document.attendancenecessary = checkAndSetUndefinedIfString(
+        document['attendancenecessary(c)']
+      );
+      new_document.assignmentshelpful = checkAndSetUndefinedIfString(
+        document['assignmentshelpful(c)']
+      );
+      new_document.instructorprepared = checkAndSetUndefinedIfString(
+        document['instructorprepared(i)']
+      );
+      new_document.instructorclearexplanations = checkAndSetUndefinedIfString(
+        document['instructorclearexplanations(i)']
+      );
+      new_document.availableforhelpoutsideofclass =
+        checkAndSetUndefinedIfString(
+          document['availableforhelpoutsideofclass(i)']
+        );
+      new_document.stimulatedinterestinthesubjectmatter =
+        checkAndSetUndefinedIfString(
+          document['stimulatedinterestinthesubjectmatter(i)']
+        );
+
+      return <IDrilldown>new_document;
     }
   }
 
-  if (!match) {
-    return null;
-  }
-
-  return <IDrilldown>match;
+  return null;
 };

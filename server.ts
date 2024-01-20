@@ -17,11 +17,6 @@ import {
   closeMongooseConnection,
 } from './middleware/mongoConnection';
 import { handleCors } from './middleware/cors';
-import path from 'path';
-const __dirname = path.resolve();
-
-import * as dotenv from 'dotenv';
-dotenv.config();
 
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
