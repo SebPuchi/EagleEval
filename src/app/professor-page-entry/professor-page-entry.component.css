@@ -106,7 +106,7 @@
   }
   
   .contact {
-    width: 100%;
+    width: auto;
     flex-direction: column;
     align-items: flex-start;
     padding: 20px 20px 0;
@@ -162,7 +162,7 @@
   }
   
   .education {
-    width: 100%;
+    width: auto;
     flex-direction: column;
     align-items: flex-start;
     padding: 0 20px 20px;
@@ -234,7 +234,7 @@
   }
   
   .class {
-    width: 100%;
+    width: auto;
     flex-direction: column;
     justify-content: center;
     align-items: center;
