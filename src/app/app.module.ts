@@ -45,6 +45,7 @@ import { CourseAssignHelpfulComponent } from './classComponents/course-assign-he
 
 import { ClassStatTableComponent } from './classComponents/class-stat-table/class-stat-table.component';
 import { ContactEDUComponent } from './profComponents/contact-edu/contact-edu.component';
+import { MainDataCardComponent } from './profComponents/main-data-card/main-data-card.component';
 
 @NgModule({
 	declarations: [
@@ -65,7 +66,8 @@ import { ContactEDUComponent } from './profComponents/contact-edu/contact-edu.co
   CourseIntellectuallyChallengingComponent,
   CourseAssignHelpfulComponent,
   ClassStatTableComponent,
-  ContactEDUComponent
+  ContactEDUComponent,
+  MainDataCardComponent
 	],
 	imports: [
 		BrowserModule,
