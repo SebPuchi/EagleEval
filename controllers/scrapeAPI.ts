@@ -7,6 +7,8 @@ import ReviewModel, { IReview } from '../models/review';
 import ProfessorModel, { IProfessor } from '../models/professor';
 import CourseModel, { ICourse } from '../models/course';
 import { Types, Model, Document } from 'mongoose';
+import { Type } from '@angular/core';
+import { error } from 'console';
 
 // define consts for batch processing
 const BATCH_SIZE: number = 50;
@@ -35,9 +37,9 @@ async function scrapeReviews<T extends Document>(
 
     // Loop through each batch
     for (let i = 0; i < batches; i++) {
-      console.log(`Scraping data for batch ${i} of ${batches}`);
+      console.log(`Scraping data for batch ${i + 1} of ${batches}`);
 
-      let promises: Promise<any>[] = [];
+      const promises: Array<[Promise<IReview[] | null>, Types.ObjectId]> = [];
 
       // Fetch the current batch of items from the model
       const curr_batch: T[] = await model
@@ -50,27 +52,45 @@ async function scrapeReviews<T extends Document>(
       // Loop through each item in the batch
       for (const item of curr_batch) {
         // Extract the item's ID and key
-        const id: Types.ObjectId = item.id;
+        const id: Types.ObjectId = item._id;
         const name: string = getKey(item);
 
         console.log('Getting reviews for ', name);
         // Fetch reviews for the current item
-        let reviewData: IReview[] | null = await getReviews(name);
-
-        if (reviewData != null) {
-          for (const review of reviewData) {
-            // Set the ID in the review data
-            setId(review, id);
-
-            // Cache the reviews
-            promises.push(cacheReview(review));
-          }
-        }
+        promises.push([getReviews(name), id]);
       }
+      // Resolve all promises using Promise.all
+      await Promise.all(promises.map(([promise]) => promise))
+        .then((results) => {
+          // Now 'results' is an array of resolved values
+          // To get an array of tuples, combine 'results' with the generated ids
+          const reviewData: Array<[Types.ObjectId, IReview[] | null]> =
+            promises.map(([, id], index) => [id, results[index]]);
+          if (reviewData != null) {
+            for (const review_tuple of reviewData) {
+              const reviews: IReview[] | null = review_tuple[1];
+              const id: Types.ObjectId = review_tuple[0];
+              if (reviews != null) {
+                for (const review of reviews) {
+                  setId(review, id);
+                  // Cache the reviews
+                  cacheReview(review)
+                    .then()
+                    .catch((error) => {
+                      console.error(error);
+                    });
+                }
+              }
+            }
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
 
+      //const reviewData = await Promise.all(promises);
       // Wait for all reviews to be cached before starting the next batch
-      console.log(`Caching batch ${i} of ${batches}`);
-      await Promise.all(promises);
+      console.log(`Caching batch ${i + 1} of ${batches}`);
     }
   } catch (error) {
     // Handle any errors that occur during the scraping process

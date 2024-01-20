@@ -5,6 +5,8 @@ import mongoose, { Schema, Types, Document } from 'mongoose';
 export interface IReview extends Document {
   professor_id: Types.ObjectId;
   course_id: Types.ObjectId;
+  prof: string;
+  code: string;
   semester: string;
   section: number;
   instructor_overall?: number | undefined;
@@ -21,6 +23,8 @@ const reviewSchema: Schema<IReview> = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Course',
   },
+  prof: String,
+  code: String,
   semester: String,
   section: Number,
   instructor_overall: Number || undefined,

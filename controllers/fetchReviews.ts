@@ -126,6 +126,8 @@ export const getReviews = async (query: string): Promise<IReview[] | null> => {
     // Add ids to result
     review.professor_id = prof_id;
     review.course_id = course_id;
+    review.prof = review['instructor'];
+    review.code = review['course_code'].substring(0, 10);
   }
 
   // Remove uneeded keys in json
