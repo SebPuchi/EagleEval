@@ -88,11 +88,6 @@ passport.deserializeUser(async (id, done) => {
 router.use(passport.initialize());
 router.use(passport.session());
 
-// Define login route
-router.get('/login', (req, res) => {
-  res.send('Login Page');
-});
-
 // Define Google authentication route
 router.get(
   '/google',
@@ -102,7 +97,7 @@ router.get(
 // Define Google authentication callback route
 router.get(
   '/google/callback',
-  passport.authenticate('google', { failureRedirect: '/login' }),
+  passport.authenticate('google', { failureRedirect: '/' }),
   (req, res) => {
     // Successful authentication, redirect home.
     res.redirect('/auth/profile');
@@ -129,7 +124,7 @@ function ensureAuthenticated(req: Request, res: Response, next: NextFunction) {
   if (req.isAuthenticated()) {
     return next();
   }
-  res.redirect('/login');
+  res.redirect('/');
 }
 
 export { router as auth_router };
