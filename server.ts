@@ -4,6 +4,7 @@ import bodyParser from 'body-parser';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 import path from 'path';
+import crypto from 'crypto';
 
 // Import routes and middleware
 import { fetch_router } from './routes/fetch';
@@ -28,6 +29,13 @@ const __dirname = dirname(__filename);
 // Express application
 const app = express();
 const private_api = express();
+
+// Sets the `script-src` directive to
+// "'self' 'nonce-e33...'" (or similar)
+app.use((req, res, next) => {
+  res.locals['cspNonce'] = crypto.randomBytes(32).toString('hex');
+  next();
+});
 
 // Helmet to protect from expolits
 app.use(helmet());
