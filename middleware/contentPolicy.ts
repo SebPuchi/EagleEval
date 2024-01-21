@@ -13,6 +13,9 @@ export default function contentSecurityPolicy() {
       useDefaults: true,
       directives: {
         defaultSrc: ['https://eagleeval.com'].concat(trusted),
+        scriptSrcAttr: ['https://eagleeval.com', "'unsafe-inline'"].concat(
+          trusted
+        ),
         scriptSrc: [
           'https://www.eagleeval.com',
           //"'unsafe-inline'",
