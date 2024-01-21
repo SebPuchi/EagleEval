@@ -6,13 +6,36 @@ import { config } from '../config/googleConfig';
 import session from 'express-session';
 import UserModel from 'models/user';
 
+// Get env varialbes
+const CLIENT_ID: string | undefined = config.OAuthCreds.id;
+const CLIENT_SECRET: string | undefined = config.OAuthCreds.secret;
+const SESSION_SECRET: string | undefined = config.OAuthCreds.session;
+
+// Check if environment variables are defined
+if (
+  CLIENT_ID === undefined ||
+  CLIENT_SECRET === undefined ||
+  SESSION_SECRET === undefined
+) {
+  const undefinedVariables: string[] = [];
+  if (CLIENT_ID === undefined) undefinedVariables.push('id');
+  if (CLIENT_SECRET === undefined) undefinedVariables.push('secret');
+  if (SESSION_SECRET === undefined) undefinedVariables.push('session_secret');
+
+  throw new Error(
+    `The following Google OAuth2.0 environment variable(s) are undefined: ${undefinedVariables.join(
+      ', '
+    )}.`
+  );
+}
+
 // Create an Express router
 const router = express.Router();
 
 // Configure session middleware
 router.use(
   session({
-    secret: config.OAuthCreds.session, // Change this to a secure secret key
+    secret: SESSION_SECRET, // Change this to a secure secret key
     resave: false,
     saveUninitialized: true,
   })
@@ -22,8 +45,8 @@ router.use(
 passport.use(
   new GoogleStrategy(
     {
-      clientID: config.OAuthCreds.id,
-      clientSecret: config.OAuthCreds.secret,
+      clientID: CLIENT_ID,
+      clientSecret: CLIENT_SECRET,
       callbackURL: 'http://localhost:80/auth/google/callback',
     },
     async (accessToken, refreshToken, profile, done) => {
