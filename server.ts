@@ -17,6 +17,7 @@ import {
   closeMongooseConnection,
 } from './middleware/mongoConnection';
 import { handleCors } from './middleware/cors';
+import contentSecurityPolicy from 'middleware/contentPolicy';
 
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
@@ -30,6 +31,7 @@ const private_api = express();
 
 // Helmet to protect from expolits
 app.use(helmet());
+app.use(contentSecurityPolicy());
 
 // Block ddos attempts
 const limiter = rateLimit({
