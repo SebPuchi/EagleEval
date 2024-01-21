@@ -4,7 +4,13 @@ import passport from 'passport';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import { config } from '../config/googleConfig';
 import session from 'express-session';
-import UserModel from 'models/user';
+import UserModel, { IUser } from 'models/user';
+
+declare namespace Express {
+  interface User {
+    id?: string;
+  }
+}
 
 // Get env varialbes
 const CLIENT_ID: string | undefined = config.OAuthCreds.id;
@@ -69,7 +75,7 @@ passport.use(
   )
 );
 
-passport.serializeUser((user, done) => {
+passport.serializeUser((user: Express.User, done) => {
   done(null, user.id);
 });
 
