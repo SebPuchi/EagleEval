@@ -1,4 +1,5 @@
 import helmet from 'helmet';
+import { Request, Response } from 'express';
 
 const trusted = ["'self'"];
 
@@ -9,10 +10,14 @@ if (process.env['NODE_ENV'] !== 'production') {
 export default function contentSecurityPolicy() {
   return helmet({
     contentSecurityPolicy: {
-      useDefaults: false,
+      useDefaults: true,
       directives: {
-        defaultSrc: ["'self'", "'unsafe-inline'"].concat(trusted),
-        scriptSrc: ["'self'", "'unsafe-inline'"].concat(trusted),
+        defaultSrc: ['https://eagleeval.com'].concat(trusted),
+        scriptSrc: [
+          'https://www.eagleeval.com',
+          //"'unsafe-inline'",
+          (req: any, res: any) => `'nonce-${res.locals['cspNonce']}'`,
+        ].concat(trusted),
         objectSrc: ["'none'"],
         upgradeInsecureRequests: [],
       },
