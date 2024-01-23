@@ -5,6 +5,70 @@
   margin: 0;
   padding: 0
 }
+
+.professorscorebarwrapper {
+  height: 260px;
+  flex-direction: row;
+  justify-content: center;
+  padding: 20px;
+  display: flex
+}
+
+
+.profscoreknobdiv {
+  width: 40%;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  display: flex
+}
+
+.knobdataholderdiv {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  display: flex
+}
+
+
+.description1 {
+  text-align: center;
+  font-family: Inter,sans-serif;
+  display: flex
+}
+
+
+.quaddatadiv {
+  width: 60%;
+  flex-wrap: wrap;
+  display: flex
+}
+
+
+.silderdatadiv {
+  width: 50%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  display: flex
+}
+
+.silderscore {
+  margin-bottom: 7px;
+  font-family: Inter,sans-serif;
+  font-size: 45px;
+  font-weight: 700
+}
+
+.sliderdatatext {
+  text-align: center;
+  font-family: Inter,sans-serif;
+  font-size: 17px;
+  font-weight: 700
+}
+
+
 .smlldiv {
   width: 45px;
   height: 2px;
@@ -51,11 +115,67 @@
 }
 
 
+
+@media screen and (max-width:767px) {
+
+  .professorscorebarwrapper {
+      height: auto;
+      flex-direction: column;
+      align-items: center
+    }
+
+    .quaddatadiv {
+      margin-top: 26px
+    }
+
+    .silderdatadiv {
+      margin-top: 15px;
+      margin-bottom: 15px
+    }
+
+
+    .silderscore {
+      font-size: 35px
+    }
+
+
+
+
+
+}
+
+
+
 @media screen and (max-width:479px) {
 
   .grid {
     grid-template-columns: 1fr
   }
+
+  .professorscorebarwrapper {
+    height: auto;
+    flex-direction: column;
+    align-items: center
+  }
+
+  .profscoreknobdiv {
+    width: auto;
+    margin-bottom: 20px
+  }
+
+  .quaddatadiv {
+    width: auto;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center
+  }
+
+  .silderdatadiv {
+    width: auto;
+    margin-top: 20px;
+    margin-bottom: 20px
+  }
+
 
 
 
