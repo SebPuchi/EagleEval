@@ -6,6 +6,64 @@
   padding: 0
 }
 
+
+.professorinfowrapper {
+  width: 100%;
+  height: auto;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  display: flex
+}
+
+
+.profimgdatawrapper {
+  width: auto;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  display: flex
+}
+
+
+.professordividerbtm {
+  width: 75%;
+  height: 2px;
+  background-color: rgba(172,172,172,.52);
+  margin-top: 20px;
+  margin-bottom: 20px
+}
+
+
+.professordividertop {
+  width: 75%;
+  height: 2px;
+  background-color: rgba(172,172,172,.52);
+  margin-bottom: 20px
+}
+
+
+
+.whitecard.whitecontact {
+  width: 100%
+}
+
+
+.card {
+  background-color: #eee;
+  border: 1px solid #e6e9f1;
+  border-radius: 12px;
+  box-shadow: 2px 3px 7px 2px rgba(20,20,43,.09)
+}
+
+
+.contentwrapper {
+  padding-bottom: 0;
+  padding-left: 20px;
+  padding-right: 20px
+}
+
 .professorscorebarwrapper {
   height: 260px;
   flex-direction: row;
@@ -116,6 +174,17 @@
 
 
 
+@media screen and (max-width:991px) {
+  .contentwrapper {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    display: flex
+  }
+
+}
+
+
 @media screen and (max-width:767px) {
 
   .professorscorebarwrapper {
@@ -138,6 +207,10 @@
       font-size: 35px
     }
 
+    .card {
+      box-shadow: 0 2px 12px rgba(20,20,43,.04)
+    }
+
 
 
 
@@ -147,6 +220,11 @@
 
 
 @media screen and (max-width:479px) {
+
+  .contentwrapper {
+    padding-left: 0;
+    padding-right: 0
+  }
 
   .grid {
     grid-template-columns: 1fr
