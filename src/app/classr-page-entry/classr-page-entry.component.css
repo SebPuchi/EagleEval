@@ -14,6 +14,7 @@
   margin-top: 0;
   margin-bottom: 0;
   font-size: 40px;
+  font-family: Inter,sans-serif;
 }
 
 .dynamicprofgrid {
@@ -41,35 +42,6 @@
 }
 
 
-
-.description1 {
-  text-align: center;
-  font-family: Inter, sans-serif;
-  display: flex;
-}
-
-.silderdatadiv {
-  width: 50%;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 0;
-  display: flex;
-}
-
-.sliderdatatext {
-  text-align: center;
-  font-family: Inter, sans-serif;
-  font-size: 17px;
-  font-weight: 700;
-}
-
-.silderscore {
-  margin-bottom: 0;
-  font-family: Inter, sans-serif;
-  font-size: 45px;
-  font-weight: 700;
-}
 
 .professorclasstablewrapper {
   flex-wrap: wrap;
@@ -99,11 +71,7 @@
   align-items: flex-start;
 }
 
-.grid {
-  width: 100%;
-  grid-column-gap: 20px;
-  grid-row-gap: 20px;
-}
+
 
 .classnameprof {
   margin-top: 0;
@@ -222,14 +190,6 @@
   }
 
 
-  .silderdatadiv {
-    margin-top: 15px;
-    margin-bottom: 15px;
-  }
-
-  .silderscore {
-    font-size: 35px;
-  }
 
   .classnameprof {
     font-size: 20px;
@@ -248,15 +208,7 @@
   }
 
 
-  .silderdatadiv {
-    width: auto;
-    margin-top: 20px;
-    margin-bottom: 20px;
-  }
 
-  .grid {
-    grid-template-columns: 1fr;
-  }
 
   .classnameprof {
     font-size: 20px;
