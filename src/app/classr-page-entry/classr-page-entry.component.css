@@ -27,43 +27,6 @@
 
 
 
-.professorclasstablewrapper {
-  flex-wrap: wrap;
-  justify-content: space-between;
-  padding: 10px 20px 20px;
-  display: flex;
-}
-
-.professorclassheaderdiv {
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 20px 20px 0;
-  display: flex;
-}
-
-.class {
-  width: 100%;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-  display: flex;
-}
-
-.class.whitecard {
-  width: auto;
-  align-items: flex-start;
-}
-
-
-
-.classnameprof {
-  margin-top: 0;
-  margin-bottom: 0;
-  font-family: Inter, sans-serif;
-  font-size: 30px;
-  line-height: 40px;
-}
 
 .veritcal-divider {
   width: 2px;
@@ -166,15 +129,6 @@
   }
 }
 
-@media screen and (max-width: 767px) {
-
-
-
-
-  .classnameprof {
-    font-size: 20px;
-  }
-}
 
 @media screen and (max-width: 479px) {
 
@@ -184,11 +138,6 @@
   }
 
 
-
-
-  .classnameprof {
-    font-size: 20px;
-  }
 
   .veritcal-divider {
     display: none;

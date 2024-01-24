@@ -20,25 +20,8 @@
     display: flex
   }
 
-  .class {
-    width: auto;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    display: flex
-  }
-  .class.whitecard {
-    align-items: flex-start
-  }
 
-  .classnameprof {
-    margin-top: 0;
-    margin-bottom: 0;
-    font-family: Inter,sans-serif;
-    font-size: 30px;
-    line-height: 40px
-  }
+  
 
   .classdatascorediv {
     width: 100%;
@@ -98,9 +81,7 @@
         font-size: 30px
       }
 
-      .classnameprof {
-        font-size: 20px
-      }
+     
 
 
 
@@ -112,9 +93,7 @@
         font-size: 30px
       }
 
-      .classnameprof {
-        font-size: 20px
-      }
+    
 
       .classdatascorediv {
         flex-direction: column;
