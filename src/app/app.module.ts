@@ -35,16 +35,6 @@ import { KnobModule } from 'primeng/knob';
 import { ProfessorService } from 'src/app/PageDataService/professor.service';
 import { ClassService } from 'src/app/PageDataService/class.service';
 
-
-import { ClassScoreKnobComponent } from './classComponents/class-score-knob/class-score-knob.component';
-import { CourseInfoCardComponent } from './classComponents/course-info-card/course-info-card.component';
-import { CourseAvgHoursComponent } from './classComponents/course-avg-hours/course-avg-hours.component';
-import { CourseAttendanceComponent } from './classComponents/course-attendance/course-attendance.component';
-import { CourseWellOrganizedComponent } from './classComponents/course-well-organized/course-well-organized.component';
-import { CourseIntellectuallyChallengingComponent } from './classComponents/course-intellectually-challenging/course-intellectually-challenging.component';
-import { CourseAssignHelpfulComponent } from './classComponents/course-assign-helpful/course-assign-helpful.component';
-
-import { ClassStatTableComponent } from './classComponents/class-stat-table/class-stat-table.component';
 import { ContactEDUComponent } from './profComponents/contact-edu/contact-edu.component';
 import { MainDataCardComponent } from './profComponents/main-data-card/main-data-card.component';
 import { ClassDataProfComponent } from './profComponents/class-data-prof/class-data-prof.component';
@@ -60,14 +50,6 @@ import { ClassDataProfComponent } from './profComponents/class-data-prof/class-d
   SearchBarComponent,
   HomePageComponent,
   routingComponents,
-  ClassScoreKnobComponent,
-  CourseInfoCardComponent,
-  CourseAvgHoursComponent,
-  CourseAttendanceComponent,
-  CourseWellOrganizedComponent,
-  CourseIntellectuallyChallengingComponent,
-  CourseAssignHelpfulComponent,
-  ClassStatTableComponent,
   ContactEDUComponent,
   MainDataCardComponent,
   ClassDataProfComponent
