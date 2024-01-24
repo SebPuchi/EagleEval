@@ -7,6 +7,20 @@
 }
 
 
+.veritcal-divider {
+  width: 2px;
+  height: 75%;
+  background-color: rgba(172, 172, 172, .52);
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+
+.crsdesct {
+  font-family: Inter,sans-serif;
+  line-height: 25px
+}
+
 
 .classnameprof {
   margin-top: 0;
@@ -285,6 +299,10 @@
 
 
 @media screen and (max-width:479px) {
+
+  .veritcal-divider {
+    display: none;
+  }
 
 
   .classnameprof {
