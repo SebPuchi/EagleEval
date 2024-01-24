@@ -38,6 +38,7 @@ import { ClassService } from 'src/app/PageDataService/class.service';
 import { ContactEDUComponent } from './profComponents/contact-edu/contact-edu.component';
 import { MainDataCardComponent } from './profComponents/main-data-card/main-data-card.component';
 import { ClassDataProfComponent } from './profComponents/class-data-prof/class-data-prof.component';
+import { ClassInfoCardComponent } from './classComponents/class-info-card/class-info-card.component';
 
 @NgModule({
 	declarations: [
@@ -52,7 +53,8 @@ import { ClassDataProfComponent } from './profComponents/class-data-prof/class-d
   routingComponents,
   ContactEDUComponent,
   MainDataCardComponent,
-  ClassDataProfComponent
+  ClassDataProfComponent,
+  ClassInfoCardComponent
 	],
 	imports: [
 		BrowserModule,
