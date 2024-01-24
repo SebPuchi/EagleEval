@@ -7,6 +7,22 @@
 }
 
 
+.nameandstatheader {
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 40px;
+  font-family: Inter,sans-serif;
+}
+
+
+.contact {
+  width: auto;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 20px 20px 0;
+  display: flex;
+}
+
 .professorinfowrapper {
   width: 100%;
   height: auto;
@@ -187,6 +203,11 @@
 
 @media screen and (max-width:767px) {
 
+
+  .nameandstatheader {
+    font-size: 30px;
+  }
+
   .professorscorebarwrapper {
       height: auto;
       flex-direction: column;
@@ -220,6 +241,10 @@
 
 
 @media screen and (max-width:479px) {
+
+  .nameandstatheader {
+    font-size: 30px;
+  }
 
   .contentwrapper {
     padding-left: 0;

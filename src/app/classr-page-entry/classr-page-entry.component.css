@@ -10,13 +10,6 @@
 
 
 
-.nameandstatheader {
-  margin-top: 0;
-  margin-bottom: 0;
-  font-size: 40px;
-  font-family: Inter,sans-serif;
-}
-
 .dynamicprofgrid {
   width: 100%;
   grid-column-gap: 20px;
@@ -31,15 +24,6 @@
   margin: 20px;
 }
 
-
-
-.contact {
-  width: auto;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 20px 20px 0;
-  display: flex;
-}
 
 
 
@@ -185,10 +169,6 @@
 @media screen and (max-width: 767px) {
 
 
-  .nameandstatheader {
-    font-size: 30px;
-  }
-
 
 
   .classnameprof {
@@ -198,10 +178,6 @@
 
 @media screen and (max-width: 479px) {
 
-
-  .nameandstatheader {
-    font-size: 30px;
-  }
 
   .dynamicprofgrid {
     grid-template-columns: 1fr;
