@@ -39,6 +39,8 @@ import { ContactEDUComponent } from './profComponents/contact-edu/contact-edu.co
 import { MainDataCardComponent } from './profComponents/main-data-card/main-data-card.component';
 import { ClassDataProfComponent } from './profComponents/class-data-prof/class-data-prof.component';
 import { ClassInfoCardComponent } from './classComponents/class-info-card/class-info-card.component';
+import { MainDataClassComponent } from './classComponents/main-data-class/main-data-class.component';
+import { ProfessorTableForClasspgComponent } from './classComponents/professor-table-for-classpg/professor-table-for-classpg.component';
 
 @NgModule({
 	declarations: [
@@ -54,7 +56,9 @@ import { ClassInfoCardComponent } from './classComponents/class-info-card/class-
   ContactEDUComponent,
   MainDataCardComponent,
   ClassDataProfComponent,
-  ClassInfoCardComponent
+  ClassInfoCardComponent,
+  MainDataClassComponent,
+  ProfessorTableForClasspgComponent
 	],
 	imports: [
 		BrowserModule,
