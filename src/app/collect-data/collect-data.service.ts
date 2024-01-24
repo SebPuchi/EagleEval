@@ -2,6 +2,7 @@ import { Observable, forkJoin } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { ApiService } from '../api.service';
 import { AppSettings } from '../appSettings';
+
 import {
   ProfPageData,
   CourseTableData,
@@ -13,52 +14,51 @@ import {
   ClassService,
 } from '../PageDataService/class.service';
 
+const API_ENDPOINT = AppSettings.API_ENDPOINT;
+
 interface ProfData {
   _id: string;
-  title: string;
+  name: string;
   __v: number;
-  education: string[];
-  email: string;
-  firstName: string;
-  lastName: string;
-  office: string;
-  phone: string;
-  profileImage: string;
+  education?: string[];
+  phone?: string;
+  title?: string[];
+  email?: string;
+  office?: string;
+  photoLink?: string;
 }
+
 
 interface CourseData {
   _id: string;
-  crs_code: string;
+  code: string;
   __v: number;
   college: string;
-  crs_desc: string;
+  description: string;
   subject: string;
   title: string;
 }
 
 interface ReviewData {
   _id: string;
-  course_code: string;
+  code: string;
+  prof: string;
   semester: string;
   __v: number;
-  course_name: string;
-  course_overall?: number;
-  department: string;
-  instructor: string;
-  instructor_overall?: string;
-  school: string;
+  course_id?: string;
+  course_overall:? number;
+  instructor_overall?: number;
+  professor_id?: string;
+  section: number;
 }
 
 interface DrilldownData {
   _id: string;
   __v: number;
-  course_code: string;
-  course_name: string;
-  instructor: string;
-  semester: string;
+  review_id: string;
   coursewellorganized?: number;
   courseintellectuallychallenging?: number;
-  effortavghoursweeklyc?: number;
+  effortavghoursweekly?: number;
   attendancenecessary?: number;
   assignmentshelpful?: number;
   instructorprepared?: number;
@@ -130,42 +130,37 @@ export class CollectDataService {
     return groupedData;
   }
 
-  private getReviewsFromCache(query: string) {
-    const url = AppSettings.API_ENDPOINT + 'cache/search/reviews';
-
-    return this.api.getFromCache(query, url);
-  }
-
-  private getDrilldownFromCache(query: string) {
-    const url = AppSettings.API_ENDPOINT + 'cache/search/drilldown';
-
-    return this.api.getFromCache(query, url);
-  }
-
-  private getReviewsFromAPI(query: string) {
-    const url = AppSettings.API_ENDPOINT + 'fetch/reviews';
-
-    return this.api.getReviewsFromAPI(query, url);
-  }
-
-  private getDrilldownFromAPI(code: string, prof: string) {
-    const url = AppSettings.API_ENDPOINT + 'fetch/drilldown';
-
-    return this.api.getDrilldownFromAPI(prof, code, url);
-  }
-
   private getProfData(id: string) {
-    const url = AppSettings.API_ENDPOINT + 'cache/search/profs';
+    const url = API_ENDPOINT + 'fetch/database/prof';
 
     return this.api.getSearchById(id, url);
   }
 
   private getCourseData(id: string) {
-    const url = AppSettings.API_ENDPOINT + 'cache/search/courses';
+    const url = API_ENDPOINT + 'fetch/database/course';
 
     return this.api.getSearchById(id, url);
   }
 
+  private getReviewsForProf(id: string) {
+    const url = API_ENDPOINT + 'fetch/database/review/prof';
+
+    return this.api.getSearchById(id, url);
+  }
+
+  private getReviewsForCourse(id: string) {
+    const url = API_ENDPOINT + 'fetch/database/review/course';
+
+    return this.api.getSearchById(id, url);
+  }
+
+  private getDrilldown(id: string) {
+    const url = API_ENDPOINT + 'fetch/databse/drilldown';
+
+    return this.api.getSearchById(id, url)''
+  }
+
+  /*
   private getProfAvgData(
     metaData: ProfData,
     revData: ReviewData[],
@@ -412,4 +407,5 @@ export class CollectDataService {
       });
     });
   }
+*/
 }
