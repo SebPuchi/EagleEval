@@ -28,7 +28,6 @@ interface ProfData {
   photoLink?: string;
 }
 
-
 interface CourseData {
   _id: string;
   code: string;
@@ -46,7 +45,7 @@ interface ReviewData {
   semester: string;
   __v: number;
   course_id?: string;
-  course_overall:? number;
+  course_overall?: number;
   instructor_overall?: number;
   professor_id?: string;
   section: number;
@@ -157,7 +156,7 @@ export class CollectDataService {
   private getDrilldown(id: string) {
     const url = API_ENDPOINT + 'fetch/databse/drilldown';
 
-    return this.api.getSearchById(id, url)''
+    return this.api.getSearchById(id, url);
   }
 
   /*
