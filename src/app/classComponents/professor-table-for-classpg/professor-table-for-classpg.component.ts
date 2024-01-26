@@ -7,4 +7,7 @@ import { Component } from '@angular/core';
 })
 export class ProfessorTableForClasspgComponent {
 
+ //Will most likely be an array if I remeber correctly
+  classScoreForProfOvl: number | undefined = 50;
+
 }

@@ -5,7 +5,18 @@
         <div class="smllprofessorimgwrapper">
           <div class="smllprofessorimg card"></div>
           <div class="veritcal-divider"></div>
-          <div class="professorovlcourseknob"></div>
+          <div class="professorovlcourseknob">
+
+            <p-knob
+            [(ngModel)]="classScoreForProfOvl"
+            [size] = "160"
+            [readonly] = "true"
+            [strokeWidth]="12.5"
+            [disabled] = "true"
+          ></p-knob>
+
+
+          </div>
         </div>
         <div class="fildwidthdiv"></div>
         <div class="contact-edutextheader">Professor Review</div>

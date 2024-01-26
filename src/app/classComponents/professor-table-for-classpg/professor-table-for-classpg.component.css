@@ -1,7 +1,7 @@
 .smllprofessorimgwrapper {
     width: 100%;
     flex-direction: row;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
     padding: 15px 0 0;
     display: flex
@@ -14,9 +14,18 @@
     background-size: cover
   }
   .smllprofessorimg.card {
-    width: 50%;
-    height: 200px
+    width: 45%;
+    height: 170px
   }
   .reviewaccordian {
     width: 100%
+  }
+
+
+  @media screen and (max-width:991px) {
+    .smllprofessorimg.card {
+      margin-right: 10px;
+    }
+
+   
   }
