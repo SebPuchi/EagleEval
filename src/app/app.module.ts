@@ -10,6 +10,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // Primeng angular module imports
 
+import { AccordionModule } from 'primeng/accordion';
 import { CardModule } from 'primeng/card';
 import { MenubarModule } from 'primeng/menubar';
 import { ButtonModule } from 'primeng/button';
@@ -71,6 +72,7 @@ import { ProfessorTableForClasspgComponent } from './classComponents/professor-t
 		ProgressBarModule,
 		HttpClientModule,
 		KnobModule,
+		AccordionModule,
 		FormsModule,
 		BrowserAnimationsModule
 
