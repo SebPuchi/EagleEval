@@ -134,7 +134,7 @@
 }
 
 .professorscorebarwrapper {
-  height: 260px;
+  height: 300px;
   flex-direction: row;
   justify-content: center;
   padding: 20px;
@@ -145,7 +145,7 @@
 .profscoreknobdiv {
   width: 40%;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   display: flex
 }
@@ -175,7 +175,7 @@
 .silderdatadiv {
   width: 50%;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   padding: 0;
   display: flex
@@ -183,8 +183,9 @@
 
 .silderscore {
   font-family: Inter,sans-serif;
-  font-size: 45px;
-  font-weight: 700
+  font-size: 55px;
+  font-weight: 700;
+  margin-top:20px; 
 }
 
 .sliderdatatext {
