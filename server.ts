@@ -12,6 +12,7 @@ import { update_router } from './routes/update';
 import { search_router } from './routes/search';
 import { scrape_router } from './routes/scrape';
 import { auth_router } from './routes/auth';
+import { comment_router } from 'routes/comments';
 
 import {
   createMongooseConnection,
@@ -73,6 +74,9 @@ private_api.use('/api/scrape', scrape_router);
 
 // Add routes for google auth (OAuth2.0)
 app.use('/auth', auth_router);
+
+// Add routes for rmp comments
+app.use('/api/comments', comment_router);
 
 const port = process.env['PORT'] || 80;
 const privatePort = 8080;
