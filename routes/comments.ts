@@ -1,8 +1,7 @@
 import express, { Request, Response } from 'express';
-import {
-  searchForTeacher,
-  getTeacherReviews,
-} from 'controllers/RateMyProfessor';
+import rmp from 'controllers/RateMyProfessor';
+
+const BC_SCHOOL_ID = 'U2Nob29sLTEyMg==';
 
 const comment_router = express.Router();
 
@@ -11,13 +10,16 @@ comment_router.get('/prof', async (req: Request, res: Response) => {
   const prof_name = req.query['name'] as any | null;
 
   if (prof_name) {
-    console.log(`Searching RMP for comments for ${prof_name}`);
+    console.log(`Searching RMP for comments on ${prof_name}`);
 
-    const prof_id: string | null = await searchForTeacher(prof_name);
+    const prof_id: string = (
+      await rmp.searchTeacher(prof_name, BC_SCHOOL_ID)
+    )[0].id;
+
     if (prof_id) {
-      const comments = await getTeacherReviews(prof_id);
+      const comments: any = await rmp.getTeacher(prof_id);
 
-      return res.json(comments);
+      return res.json(comments.ratings.edges);
     } else {
       console.log(`${prof_name} not found in RMP`);
       return res.json(null);

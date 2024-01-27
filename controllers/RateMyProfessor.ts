@@ -1,49 +1,93 @@
-import ratings from '@chromeskullex/rate-my-professors';
-/*
-TypeError: ratings.searchSchool is not a function
-    at file:///home/andrew/EagleEval/controllers/RateMyProfessor.ts:1:190
-    at ModuleJob.run (node:internal/modules/esm/module_job:218:25)
-    at async ModuleLoader.import (node:internal/modules/esm/loader:323:24)
-    at async loadESM (node:internal/process/esm_loader:28:7)
-    at async handleMainPromise (node:internal/modules/run_main:120:12)
+import { GraphQLClient } from 'graphql-request';
+import {
+  autocompleteSchoolQuery,
+  searchTeacherQuery,
+  getTeacherQuery,
+} from './queries';
 
+const AUTH_TOKEN = 'dGVzdDp0ZXN0';
 
-*/
-// Define the school ID for Boston College using the searchSchool method
-console.log(ratings.searchSchool('Boston College'));
-const BC_SCHOOL_ID = (await ratings.searchSchool('Boston College'))[0].id;
+const client = new GraphQLClient('https://www.ratemyprofessors.com/graphql', {
+  headers: {
+    authorization: `Basic ${AUTH_TOKEN}`,
+    'Access-Control-Allow-Origin': '*',
+  },
+});
 
-/**
- * Searches for a teacher by name and returns the teacher's ID.
- *
- * @param {string} name - The name of the teacher to search for.
- * @returns {Promise<string | null>} - The teacher's ID if found, otherwise null.
- */
-export const searchForTeacher = async (
-  name: string
-): Promise<string | null> => {
-  // Search for the teacher using the provided name and the school ID for Boston College
-  const response = await ratings.searchTeacher(name, BC_SCHOOL_ID);
+export interface ISchoolFromSearch {
+  id: string;
+  name: string;
+  city: string;
+  state: string;
+}
 
-  // If a response is received and there is at least one result, return the first teacher's ID
-  if (response && response.length > 0) {
-    return response[0].id;
-  }
+export interface ITeacherFromSearch {
+  id: string;
+  firstName: string;
+  lastName: string;
+  school: {
+    id: string;
+    name: string;
+  };
+}
 
-  // Return null if no teacher is found
-  return null;
+export interface ITeacherPage {
+  id: string;
+  firstName: string;
+  lastName: string;
+  avgDifficulty: number;
+  avgRating: number;
+  numRatings: number;
+  department: string;
+  school: ISchoolFromSearch;
+  legacyId: number;
+}
+
+export interface DepartmentQuery {
+  query: {
+    text: string;
+    schoolID: string;
+    fallback: boolean;
+    departmentID: string;
+  };
+  schoolID: string;
+}
+
+const searchSchool = async (query: string): Promise<ISchoolFromSearch[]> => {
+  const response: any = await client.request(autocompleteSchoolQuery, {
+    query,
+  });
+
+  return response.autocomplete.schools.edges.map(
+    (edge: { node: ISchoolFromSearch }) => edge.node
+  );
 };
 
-/**
- * Retrieves the reviews for a teacher based on the provided teacher ID.
- *
- * @param {string} id - The ID of the teacher for whom reviews are to be retrieved.
- * @returns {Promise<any | null>} - The teacher's reviews if found, otherwise null.
- */
-export const getTeacherReviews = async (id: string): Promise<any | null> => {
-  // Retrieve the teacher's reviews using the getTeacher method
-  const response = await ratings.getTeacher(id);
+const searchTeacher = async (
+  name: string,
+  schoolID: string
+): Promise<ITeacherFromSearch[]> => {
+  const response: any = await client.request(searchTeacherQuery, {
+    text: name,
+    schoolID,
+  });
 
-  // Return the response if available, otherwise return null
-  return response ? response : null;
+  if (response.newSearch.teachers === null) {
+    return [];
+  }
+
+  return response.newSearch.teachers.edges.map(
+    (edge: { node: ITeacherFromSearch }) => edge.node
+  );
+};
+
+const getTeacher = async (id: string): Promise<ITeacherPage> => {
+  const response: any = await client.request(getTeacherQuery, { id });
+  return response.node;
+};
+
+export default {
+  searchSchool,
+  searchTeacher,
+  getTeacher,
 };
