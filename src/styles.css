@@ -54,6 +54,11 @@ border-color:#6d1f22
 
 }
 
+.p-tabview .p-tabview-nav li .p-tabview-nav-link:not(.p-disabled):focus {
+
+  box-shadow:none;
+}
+
 .p-tabview .p-tabview-panels {
 
 
