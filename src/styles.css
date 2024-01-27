@@ -5,6 +5,271 @@
   margin: 0;
   padding: 0
 }
+
+
+
+
+.review {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.reviewheader {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.reviewinfo {
+  font-family: Inter,sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+
+
+/* Primeng Styles */
+
+
+.p-button {
+
+
+  background: #6d1f22;
+  border: #6d1f22;
+}
+
+.p-button:enabled:hover {
+
+  background: #983a3d;
+
+}
+
+
+.p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
+color: #000000;
+border-color:#6d1f22
+
+}
+
+.p-tabview .p-tabview-nav li .p-tabview-nav-link:not(.p-disabled):focus {
+
+  box-shadow:none;
+}
+
+.p-tabview .p-tabview-panels {
+
+
+  color:black;
+}
+
+.p-tabview .p-tabview-nav {
+
+  background: transparent;
+
+}
+
+/* *************** */
+
+.reviewaccordian {
+  width: 100%;
+  margin-top:20px;
+}
+
+
+.veritcal-divider {
+  width: 2px;
+  height: 75%;
+  background-color: rgba(172, 172, 172, .52);
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+
+.crsdesct {
+  font-family: Inter,sans-serif;
+  line-height: 25px
+}
+
+
+.classnameprof {
+  margin-top: 0;
+  margin-bottom: 0;
+  font-family: Inter, sans-serif;
+  font-size: 30px;
+  line-height: 40px;
+}
+
+.class {
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  display: flex;
+}
+
+
+.class.whitecard {
+  width: auto;
+  align-items: flex-start;
+}
+
+.professorclassheaderdiv {
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 20px 20px 0;
+  display: flex;
+}
+
+.professorclasstablewrapper {
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 10px 20px 20px;
+  display: flex;
+}
+
+
+.nameandstatheader {
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 40px;
+  font-family: Inter,sans-serif;
+}
+
+
+.contact {
+  width: auto;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 20px 20px 0;
+  display: flex;
+}
+
+.professorinfowrapper {
+  width: 100%;
+  height: auto;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  display: flex
+}
+
+
+.profimgdatawrapper {
+  width: auto;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  display: flex
+}
+
+
+.professordividerbtm {
+  width: 75%;
+  height: 2px;
+  background-color: rgba(172,172,172,.52);
+  margin-top: 20px;
+  margin-bottom: 20px
+}
+
+
+.professordividertop {
+  width: 75%;
+  height: 2px;
+  background-color: rgba(172,172,172,.52);
+  margin-bottom: 20px
+}
+
+
+
+.whitecard.whitecontact {
+  width: 100%
+}
+
+
+.card {
+  background-color: #eee;
+  border: 1px solid #e6e9f1;
+  border-radius: 12px;
+  box-shadow: 2px 3px 7px 2px rgba(20,20,43,.09)
+}
+
+
+.contentwrapper {
+  padding-bottom: 0;
+  padding-left: 20px;
+  padding-right: 20px
+}
+
+.professorscorebarwrapper {
+  height: 300px;
+  flex-direction: row;
+  justify-content: center;
+  padding: 20px;
+  display: flex
+}
+
+
+.profscoreknobdiv {
+  width: 40%;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  display: flex
+}
+
+.knobdataholderdiv {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  display: flex
+}
+
+
+.description1 {
+  text-align: center;
+  font-family: Inter,sans-serif;
+  display: flex
+}
+
+
+.quaddatadiv {
+  width: 60%;
+  flex-wrap: wrap;
+  display: flex
+}
+
+
+.silderdatadiv {
+  width: 50%;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0;
+  display: flex
+}
+
+.silderscore {
+  font-family: Inter,sans-serif;
+  font-size: 55px;
+  font-weight: 700;
+  margin-top:15px; 
+ 
+}
+
+.sliderdatatext {
+  text-align: center;
+  font-family: Inter,sans-serif;
+  font-size: 17px;
+  font-weight: 700;
+  
+}
+
+
 .smlldiv {
   width: 45px;
   height: 2px;
@@ -51,11 +316,118 @@
 }
 
 
+
+@media screen and (max-width:991px) {
+  .contentwrapper {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    display: flex
+  }
+
+  .silderscore {
+    font-size: 35px
+  }
+
+  .reviewinfo {
+    
+    font-size: 13px;
+    
+  }
+
+}
+
+
+@media screen and (max-width:767px) {
+
+
+  .classnameprof {
+    font-size: 20px;
+  }
+
+
+  .nameandstatheader {
+    font-size: 30px;
+  }
+
+  .professorscorebarwrapper {
+      height: auto;
+      flex-direction: column;
+      align-items: center
+    }
+
+    .quaddatadiv {
+      margin-top: 26px
+    }
+
+    .silderdatadiv {
+      margin-top: 15px;
+      margin-bottom: 15px
+    }
+
+
+  
+
+    .card {
+      box-shadow: 0 2px 12px rgba(20,20,43,.04)
+    }
+
+
+
+
+
+}
+
+
+
 @media screen and (max-width:479px) {
+
+  .veritcal-divider {
+    display: none;
+  }
+
+
+  .classnameprof {
+    font-size: 20px;
+  }
+
+  .nameandstatheader {
+    font-size: 30px;
+  }
+
+  .contentwrapper {
+    padding-left: 0;
+    padding-right: 0
+  }
 
   .grid {
     grid-template-columns: 1fr
   }
+
+  .professorscorebarwrapper {
+    height: auto;
+    flex-direction: column;
+    align-items: center
+  }
+
+  .profscoreknobdiv {
+    width: auto;
+    margin-bottom: 20px
+  }
+
+  .quaddatadiv {
+    width: auto;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center
+  }
+
+  .silderdatadiv {
+    width: auto;
+    margin-top: 20px;
+    margin-bottom: 20px
+  }
+
 
 
 

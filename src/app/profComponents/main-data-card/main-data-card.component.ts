@@ -8,6 +8,7 @@ import { Component,OnInit } from '@angular/core';
 export class MainDataCardComponent {
 
   professorOvl: number | undefined = 50;
+  strokeColor: string = '#6d1f22';
 
   instructorPrepared: number | undefined = 50;
   clearMaterial: number | undefined = 50;

@@ -7,7 +7,9 @@
 .text-14.text-14-60 {
   opacity: .6;
   color: #fff;
-  opacity: .6
+  opacity: .6;
+  font-family: Roboto,sans-serif;
+  
 }
 .tagline {
   opacity: .6;

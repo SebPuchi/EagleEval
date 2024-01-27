@@ -8,5 +8,6 @@ import { Component } from '@angular/core';
 export class ClassDataProfComponent {
 
   courseOvl: number | undefined = 50;
+  strokeColor: string = '#6d1f22';
 
 }
