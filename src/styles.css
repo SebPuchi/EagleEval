@@ -6,6 +6,11 @@
   padding: 0
 }
 
+.reviewaccordian {
+  width: 100%;
+  margin-top:20px;
+}
+
 
 .veritcal-divider {
   width: 2px;
