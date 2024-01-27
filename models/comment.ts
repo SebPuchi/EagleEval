@@ -5,6 +5,8 @@ import mongoose, { Schema, Types, Document } from 'mongoose';
 export interface IComment extends Document {
   user_id: Types.ObjectId;
   message: string;
+  createdAt: Date;
+  wouldTakeAgain?: number;
   professor_id: Types.ObjectId;
   course_id: Types.ObjectId;
 }
@@ -13,6 +15,8 @@ export interface IComment extends Document {
 const commentSchema: Schema<IComment> = new Schema({
   user_id: { type: Schema.Types.ObjectId, ref: 'User', required: true },
   message: { type: String, required: true },
+  createdAt: { type: Date, default: Date.now },
+  wouldTakeAgain: { type: Number },
   professor_id: { type: Schema.Types.ObjectId, ref: 'Professor' },
   course_id: { type: Schema.Types.ObjectId, ref: 'Course' },
 });
