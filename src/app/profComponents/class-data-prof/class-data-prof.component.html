@@ -64,15 +64,22 @@
     </div>
      
   </p-tabPanel>
-  <p-tabPanel header="Student Reviews">
-
+  <p-tabPanel header="Reviews">
+    
+    <div class="addreviewwrapper"></div>
     <div class="professorclassheaderdiv removeTopPadding">
-      <h1 class="nameandstatheader">Jeremy Wilkin&#x27;s Class Statistics </h1>
+      <div class="addreviewwrapper">
+      <h1 class="nameandstatheader">Reviews</h1>
+      <div class="addReviewButton">
+
+        <p-button label="Add Review"></p-button>
+      </div>
+    </div>
       <div class="fildwidthdiv"></div>
     </div>
 
     <div class="professorReviewWrapper">
-    <p-accordion [activeIndex]="0">
+    <p-accordion [activeIndex]="0" >
       <p-accordionTab header="Perspective in Western Culture I">
           <p>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
