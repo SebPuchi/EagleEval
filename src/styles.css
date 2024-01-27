@@ -8,6 +8,8 @@
 
 
 
+
+
 .review {
   display: flex;
   width: 100%;
@@ -30,6 +32,15 @@
 
 
 
+/* Primeng Styles */
+
+
+.p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
+color: #000000;
+border-color:#6d1f22
+
+}
+
 .p-tabview .p-tabview-panels {
 
 
@@ -41,6 +52,9 @@
   background: transparent;
 
 }
+
+/* *************** */
+
 .reviewaccordian {
   width: 100%;
   margin-top:20px;
