@@ -1,5 +1,12 @@
 
+.removeTopPadding{
+  padding-top: 0px;
 
+}
+.removeBtmPadding{
+
+  padding-bottom: 0px;
+}
 
   .classdatascorediv {
     width: 100%;
