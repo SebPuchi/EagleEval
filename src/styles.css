@@ -9,7 +9,6 @@
 
 
 
-
 .review {
   display: flex;
   width: 100%;
@@ -33,6 +32,20 @@
 
 
 /* Primeng Styles */
+
+
+.p-button {
+
+
+  background: #6d1f22;
+  border: #6d1f22;
+}
+
+.p-button:enabled:hover {
+
+  background: #983a3d;
+
+}
 
 
 .p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
