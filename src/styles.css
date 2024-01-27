@@ -203,14 +203,16 @@
   font-family: Inter,sans-serif;
   font-size: 55px;
   font-weight: 700;
-  margin-top:20px; 
+  margin-top:15px; 
+ 
 }
 
 .sliderdatatext {
   text-align: center;
   font-family: Inter,sans-serif;
   font-size: 17px;
-  font-weight: 700
+  font-weight: 700;
+  
 }
 
 
@@ -269,6 +271,10 @@
     display: flex
   }
 
+  .silderscore {
+    font-size: 35px
+  }
+
 }
 
 
@@ -300,9 +306,7 @@
     }
 
 
-    .silderscore {
-      font-size: 35px
-    }
+  
 
     .card {
       box-shadow: 0 2px 12px rgba(20,20,43,.04)
