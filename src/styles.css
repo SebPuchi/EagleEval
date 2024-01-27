@@ -6,6 +6,12 @@
   padding: 0
 }
 
+
+.p-tabview .p-tabview-nav {
+
+  background: transparent;
+
+}
 .reviewaccordian {
   width: 100%;
   margin-top:20px;
