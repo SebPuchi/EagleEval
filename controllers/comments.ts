@@ -1,4 +1,4 @@
-import CommentModel, { IComment } from 'models/comment';
+import CommentModel, { IComment } from '../models/comment';
 import { Types } from 'mongoose';
 
 /**

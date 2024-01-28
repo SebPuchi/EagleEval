@@ -1,14 +1,20 @@
 import express, { Request, Response } from 'express';
+import bodyParser from 'body-parser';
 import ProfessorModel from '../models/professor';
 import { searchById, findDocumentIdByFilter } from '../utils/mongoUtils';
+import { body, param, validationResult } from 'express-validator';
 import { Types } from 'mongoose';
 import rmp from '../controllers/RateMyProfessor';
 import { IComment } from '../models/comment';
 import CourseModel from '../models/course';
+import { createComment, deleteCommentById } from '../controllers/comments';
 
 const BC_SCHOOL_ID = 'U2Nob29sLTEyMg==';
 
 const comment_router = express.Router();
+
+comment_router.use(bodyParser.json());
+comment_router.use(bodyParser.urlencoded({ extended: true }));
 
 async function convertToIComment(
   jsonData: any[],
@@ -30,8 +36,8 @@ async function convertToIComment(
         message: commentNode.comment,
         createdAt: new Date(commentNode.date),
         wouldTakeAgain: commentNode.wouldTakeAgain ? true : false,
-        professor_id: prof_id, // You should replace this with the actual professor_id
-        course_id: course_id, // You should replace this with the actual course_id
+        professor_id: prof_id,
+        course_id: course_id,
       };
     })
   );
@@ -86,5 +92,76 @@ comment_router.get('/prof', async (req: Request, res: Response) => {
     return res.send('Query string must include id of professor');
   }
 });
+
+// Reouter endpoint for create a new comment
+comment_router.post(
+  '/prof',
+  [
+    body('user_id').isMongoId(),
+    body('message').isString(),
+    body('wouldTakeAgain').isBoolean(),
+    body('prof_id').isMongoId(),
+    body('course_id').isMongoId(),
+  ],
+  async (req: Request, res: Response) => {
+    // Check for validation errors
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    try {
+      const { user_id, message, wouldTakeAgain, prof_id, course_id } = req.body;
+
+      const new_comment: IComment | null = await createComment(
+        user_id,
+        message,
+        wouldTakeAgain,
+        prof_id,
+        course_id
+      );
+      if (new_comment != null) {
+        return res
+          .status(201)
+          .json({ message: 'Comment created successfully' });
+      } else {
+        return res.status(400).json({ errors: 'Error creating review' });
+      }
+    } catch (error: any) {
+      console.error(error.message);
+      return res.status(500).json({ error: 'Internal Server Error' });
+    }
+  }
+);
+
+// Example route for deleting a comment by ID
+comment_router.delete(
+  '/prof/:id',
+  [param('id').isMongoId()],
+  async (req: Request, res: Response) => {
+    // Check for validation errors
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    try {
+      const commentId: Types.ObjectId = req.params['id'] as any;
+
+      const deletedComment = await deleteCommentById(commentId);
+
+      // Check if the comment exists
+      if (!deletedComment) {
+        return res.status(404).json({ error: 'Comment not found' });
+      }
+
+      return res.status(200).json({ message: 'Comment deleted successfully' });
+    } catch (error: any) {
+      console.error(error.message);
+      return res.status(500).json({ error: 'Internal Server Error' });
+    }
+  }
+);
 
 export { comment_router };
