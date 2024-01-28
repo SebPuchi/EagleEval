@@ -15,8 +15,9 @@ export class UserprofileComponent {
 
     Confirm() { 
       this.confirmationService.confirm({ 
-          message: 'Proceeding will remove all reviews and data associated with this account', 
-          header: 'Remove your Account?', 
+          message: 'Deleting account will remove all reviews and data associated with your student email', 
+          header: 'Are you sure you wish to proceed?', 
+          icon: 'pi pi-exclamation-triangle'
       }); 
 
   } 
