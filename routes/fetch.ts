@@ -3,9 +3,9 @@ import { getReviews } from '../controllers/fetchReviews';
 import { getDrillDown } from '../controllers/fetchDrillDown';
 import ReviewModel, { IReview } from '../models/review';
 import DrilldownModel, { IDrilldown } from '../models/drilldown';
-import ProfessorModel, { IProfessor } from '../models/professor';
-import CourseModel, { ICourse } from '../models/course';
-import { searchById, searchForId } from 'utils/mongoUtils';
+import ProfessorModel from '../models/professor';
+import CourseModel from '../models/course';
+import { searchById, searchForId } from '../utils/mongoUtils';
 
 const fetch_router = express.Router();
 

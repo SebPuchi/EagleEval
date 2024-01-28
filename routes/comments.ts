@@ -1,10 +1,10 @@
 import express, { Request, Response } from 'express';
-import ProfessorModel from 'models/professor';
-import { searchById, findDocumentIdByFilter } from 'utils/mongoUtils';
+import ProfessorModel from '../models/professor';
+import { searchById, findDocumentIdByFilter } from '../utils/mongoUtils';
 import { Types } from 'mongoose';
-import rmp from 'controllers/RateMyProfessor';
+import rmp from '../controllers/RateMyProfessor';
 import { IComment } from '../models/comment';
-import CourseModel from 'models/course';
+import CourseModel from '../models/course';
 
 const BC_SCHOOL_ID = 'U2Nob29sLTEyMg==';
 
@@ -23,7 +23,7 @@ async function convertToIComment(
           $regex: new RegExp(commentNode.class, 'i'),
         },
       };
-      console.log(filter);
+
       const course_id = await findDocumentIdByFilter(CourseModel, filter);
       return <any>{
         user_id: null,

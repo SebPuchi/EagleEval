@@ -31,18 +31,6 @@ export interface ITeacherFromSearch {
   };
 }
 
-export interface ITeacherPage {
-  id: string;
-  firstName: string;
-  lastName: string;
-  avgDifficulty: number;
-  avgRating: number;
-  numRatings: number;
-  department: string;
-  school: ISchoolFromSearch;
-  legacyId: number;
-}
-
 export interface DepartmentQuery {
   query: {
     text: string;
@@ -81,7 +69,7 @@ const searchTeacher = async (
   );
 };
 
-const getTeacher = async (id: string): Promise<ITeacherPage> => {
+const getTeacher = async (id: string): Promise<any> => {
   const response: any = await client.request(getTeacherQuery, { id });
   return response.node;
 };

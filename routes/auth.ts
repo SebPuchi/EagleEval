@@ -4,7 +4,7 @@ import passport from 'passport';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import { config } from '../config/googleConfig';
 import session from 'express-session';
-import UserModel, { IUser } from 'models/user';
+import UserModel from '../models/user';
 
 declare namespace Express {
   interface User {
