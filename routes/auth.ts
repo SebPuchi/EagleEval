@@ -124,7 +124,7 @@ function ensureAuthenticated(req: Request, res: Response, next: NextFunction) {
   if (req.isAuthenticated()) {
     return next();
   }
-  res.redirect('/');
+  res.redirect('/api/auth/google');
 }
 
 export { router as auth_router };

@@ -29,7 +29,7 @@ async function convertToIComment(
         user_id: null,
         message: commentNode.comment,
         createdAt: new Date(commentNode.date),
-        wouldTakeAgain: commentNode.wouldTakeAgain,
+        wouldTakeAgain: commentNode.wouldTakeAgain ? true : false,
         professor_id: prof_id, // You should replace this with the actual professor_id
         course_id: course_id, // You should replace this with the actual course_id
       };
