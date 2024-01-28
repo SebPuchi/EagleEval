@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // Primeng angular module imports
+
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { TabViewModule } from 'primeng/tabview';
 import { AccordionModule } from 'primeng/accordion';
@@ -30,6 +31,9 @@ import { ClassrPageEntryComponent } from './class-page-entry/class-page-entry.co
 import { PageServiceService } from './page-service.service';
 import { ProgressBarModule } from 'primeng/progressbar'
 import { KnobModule } from 'primeng/knob';
+
+// Confirmation Service 
+import { ConfirmationService } from 'primeng/api'
 
 
 //PROF + CLASS SERVICE
@@ -82,7 +86,7 @@ import { UserprofileComponent } from './userprofile/userprofile.component';
 		BrowserAnimationsModule
 
 	],
-	providers: [PageServiceService,ProfessorService,ClassService],
+	providers: [ConfirmationService,PageServiceService,ProfessorService,ClassService],
 	bootstrap: [AppComponent]
 
 })
