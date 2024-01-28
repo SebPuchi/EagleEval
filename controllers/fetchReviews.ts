@@ -1,4 +1,4 @@
-import fetch, { isRedirect } from 'node-fetch';
+import fetch from 'node-fetch';
 import { FilterQuery, Types } from 'mongoose';
 import HtmlTableToJson from '../utils/HtmlTableToJson';
 import {
