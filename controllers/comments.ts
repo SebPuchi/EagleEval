@@ -8,30 +8,29 @@ import { Types } from 'mongoose';
  * @param userComment - The user's input comment.
  * @returns The cleaned comment, ensuring it is under 300 characters.
  */
-function cleanAndCheckComment(userComment: string): string {
-  // Remove leading and trailing whitespaces
-  let cleanedComment = userComment.trim();
-
-  // Remove HTML tags (if any)
-  cleanedComment = cleanedComment.replace(/<\/?[^>]+(>|$)/g, '');
-
-  // Check for common injection attack patterns
-  const injectionPatterns = [
-    /script/gi,
-    /on\w*=/gi,
-    /javascript:/gi,
-    /(<\s*\/?\s*script\s*>)/gi,
-  ];
-  for (const pattern of injectionPatterns) {
-    cleanedComment = cleanedComment.replace(pattern, '');
-  }
-
+function cleanAndCheckComment(userComment: string): string | undefined {
   // Check if the comment is under 300 characters
-  if (cleanedComment.length <= 300) {
+  if (userComment.length <= 300) {
+    // Remove leading and trailing whitespaces
+    let cleanedComment = userComment.trim();
+
+    // Remove HTML tags (if any)
+    cleanedComment = cleanedComment.replace(/<\/?[^>]+(>|$)/g, '');
+
+    // Check for common injection attack patterns
+    const injectionPatterns = [
+      /script/gi,
+      /on\w*=/gi,
+      /javascript:/gi,
+      /(<\s*\/?\s*script\s*>)/gi,
+    ];
+    for (const pattern of injectionPatterns) {
+      cleanedComment = cleanedComment.replace(pattern, '');
+    }
     return cleanedComment;
   } else {
-    // If the comment is too long, truncate it to 300 characters
-    return cleanedComment.substring(0, 300);
+    // If the comment is too long, return undefined
+    return undefined;
   }
 }
 
