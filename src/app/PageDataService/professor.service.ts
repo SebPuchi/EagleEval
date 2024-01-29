@@ -2,11 +2,9 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 export interface ProfPageData {
-  title: string;
+  name: string;
   education?: string[];
   email?: string;
-  firstName: string;
-  lastName: string;
   phone?: string;
   office?: string;
   profileImage?: string;
@@ -20,8 +18,10 @@ export interface ProfPageData {
 export interface CourseTableData {
   title: string;
   crs_code: string;
+  school: string;
+  subject: string;
+  description?: string;
   course_overall: number;
-  effort_hours?: number;
 }
 
 @Injectable({
