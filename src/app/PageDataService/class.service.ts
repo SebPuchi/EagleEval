@@ -7,7 +7,7 @@ interface Comment {
   createdAt: Date;
   wouldTakeAgain?: boolean;
   professor_id: string;
-  course_id: string;
+  course_id?: string;
 }
 
 export interface CoursePageData {

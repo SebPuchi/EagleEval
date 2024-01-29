@@ -7,7 +7,7 @@ interface Comment {
   createdAt: Date;
   wouldTakeAgain?: boolean;
   professor_id: string;
-  course_id: string;
+  course_id?: string;
 }
 
 export interface ProfPageData {
@@ -22,7 +22,7 @@ export interface ProfPageData {
   avgExplains?: number;
   avgAvailable?: number;
   avgEnthusiastic?: number;
-  comments?: Comment[];
+  comments?: { [course: string]: Comment[] };
 }
 
 export interface CourseTableData {

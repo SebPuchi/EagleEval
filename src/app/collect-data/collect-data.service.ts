@@ -74,7 +74,7 @@ interface Comment {
   createdAt: Date;
   wouldTakeAgain?: boolean;
   professor_id: string;
-  course_id: string;
+  course_id?: string;
 }
 
 @Injectable({
@@ -306,6 +306,26 @@ export class CollectDataService {
         );
 
         this.getProfComments(id).subscribe((prof_comments: Comment[]) => {
+          let commentDict: { [course: string]: Comment[] } = {};
+
+          prof_comments.forEach((comment: Comment) => {
+            if (comment.course_id) {
+              const course_id = comment.course_id;
+              if (!commentDict[course_id]) {
+                // If the objectId does not exist in the dictionary, create a new entry
+                commentDict[course_id] = [comment];
+              } else {
+                // If the objectId already exists, push the new review into the existing array
+                commentDict[course_id].push(comment);
+              }
+            } else {
+              if (!commentDict['general']) {
+                commentDict['general'] = [comment];
+              } else {
+                commentDict['general'].push(comment);
+              }
+            }
+          });
           const new_prof_page_data: ProfPageData = {
             name: prof_data.name,
             education: prof_data.education,
@@ -317,7 +337,7 @@ export class CollectDataService {
             avgExplains: avg_explains,
             avgAvailable: avg_available,
             avgEnthusiastic: avg_enthusiastic,
-            comments: prof_comments,
+            comments: commentDict,
           };
 
           this.prof.setProfPageData(new_prof_page_data);
