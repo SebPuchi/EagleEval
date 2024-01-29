@@ -1,44 +1,26 @@
-.professorclassheaderdiv {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 20px 20px 0;
-    display: flex
-  }
 
-  .nameandstatheader {
-    margin-top: 0;
-    margin-bottom: 0;
-    font-size: 40px;
-    font-family: Inter,sans-serif
-  }
+.professorReviewWrapper{
+
+  margin-top: 10px;
+
+}
 
 
-.professorclasstablewrapper {
-    flex-wrap: wrap;
-    justify-content: space-between;
-    padding: 10px 20px 20px;
-    display: flex
-  }
+.addreviewwrapper {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
 
-  .class {
-    width: auto;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    display: flex
-  }
-  .class.whitecard {
-    align-items: flex-start
-  }
 
-  .classnameprof {
-    margin-top: 0;
-    margin-bottom: 0;
-    font-family: Inter,sans-serif;
-    font-size: 30px;
-    line-height: 40px
-  }
+.removeTopPadding{
+  padding-top: 0px;
+
+}
+.removeBtmPadding{
+
+  padding-bottom: 0px;
+}
 
   .classdatascorediv {
     width: 100%;
@@ -71,59 +53,24 @@
   }
 
 
-  .veritcal-divider {
-    width: 2px;
-    height: 75%;
-    background-color: rgba(172,172,172,.52);
-    margin-left: 10px;
-    margin-right: 10px
-  }
-
-
 
 .classscoreknobproftable {
     height: 100px
   }
 
 
-  .crsdesct {
-    font-family: Inter,sans-serif;
-    line-height: 25px
-  }
 
-
-  @media screen and (max-width:767px) {
-
-    .nameandstatheader {
-        font-size: 30px
-      }
-
-      .classnameprof {
-        font-size: 20px
-      }
-
-
-
-  }
 
   @media screen and (max-width:479px) {
 
-    .nameandstatheader {
-        font-size: 30px
-      }
-
-      .classnameprof {
-        font-size: 20px
-      }
+    
 
       .classdatascorediv {
         flex-direction: column;
         justify-content: center
       }
 
-      .veritcal-divider {
-        display: none
-      }
+    
 
 
   }

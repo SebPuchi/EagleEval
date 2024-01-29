@@ -1,49 +1,33 @@
 <app-home-bar></app-home-bar>
 
-<div class="mainsection">
-  <div class="contentwrapper">
-    <div class="w-layout-grid dynamicprofcontent">
-      <app-course-info-card></app-course-info-card>
+<section class="contentwrapper">
+  <div class="w-layout-grid dynamicprofgrid">
+    <div id="w-node-d9f8d9d4-fd1f-09b9-4f0d-5f74494a2159-b68642c4" class="card">
+      <!-- CLASS HRS / DESCRIP ENTRY -->
 
-      <div
-        id="w-node-_65b1e46a-f1fb-bc44-019d-7a3f9fec543a-93504854"
-        class="card"
-      >
-        <div class="w-layout-grid dataspecificgridwrap">
-          <app-class-score-knob></app-class-score-knob>
+      <app-class-info-card></app-class-info-card>
 
-          <app-course-avg-hours></app-course-avg-hours>
+    </div>
+    <div id="w-node-e1d71806-b979-52f8-f44f-7e04e8858948-b68642c4" class="card">
+      <div class="w-layout-grid profdatagrid">
+        <div id="w-node-eabfb9ca-8044-14b0-125e-cbca8a67454b-b68642c4" class="whitecard">
+          <!-- CLASS SCORE AND SLIDERS ENTRY -->
+          <app-main-data-class></app-main-data-class>
 
-          <div
-            id="w-node-_65b1e46a-f1fb-bc44-019d-7a3f9fec545e-93504854"
-            class="sliderdatadiv card"
-          >
-            <app-course-attendance></app-course-attendance>
-          </div>
 
-          <div
-            id="w-node-_65b1e46a-f1fb-bc44-019d-7a3f9fec5471-93504854"
-            class="sliderdatadiv card"
-          >
-            <app-course-intellectually-challenging></app-course-intellectually-challenging>
+        </div>
+        <div id="w-node-dfff5bd2-9150-0e9f-1075-ee38b2732c08-b68642c4" class="whitecard">
+          <div class="professorclassheaderdiv">
+            <h1 class="nameandstatheader">Professors who teach CSCI2271</h1>
+            <div class="fildwidthdiv"></div>
           </div>
-          <div
-            id="w-node-_65b1e46a-f1fb-bc44-019d-7a3f9fec5472-93504854"
-            class="sliderdatadiv card"
-          >
-            <app-course-well-organized></app-course-well-organized>
-          </div>
-          <div
-            id="w-node-_65b1e46a-f1fb-bc44-019d-7a3f9fec5473-93504854"
-            class="sliderdatadiv card bottomslider"
-          >
-            <app-course-assign-helpful></app-course-assign-helpful>
-          </div>
+          <!-- PROFESSOR TABLE ENTRY -->
+          <app-professor-table-for-classpg></app-professor-table-for-classpg>
         </div>
       </div>
     </div>
-
-    <app-class-stat-table></app-class-stat-table>
   </div>
-</div>
+</section>
+
+
 <app-footer></app-footer>

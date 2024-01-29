@@ -6,7 +6,7 @@ export interface AutocompleteSearchResult {
   name?: string;
   title?: string;
   code?: string;
-  score: { $meta: 'searchScore' };
+  score: number;
 }
 
 // Autocomplete search for courses
