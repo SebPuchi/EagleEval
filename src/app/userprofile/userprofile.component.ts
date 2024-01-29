@@ -20,6 +20,8 @@ export class UserprofileComponent {
           icon: 'pi pi-exclamation-triangle'
       }); 
 
+
+
   } 
 
   removeReview() { 
@@ -30,6 +32,7 @@ export class UserprofileComponent {
     }); 
 
 } 
+
 
 
 
