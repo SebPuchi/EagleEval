@@ -13,7 +13,7 @@ export class UserprofileComponent {
     private primengConfig: PrimeNGConfig) { }
 
 
-    Confirm() { 
+    removeAccount() { 
       this.confirmationService.confirm({ 
           message: 'Deleting account will remove all reviews and data associated with your student email', 
           header: 'Are you sure you wish to proceed?', 
@@ -21,6 +21,15 @@ export class UserprofileComponent {
       }); 
 
   } 
+
+  removeReview() { 
+    this.confirmationService.confirm({ 
+        message: 'Deleting a review is an irreversible action', 
+        header: 'Are you sure you wish to proceed?', 
+        icon: 'pi pi-exclamation-triangle'
+    }); 
+
+} 
 
 
 
