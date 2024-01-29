@@ -26,7 +26,7 @@ describe('Authentication Router', () => {
   it('should protect the profile route and redirect to login if not authenticated', async () => {
     const response = await request(app).get('/auth/profile');
     expect(response.status).toBe(302); // 302 is the status code for redirection
-    expect(response.header['location']).toBe('/'); // Adjust this based on your redirect logic
+    expect(response.header['location']).toBe('/api/auth/google'); // Adjust this based on your redirect logic
   });
 
   it('should logout and redirect to the home page', async () => {

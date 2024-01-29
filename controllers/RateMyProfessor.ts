@@ -5,8 +5,10 @@ import {
   getTeacherQuery,
 } from './queries';
 
+// Authentication token for API access
 const AUTH_TOKEN = 'dGVzdDp0ZXN0';
 
+// GraphQL client configuration
 const client = new GraphQLClient('https://www.ratemyprofessors.com/graphql', {
   headers: {
     authorization: `Basic ${AUTH_TOKEN}`,
@@ -14,6 +16,7 @@ const client = new GraphQLClient('https://www.ratemyprofessors.com/graphql', {
   },
 });
 
+// Interface representing school information from a search
 export interface ISchoolFromSearch {
   id: string;
   name: string;
@@ -21,6 +24,7 @@ export interface ISchoolFromSearch {
   state: string;
 }
 
+// Interface representing teacher information from a search
 export interface ITeacherFromSearch {
   id: string;
   firstName: string;
@@ -31,6 +35,7 @@ export interface ITeacherFromSearch {
   };
 }
 
+// Interface representing a query for department information
 export interface DepartmentQuery {
   query: {
     text: string;
@@ -41,6 +46,11 @@ export interface DepartmentQuery {
   schoolID: string;
 }
 
+/**
+ * Searches for schools based on a given query string.
+ * @param query - The query string for school search.
+ * @returns A promise that resolves to an array of ISchoolFromSearch.
+ */
 const searchSchool = async (query: string): Promise<ISchoolFromSearch[]> => {
   const response: any = await client.request(autocompleteSchoolQuery, {
     query,
@@ -51,6 +61,12 @@ const searchSchool = async (query: string): Promise<ISchoolFromSearch[]> => {
   );
 };
 
+/**
+ * Searches for teachers based on a given name and school ID.
+ * @param name - The name of the teacher to search for.
+ * @param schoolID - The ID of the school to narrow down the search.
+ * @returns A promise that resolves to an array of ITeacherFromSearch.
+ */
 const searchTeacher = async (
   name: string,
   schoolID: string
@@ -69,11 +85,17 @@ const searchTeacher = async (
   );
 };
 
+/**
+ * Retrieves detailed information about a teacher based on their ID.
+ * @param id - The ID of the teacher to retrieve information for.
+ * @returns A promise that resolves to detailed information about the teacher.
+ */
 const getTeacher = async (id: string): Promise<any> => {
   const response: any = await client.request(getTeacherQuery, { id });
   return response.node;
 };
 
+// Exporting the functions as a single module
 export default {
   searchSchool,
   searchTeacher,
