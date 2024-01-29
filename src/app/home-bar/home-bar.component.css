@@ -17,9 +17,27 @@
 }
 
 .searchdiv {
-  width: 30%;
+  width: 100%;
+  margin-right: 20px;
+ 
+}
+
+.searchSignInWrapper{
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 50%;
+
+}
+.signInWrapper{
+  width: 70px;
+
   margin-right: 20px;
 }
+
+
 
 @media screen and (max-width: 991px) {
 
@@ -30,10 +48,18 @@
     background-image: url("src/assets/LogoIphone.png");
   }
 
-  .searchdiv {
-    width: 70%;
-    margin-right: 20px;
+  .searchSignInWrapper{
+
+    width: 80%;
+  
   }
+
+  .signInWrapper{
+    width: 90px;
+  
+   
+  }
+
 }
 
 

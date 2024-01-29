@@ -48,6 +48,7 @@ import { ClassInfoCardComponent } from './classComponents/class-info-card/class-
 import { MainDataClassComponent } from './classComponents/main-data-class/main-data-class.component';
 import { ProfessorTableForClasspgComponent } from './classComponents/professor-table-for-classpg/professor-table-for-classpg.component';
 import { UserprofileComponent } from './userprofile/userprofile.component';
+import { SignInButtonComponent } from './sign-in-button/sign-in-button.component';
 
 @NgModule({
 	declarations: [
@@ -66,7 +67,8 @@ import { UserprofileComponent } from './userprofile/userprofile.component';
   ClassInfoCardComponent,
   MainDataClassComponent,
   ProfessorTableForClasspgComponent,
-  UserprofileComponent
+  UserprofileComponent,
+  SignInButtonComponent
 	],
 	imports: [
 		BrowserModule,
