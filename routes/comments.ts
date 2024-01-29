@@ -1,11 +1,15 @@
 import express, { Request, Response } from 'express';
 import bodyParser from 'body-parser';
 import ProfessorModel from '../models/professor';
-import { searchById, findDocumentIdByFilter } from '../utils/mongoUtils';
+import {
+  searchById,
+  findDocumentIdByFilter,
+  searchForId,
+} from '../utils/mongoUtils';
 import { body, param, validationResult } from 'express-validator';
 import { Types } from 'mongoose';
 import rmp from '../controllers/RateMyProfessor';
-import { IComment } from '../models/comment';
+import CommentModel, { IComment } from '../models/comment';
 import CourseModel from '../models/course';
 import { createComment, deleteCommentById } from '../controllers/comments';
 
@@ -58,7 +62,7 @@ comment_router.get('/prof', async (req: Request, res: Response) => {
 
     if (prof_name) {
       // Log the intention to search RMP for comments on the professor
-      console.log(`Searching RMP for comments on ${prof_name}`);
+      console.log(`Searching for comments on ${prof_name}`);
 
       // Search RMP for the professor's information and get RMP professor id
       const rmp_prof_id: string = (
@@ -70,13 +74,22 @@ comment_router.get('/prof', async (req: Request, res: Response) => {
         const comments: any = await rmp.getTeacher(rmp_prof_id);
 
         // Convert RMP comments to the desired format
-        const convertedComments = await convertToIComment(
+        const convertedComments: any[] | null = await convertToIComment(
           comments.ratings.edges,
           prof_id
         );
 
+        const userComments: any[] | null = await searchForId(
+          prof_id,
+          CommentModel,
+          'professor_id'
+        );
+
+        const allComments = (convertedComments ?? []).concat(
+          userComments ?? []
+        );
         // Send the converted comments as JSON response
-        return res.json(convertedComments);
+        return res.json(allComments);
       } else {
         // Log that the professor was not found in RMP
         console.log(`${prof_name} not found in RMP`);

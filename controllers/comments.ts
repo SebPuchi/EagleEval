@@ -55,7 +55,7 @@ export function createComment(
     user_id: user_id,
     message: cleanAndCheckComment(message),
     wouldTakeAgain: wouldTakeAgain,
-    prof_id: prof_id,
+    professor_id: prof_id,
     course_id: course_id,
   };
 
