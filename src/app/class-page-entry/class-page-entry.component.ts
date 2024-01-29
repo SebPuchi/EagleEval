@@ -6,9 +6,9 @@ import { Injectable } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-classr-page-entry',
-  templateUrl: './classr-page-entry.component.html',
-  styleUrls: ['./classr-page-entry.component.css'],
+  selector: 'app-class-page-entry',
+  templateUrl: './class-page-entry.component.html',
+  styleUrls: ['./class-page-entry.component.css'],
 })
 export class ClassrPageEntryComponent {
   constructor(

@@ -9,6 +9,8 @@ import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // Primeng angular module imports
+
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { TabViewModule } from 'primeng/tabview';
 import { AccordionModule } from 'primeng/accordion';
 import { CardModule } from 'primeng/card';
@@ -25,10 +27,13 @@ import { SearchBarComponent } from './HomePageComponets/search-bar/search-bar.co
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { HomePageComponent } from './HomePageComponets/home-page/home-page.component';
 import { ProfessorPageEntryComponent } from './professor-page-entry/professor-page-entry.component';
-import { ClassrPageEntryComponent } from './classr-page-entry/classr-page-entry.component';
+import { ClassrPageEntryComponent } from './class-page-entry/class-page-entry.component';
 import { PageServiceService } from './page-service.service';
 import { ProgressBarModule } from 'primeng/progressbar'
 import { KnobModule } from 'primeng/knob';
+
+// Confirmation Service 
+import { ConfirmationService } from 'primeng/api'
 
 
 //PROF + CLASS SERVICE
@@ -42,6 +47,8 @@ import { ClassDataProfComponent } from './profComponents/class-data-prof/class-d
 import { ClassInfoCardComponent } from './classComponents/class-info-card/class-info-card.component';
 import { MainDataClassComponent } from './classComponents/main-data-class/main-data-class.component';
 import { ProfessorTableForClasspgComponent } from './classComponents/professor-table-for-classpg/professor-table-for-classpg.component';
+import { UserprofileComponent } from './userprofile/userprofile.component';
+import { SignInButtonComponent } from './sign-in-button/sign-in-button.component';
 
 @NgModule({
 	declarations: [
@@ -59,7 +66,9 @@ import { ProfessorTableForClasspgComponent } from './classComponents/professor-t
   ClassDataProfComponent,
   ClassInfoCardComponent,
   MainDataClassComponent,
-  ProfessorTableForClasspgComponent
+  ProfessorTableForClasspgComponent,
+  UserprofileComponent,
+  SignInButtonComponent
 	],
 	imports: [
 		BrowserModule,
@@ -71,6 +80,7 @@ import { ProfessorTableForClasspgComponent } from './classComponents/professor-t
 		InputTextModule,
 		ProgressBarModule,
 		HttpClientModule,
+		ConfirmDialogModule,
 		KnobModule,
 		TabViewModule,
 		AccordionModule,
@@ -78,7 +88,7 @@ import { ProfessorTableForClasspgComponent } from './classComponents/professor-t
 		BrowserAnimationsModule
 
 	],
-	providers: [PageServiceService,ProfessorService,ClassService],
+	providers: [ConfirmationService,PageServiceService,ProfessorService,ClassService],
 	bootstrap: [AppComponent]
 
 })

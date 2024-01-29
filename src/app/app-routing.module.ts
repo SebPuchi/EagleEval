@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ProfessorPageEntryComponent } from './professor-page-entry/professor-page-entry.component';
-import { ClassrPageEntryComponent } from './classr-page-entry/classr-page-entry.component';
+import { ClassrPageEntryComponent } from './class-page-entry/class-page-entry.component';
 import { HomePageComponent } from './HomePageComponets/home-page/home-page.component';
 
 const routes: Routes = [

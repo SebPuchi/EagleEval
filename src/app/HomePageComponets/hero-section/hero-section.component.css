@@ -1,3 +1,25 @@
+
+
+.heroSignIn{
+  position: absolute;
+  top: 40px;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  align-items: center;
+  width: 100%;
+  padding-right: 40px;
+  
+  z-index: 2;
+
+
+
+}
+
+
+
+
 .herosection {
   height: 100vh;
   position: relative
