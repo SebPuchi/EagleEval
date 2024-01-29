@@ -8,10 +8,24 @@
 }
 
 
+/* Links / Sign in global */
+.signIn {
+  text-align: center;
+  font-family: Inter,sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  text-decoration: none;
+  color:#ffffff;
+  
+}
+
+
 
 a {
   text-decoration: none;
 }
+
+/* ************* */
 
 
 .review {
@@ -332,6 +346,13 @@ border-color:#6d1f22
 
 
 @media screen and (max-width:991px) {
+
+  .signIn {
+  
+    font-size: 15px;
+   
+    
+  }
   .contentwrapper {
     flex-direction: column;
     justify-content: center;
