@@ -66,8 +66,8 @@ export class SearchBarComponent {
     const crsRoute = AppSettings.API_ENDPOINT + 'search/courses';
     // Run api calls in parallel with combine latest
     forkJoin({
-      profs: this.apiService.getSearchResults($event, profRoute),
-      courses: this.apiService.getSearchResults($event, crsRoute),
+      profs: this.apiService.getSearchResults($event.query, profRoute),
+      courses: this.apiService.getSearchResults($event.query, crsRoute),
     })
       .pipe(
         map((response) => {

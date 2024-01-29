@@ -1,6 +1,15 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
+interface Comment {
+  user_id?: string;
+  message: string;
+  createdAt: Date;
+  wouldTakeAgain?: boolean;
+  professor_id: string;
+  course_id: string;
+}
+
 export interface CoursePageData {
   title: string;
   crs_code: string;
@@ -16,9 +25,10 @@ export interface CoursePageData {
 }
 
 export interface ProfTableData {
-  title: string;
-  prof_overall: number;
-  explains_material?: number;
+  name: string;
+  prof_overall?: number;
+  profile_image?: string;
+  comments?: Comment[];
 }
 
 @Injectable({
