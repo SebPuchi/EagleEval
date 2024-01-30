@@ -345,6 +345,9 @@ export class CollectDataService {
           if (prof_data) {
             this.getProfComments(prof_data._id).subscribe(
               (prof_comments: Comment[]) => {
+                const filtered_comments = prof_comments?.filter(
+                  (obj) => obj.course_id == null || obj.course_id == id
+                );
                 const avg_overall = this.calculateAverage(
                   profDict[prof_id],
                   'instructor_overall'
@@ -354,7 +357,7 @@ export class CollectDataService {
                   name: prof_data.name,
                   prof_overall: avg_overall,
                   profile_image: prof_data.photoLink,
-                  comments: prof_comments,
+                  comments: filtered_comments,
                 };
 
                 tableData.push(new_table_entry);
@@ -419,6 +422,9 @@ export class CollectDataService {
         };
 
         this.course.setCoursePageData(new_course_page_data);
+
+        console.log('COURSE PAGE DATA: ', new_course_page_data);
+        console.log('PROF TABLE DATA: ', tableData);
       });
     });
   }

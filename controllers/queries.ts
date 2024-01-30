@@ -82,7 +82,7 @@ export const getTeacherQuery = gql`
         legacyId
         wouldTakeAgainPercent
         numRatings
-        ratings(first: 1000) {
+        ratings(first: 50) {
           edges {
             node {
               class
