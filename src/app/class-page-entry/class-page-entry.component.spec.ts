@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ClassrPageEntryComponent } from './classr-page-entry.component';
+import { ClassrPageEntryComponent } from './class-page-entry.component';
 
 describe('ClassrPageEntryComponent', () => {
   let component: ClassrPageEntryComponent;
