@@ -25,6 +25,7 @@ export interface CoursePageData {
 }
 
 export interface ProfTableData {
+  id: string;
   name: string;
   prof_overall?: number;
   profile_image?: string;

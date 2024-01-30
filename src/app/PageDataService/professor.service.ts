@@ -27,6 +27,7 @@ export interface ProfPageData {
 }
 
 export interface CourseTableData {
+  id: string;
   title: string;
   crs_code: string;
   school: string;

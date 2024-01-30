@@ -219,6 +219,7 @@ export class CollectDataService {
               );
 
               const new_table_entry: CourseTableData = {
+                id: course_data._id,
                 title: course_data.title,
                 crs_code: course_data.code,
                 school: course_data.college,
@@ -354,6 +355,7 @@ export class CollectDataService {
                 );
 
                 const new_table_entry: ProfTableData = {
+                  id: prof_data._id,
                   name: prof_data.name,
                   prof_overall: avg_overall,
                   profile_image: prof_data.photoLink,
