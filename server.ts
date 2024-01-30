@@ -10,7 +10,7 @@ import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import { config } from './config/googleConfig';
 import session from 'express-session';
 import UserModel from './models/user';
-import { ensureAuthenticated } from 'middleware/authentication';
+import { csrf } from 'lusca';
 
 // Import routes and middleware
 import { fetch_router } from './routes/fetch';
@@ -65,6 +65,9 @@ if (
 // Express application
 const app = express();
 const private_api = express();
+
+// Sesssion security
+app.use(csrf());
 
 // Configure session middleware
 app.use(
