@@ -12,6 +12,7 @@ import rmp from '../controllers/RateMyProfessor';
 import CommentModel, { IComment } from '../models/comment';
 import CourseModel from '../models/course';
 import { createComment, deleteCommentById } from '../controllers/comments';
+import { ensureAuthenticated } from 'middleware/authentication';
 
 const BC_SCHOOL_ID = 'U2Nob29sLTEyMg==';
 
@@ -109,6 +110,7 @@ comment_router.get('/prof', async (req: Request, res: Response) => {
 // Reouter endpoint for create a new comment
 comment_router.post(
   '/prof',
+  ensureAuthenticated,
   [
     body('user_id').isMongoId(),
     body('message').isString(),
@@ -151,6 +153,7 @@ comment_router.post(
 // Example route for deleting a comment by ID
 comment_router.delete(
   '/prof/:id',
+  ensureAuthenticated,
   [param('id').isMongoId()],
   async (req: Request, res: Response) => {
     // Check for validation errors
@@ -160,7 +163,16 @@ comment_router.delete(
     }
 
     try {
+      const userId: Types.ObjectId = (req.user as any)?._id;
+
       const commentId: Types.ObjectId = req.params['id'] as any;
+
+      const commentToDelete = await searchById(CommentModel, commentId);
+      if (commentToDelete?.user_id != userId) {
+        return res
+          .status(401)
+          .json({ message: 'Not authorized to delete this comment' });
+      }
 
       const deletedComment = await deleteCommentById(commentId);
 

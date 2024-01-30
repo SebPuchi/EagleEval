@@ -5,6 +5,12 @@ import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 import path from 'path';
 import crypto from 'crypto';
+import passport from 'passport';
+import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
+import { config } from './config/googleConfig';
+import session from 'express-session';
+import UserModel from './models/user';
+import { ensureAuthenticated } from 'middleware/authentication';
 
 // Import routes and middleware
 import { fetch_router } from './routes/fetch';
@@ -27,9 +33,88 @@ import { dirname } from 'path';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
+declare namespace Express {
+  interface User {
+    id?: string;
+  }
+}
+
+// Get env varialbes
+const CLIENT_ID: string | undefined = config.OAuthCreds.id;
+const CLIENT_SECRET: string | undefined = config.OAuthCreds.secret;
+const SESSION_SECRET: string | undefined = config.OAuthCreds.session;
+
+// Check if environment variables are defined
+if (
+  CLIENT_ID === undefined ||
+  CLIENT_SECRET === undefined ||
+  SESSION_SECRET === undefined
+) {
+  const undefinedVariables: string[] = [];
+  if (CLIENT_ID === undefined) undefinedVariables.push('id');
+  if (CLIENT_SECRET === undefined) undefinedVariables.push('secret');
+  if (SESSION_SECRET === undefined) undefinedVariables.push('session_secret');
+
+  throw new Error(
+    `The following Google OAuth2.0 environment variable(s) are undefined: ${undefinedVariables.join(
+      ', '
+    )}.`
+  );
+}
+
 // Express application
 const app = express();
 const private_api = express();
+
+// Configure session middleware
+app.use(
+  session({
+    secret: SESSION_SECRET, // Change this to a secure secret key
+    resave: false,
+    saveUninitialized: true,
+  })
+);
+
+// Configure Passport for Google OAuth 2.0
+passport.use(
+  new GoogleStrategy(
+    {
+      clientID: CLIENT_ID,
+      clientSecret: CLIENT_SECRET,
+      callbackURL: 'http://localhost:80/auth/google/callback',
+    },
+    async (accessToken, refreshToken, profile, done) => {
+      const user = await UserModel.findOne({ googleId: profile.id });
+
+      // If user doesn't exist creates a new user. (similar to sign up)
+      if (!user) {
+        const newUser = await UserModel.create({
+          googleId: profile.id,
+          name: profile.displayName,
+          email: profile.emails?.[0].value,
+        });
+        if (newUser) {
+          done(null, newUser);
+        }
+      } else {
+        done(null, user);
+      }
+    }
+  )
+);
+
+passport.serializeUser((user: Express.User, done) => {
+  done(null, user.id);
+});
+
+passport.deserializeUser(async (id, done) => {
+  const user = await UserModel.findById(id);
+  done(null, user);
+});
+
+// Initialize Passport and restore authentication state, if any, from the session
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Sets the `script-src` directive to
 // "'self' 'nonce-e33...'" (or similar)
