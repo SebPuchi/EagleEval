@@ -125,39 +125,6 @@ export class CollectDataService {
   }
 
   /**
-   * Groups an array of objects by a specified key.
-   * @param data - The array of objects to be grouped.
-   * @param key - The key by which the objects are grouped.
-   * @returns An object with keys as the unique values of the specified key and values as arrays of grouped objects.
-   */
-  private groupBy<T extends ReviewData | DrilldownData, K extends keyof T>(
-    data: T[],
-    key: K
-  ): Record<string, T[]> {
-    const groupedData: Record<string, T[]> = {};
-
-    data.forEach((item) => {
-      let itemKey: string;
-
-      if (key === 'instructor') {
-        itemKey = (item as any).instructor || '';
-      } else if (key === 'course_code') {
-        itemKey = (item as any).course_code.slice(0, 8);
-      } else {
-        itemKey = '';
-      }
-
-      if (!groupedData[itemKey]) {
-        groupedData[itemKey] = [];
-      }
-
-      groupedData[itemKey].push(item);
-    });
-
-    return groupedData;
-  }
-
-  /**
    * Retrieves professor data from the API by ID.
    * @param id - The ID of the professor.
    * @returns An observable containing the professor data.
@@ -202,7 +169,7 @@ export class CollectDataService {
    * @param id - The ID of the drilldown data.
    * @returns An observable containing the drilldown data.
    */
-  private getDrilldown(id: string): Observable<DrilldownData> {
+  private getDrilldown(id: string): Observable<DrilldownData[]> {
     const url = API_ENDPOINT + 'fetch/database/drilldown';
     return this.api.getSearchById(id, url);
   }
@@ -274,9 +241,9 @@ export class CollectDataService {
         const review_id: string = review._id;
 
         this.getDrilldown(review_id).subscribe(
-          (dd_data: DrilldownData | null) => {
+          (dd_data: DrilldownData[] | null) => {
             if (dd_data) {
-              ddData.push(dd_data);
+              ddData.push(dd_data[0]);
             }
           }
         );
@@ -307,29 +274,31 @@ export class CollectDataService {
 
         this.getProfComments(id).subscribe((prof_comments: Comment[]) => {
           let commentDict: { [course: string]: Comment[] } = {};
-
-          prof_comments.forEach((comment: Comment) => {
-            if (comment.course_id) {
-              const course_id = comment.course_id;
-              if (!commentDict[course_id]) {
-                // If the objectId does not exist in the dictionary, create a new entry
-                commentDict[course_id] = [comment];
+          if (prof_comments) {
+            prof_comments.forEach((comment: Comment) => {
+              if (comment.course_id) {
+                const course_id = comment.course_id;
+                if (!commentDict[course_id]) {
+                  // If the objectId does not exist in the dictionary, create a new entry
+                  commentDict[course_id] = [comment];
+                } else {
+                  // If the objectId already exists, push the new review into the existing array
+                  commentDict[course_id].push(comment);
+                }
               } else {
-                // If the objectId already exists, push the new review into the existing array
-                commentDict[course_id].push(comment);
+                if (!commentDict['general']) {
+                  commentDict['general'] = [comment];
+                } else {
+                  commentDict['general'].push(comment);
+                }
               }
-            } else {
-              if (!commentDict['general']) {
-                commentDict['general'] = [comment];
-              } else {
-                commentDict['general'].push(comment);
-              }
-            }
-          });
+            });
+          }
           const new_prof_page_data: ProfPageData = {
             name: prof_data.name,
             education: prof_data.education,
             email: prof_data.email,
+            title: prof_data.title,
             office: prof_data.office,
             profileImage: prof_data.photoLink,
             avgOverall: avg_overall,
@@ -403,9 +372,9 @@ export class CollectDataService {
         const review_id: string = review._id;
 
         this.getDrilldown(review_id).subscribe(
-          (dd_data: DrilldownData | null) => {
+          (dd_data: DrilldownData[] | null) => {
             if (dd_data) {
-              ddData.push(dd_data);
+              ddData.push(dd_data[0]);
             }
           }
         );

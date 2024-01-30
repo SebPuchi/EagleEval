@@ -14,6 +14,7 @@ export interface ProfPageData {
   name: string;
   education?: string[];
   email?: string;
+  title?: string[];
   phone?: string;
   office?: string;
   profileImage?: string;
