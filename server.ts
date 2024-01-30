@@ -10,7 +10,7 @@ import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import { config } from './config/googleConfig';
 import session from 'express-session';
 import UserModel from './models/user';
-import { csrf } from 'lusca';
+import lusca from 'lusca';
 
 // Import routes and middleware
 import { fetch_router } from './routes/fetch';
@@ -65,9 +65,6 @@ if (
 // Express application
 const app = express();
 const private_api = express();
-
-// Sesssion security
-app.use(csrf());
 
 // Configure session middleware
 app.use(
@@ -129,6 +126,9 @@ app.use((req, res, next) => {
 // Helmet to protect from expolits
 app.use(helmet());
 app.use(contentSecurityPolicy());
+
+// Sesssion security
+app.use(lusca.csrf());
 
 // Block ddos attempts
 const limiter = rateLimit({
