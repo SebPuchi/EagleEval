@@ -12,7 +12,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ProfessorPageEntryComponent {
   //Professor image will now load in with basic html
-  professorImgURL: string = "";
+  professorImgURL: string = '';
 
   constructor(
     private professorService: ProfessorService,
@@ -31,7 +31,7 @@ export class ProfessorPageEntryComponent {
       const id = String(routeParams.get('profId'));
 
       // Populate prof data
-      this.data.getCacheProfData(id);
+      this.data.getProfPageData(id);
     });
   }
 }

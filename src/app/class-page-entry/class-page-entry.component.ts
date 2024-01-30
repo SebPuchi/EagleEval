@@ -28,7 +28,7 @@ export class ClassrPageEntryComponent {
       const id = String(routeParams.get('classId'));
 
       // Populate prof data
-      this.data.getCacheCourseData(id);
+      this.data.getCoursePageData(id);
     });
   }
 }

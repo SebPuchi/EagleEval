@@ -2,6 +2,7 @@ import { Observable, forkJoin } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { ApiService } from '../api.service';
 import { AppSettings } from '../appSettings';
+
 import {
   ProfPageData,
   CourseTableData,
@@ -13,58 +14,67 @@ import {
   ClassService,
 } from '../PageDataService/class.service';
 
+const API_ENDPOINT = AppSettings.API_ENDPOINT;
+
 interface ProfData {
   _id: string;
-  title: string;
+  name: string;
   __v: number;
-  education: string[];
-  email: string;
-  firstName: string;
-  lastName: string;
-  office: string;
-  phone: string;
-  profileImage: string;
+  education?: string[];
+  phone?: string;
+  title?: string[];
+  email?: string;
+  office?: string;
+  photoLink?: string;
 }
 
 interface CourseData {
   _id: string;
-  crs_code: string;
+  code: string;
   __v: number;
   college: string;
-  crs_desc: string;
+  description: string;
   subject: string;
   title: string;
 }
 
 interface ReviewData {
   _id: string;
-  course_code: string;
+  code: string;
+  prof: string;
   semester: string;
   __v: number;
-  course_name: string;
+  course_id?: string;
   course_overall?: number;
-  department: string;
-  instructor: string;
-  instructor_overall?: string;
-  school: string;
+  instructor_overall?: number;
+  professor_id?: string;
+  section: number;
 }
 
 interface DrilldownData {
   _id: string;
   __v: number;
-  course_code: string;
-  course_name: string;
-  instructor: string;
-  semester: string;
+  review_id: string;
   coursewellorganized?: number;
   courseintellectuallychallenging?: number;
-  effortavghoursweeklyc?: number;
+  effortavghoursweekly?: number;
   attendancenecessary?: number;
   assignmentshelpful?: number;
   instructorprepared?: number;
   instructorclearexplanations?: number;
   availableforhelpoutsideofclass?: number;
   stimulatedinterestinthesubjectmatter?: number;
+}
+
+interface Comment {
+  _id: string;
+  __v: number;
+  user_id?: string;
+  message: string;
+  createdAt: Date;
+  wouldTakeAgain?: boolean;
+  professor_id: string;
+  course_id?: string;
 }
 
 @Injectable({
@@ -77,10 +87,21 @@ export class CollectDataService {
     private course: ClassService
   ) {}
 
+  /**
+   * Converts a value to a percentage based on a specific formula.
+   * @param value - The numeric value to be converted.
+   * @returns The converted percentage value.
+   */
   private convertToPercent(value: number) {
     return value > 0 ? (value - 1) * 25 : 0;
   }
 
+  /**
+   * Calculates the average value for a specific field in an array of objects.
+   * @param data - The array of objects containing the field.
+   * @param fieldName - The field name for which the average is calculated.
+   * @returns The calculated average value.
+   */
   private calculateAverage<T, K extends keyof T>(data: T[], fieldName: K) {
     if (!data) {
       console.error('DATA undefined: ', data);
@@ -91,7 +112,7 @@ export class CollectDataService {
     );
 
     if (filteredData.length === 0) {
-      return -1; // Return -1 for an empty or entirely undefined array or handle it differently based on your requirements.
+      return -1;
     }
 
     const sum = filteredData.reduce(
@@ -103,69 +124,315 @@ export class CollectDataService {
     return Math.round(this.convertToPercent(average));
   }
 
-  private groupBy<T extends ReviewData | DrilldownData, K extends keyof T>(
-    data: T[],
-    key: K
-  ): Record<string, T[]> {
-    const groupedData: Record<string, T[]> = {};
+  /**
+   * Retrieves professor data from the API by ID.
+   * @param id - The ID of the professor.
+   * @returns An observable containing the professor data.
+   */
+  private getProfData(id: string): Observable<ProfData> {
+    const url = API_ENDPOINT + 'fetch/database/prof';
+    return this.api.getSearchById(id, url);
+  }
 
-    data.forEach((item) => {
-      let itemKey: string;
+  /**
+   * Retrieves course data from the API by ID.
+   * @param id - The ID of the course.
+   * @returns An observable containing the course data.
+   */
+  private getCourseData(id: string): Observable<CourseData> {
+    const url = API_ENDPOINT + 'fetch/database/course';
+    return this.api.getSearchById(id, url);
+  }
 
-      if (key === 'instructor') {
-        itemKey = (item as any).instructor || '';
-      } else if (key === 'course_code') {
-        itemKey = (item as any).course_code.slice(0, 8);
-      } else {
-        itemKey = '';
-      }
+  /**
+   * Retrieves reviews for a professor from the API by ID.
+   * @param id - The ID of the professor.
+   * @returns An observable containing the reviews for the professor.
+   */
+  private getReviewsForProf(id: string): Observable<ReviewData[]> {
+    const url = API_ENDPOINT + 'fetch/database/review/prof';
+    return this.api.getSearchById(id, url);
+  }
 
-      if (!groupedData[itemKey]) {
-        groupedData[itemKey] = [];
-      }
+  /**
+   * Retrieves reviews for a course from the API by ID.
+   * @param id - The ID of the course.
+   * @returns An observable containing the reviews for the course.
+   */
+  private getReviewsForCourse(id: string): Observable<ReviewData[]> {
+    const url = API_ENDPOINT + 'fetch/database/review/course';
+    return this.api.getSearchById(id, url);
+  }
 
-      groupedData[itemKey].push(item);
+  /**
+   * Retrieves drilldown data from the API by ID.
+   * @param id - The ID of the drilldown data.
+   * @returns An observable containing the drilldown data.
+   */
+  private getDrilldown(id: string): Observable<DrilldownData[]> {
+    const url = API_ENDPOINT + 'fetch/database/drilldown';
+    return this.api.getSearchById(id, url);
+  }
+
+  /**
+   * Retrives user comments for professor by ID.
+   * @param id - The ID of the professor
+   * @returns An observable containing the comment data.
+   */
+  private getProfComments(id: string): Observable<Comment[]> {
+    const url = API_ENDPOINT + 'comments/prof';
+    return this.api.getSearchById(id, url);
+  }
+
+  /**
+   * Retrieves professor page data by ID, processes it, and updates the Professor Service.
+   * @param id - The ID of the professor.
+   */
+  getProfPageData(id: string) {
+    this.getReviewsForProf(id).subscribe((reviewData: ReviewData[]) => {
+      const courseDict: { [id: string]: ReviewData[] } = {};
+      let tableData: CourseTableData[] = [];
+      let ddData: DrilldownData[] = [];
+
+      // Collect unique course IDs
+      reviewData.forEach((review: ReviewData) => {
+        if (review.course_id) {
+          const course_id: string = review.course_id;
+          if (!courseDict[course_id]) {
+            // If the objectId does not exist in the dictionary, create a new entry
+            courseDict[course_id] = [review];
+          } else {
+            // If the objectId already exists, push the new review into the existing array
+            courseDict[course_id].push(review);
+          }
+        }
+      });
+
+      // Iterate over unique course IDs and fetch course data
+      Object.keys(courseDict).forEach((course_id: string) => {
+        this.getCourseData(course_id).subscribe(
+          (course_data: CourseData | null) => {
+            if (course_data) {
+              const avg_overall = this.calculateAverage(
+                courseDict[course_id],
+                'course_overall'
+              );
+
+              const new_table_entry: CourseTableData = {
+                id: course_data._id,
+                title: course_data.title,
+                crs_code: course_data.code,
+                school: course_data.college,
+                subject: course_data.subject,
+                description: course_data.description,
+                course_overall: avg_overall,
+              };
+
+              tableData.push(new_table_entry);
+            }
+          }
+        );
+      });
+
+      // Set course table data in prof service
+      this.prof.setcrsTableData(tableData);
+
+      // Iterate over reviews to get drilldown data
+      reviewData.forEach((review: ReviewData) => {
+        const review_id: string = review._id;
+
+        this.getDrilldown(review_id).subscribe(
+          (dd_data: DrilldownData[] | null) => {
+            if (dd_data) {
+              ddData.push(dd_data[0]);
+            }
+          }
+        );
+      });
+
+      // Fill prof page data
+      this.getProfData(id).subscribe((prof_data: ProfData) => {
+        const avg_overall = this.calculateAverage(
+          reviewData,
+          'instructor_overall'
+        );
+        const avg_prepared = this.calculateAverage(
+          ddData,
+          'instructorprepared'
+        );
+        const avg_explains = this.calculateAverage(
+          ddData,
+          'instructorclearexplanations'
+        );
+        const avg_available = this.calculateAverage(
+          ddData,
+          'availableforhelpoutsideofclass'
+        );
+        const avg_enthusiastic = this.calculateAverage(
+          ddData,
+          'stimulatedinterestinthesubjectmatter'
+        );
+
+        this.getProfComments(id).subscribe((prof_comments: Comment[]) => {
+          let commentDict: { [course: string]: Comment[] } = {};
+          if (prof_comments) {
+            prof_comments.forEach((comment: Comment) => {
+              if (comment.course_id) {
+                const course_id = comment.course_id;
+                if (!commentDict[course_id]) {
+                  // If the objectId does not exist in the dictionary, create a new entry
+                  commentDict[course_id] = [comment];
+                } else {
+                  // If the objectId already exists, push the new review into the existing array
+                  commentDict[course_id].push(comment);
+                }
+              } else {
+                if (!commentDict['general']) {
+                  commentDict['general'] = [comment];
+                } else {
+                  commentDict['general'].push(comment);
+                }
+              }
+            });
+          }
+          const new_prof_page_data: ProfPageData = {
+            name: prof_data.name,
+            education: prof_data.education,
+            email: prof_data.email,
+            title: prof_data.title,
+            office: prof_data.office,
+            profileImage: prof_data.photoLink,
+            avgOverall: avg_overall,
+            avgPrepared: avg_prepared,
+            avgExplains: avg_explains,
+            avgAvailable: avg_available,
+            avgEnthusiastic: avg_enthusiastic,
+            comments: commentDict,
+          };
+
+          this.prof.setProfPageData(new_prof_page_data);
+        });
+      });
     });
-
-    return groupedData;
   }
 
-  private getReviewsFromCache(query: string) {
-    const url = AppSettings.API_ENDPOINT + 'cache/search/reviews';
+  /**
+   * Retrieves course page data by ID, processes it, and updates the Course Service.
+   * @param id - The ID of the course.
+   */
+  getCoursePageData(id: string) {
+    this.getReviewsForCourse(id).subscribe((reviewData: ReviewData[]) => {
+      const profDict: { [id: string]: ReviewData[] } = {};
+      let tableData: ProfTableData[] = [];
+      let ddData: DrilldownData[] = [];
 
-    return this.api.getFromCache(query, url);
+      // Collect prof ids
+      reviewData.forEach((review: ReviewData) => {
+        if (review.professor_id) {
+          const prof_id: string = review.professor_id;
+          if (!profDict[prof_id]) {
+            // If the objectId does not exist in the dictionary, create a new entry
+            profDict[prof_id] = [review];
+          } else {
+            // If the objectId already exists, push the new review into the existing array
+            profDict[prof_id].push(review);
+          }
+        }
+      });
+
+      // Iterate over unique professor IDs and fetch course data
+      Object.keys(profDict).forEach((prof_id: string) => {
+        this.getProfData(prof_id).subscribe((prof_data: ProfData | null) => {
+          if (prof_data) {
+            this.getProfComments(prof_data._id).subscribe(
+              (prof_comments: Comment[]) => {
+                const filtered_comments = prof_comments?.filter(
+                  (obj) => obj.course_id == null || obj.course_id == id
+                );
+                const avg_overall = this.calculateAverage(
+                  profDict[prof_id],
+                  'instructor_overall'
+                );
+
+                const new_table_entry: ProfTableData = {
+                  id: prof_data._id,
+                  name: prof_data.name,
+                  prof_overall: avg_overall,
+                  profile_image: prof_data.photoLink,
+                  comments: filtered_comments,
+                };
+
+                tableData.push(new_table_entry);
+              }
+            );
+          }
+        });
+      });
+
+      // Set prof table data in course service
+      this.course.setprofTableData(tableData);
+
+      // Iterate over reviews to get drilldown data
+      reviewData.forEach((review: ReviewData) => {
+        const review_id: string = review._id;
+
+        this.getDrilldown(review_id).subscribe(
+          (dd_data: DrilldownData[] | null) => {
+            if (dd_data) {
+              ddData.push(dd_data[0]);
+            }
+          }
+        );
+      });
+
+      // Fill course page data
+      this.getCourseData(id).subscribe((course_data: CourseData) => {
+        const avg_overall = this.calculateAverage(reviewData, 'course_overall');
+        const avg_organized = this.calculateAverage(
+          ddData,
+          'coursewellorganized'
+        );
+        const avg_challanging = this.calculateAverage(
+          ddData,
+          'courseintellectuallychallenging'
+        );
+        const avg_effort = this.calculateAverage(
+          ddData,
+          'effortavghoursweekly'
+        );
+        const avg_attendance = this.calculateAverage(
+          ddData,
+          'attendancenecessary'
+        );
+        const avg_asssignments = this.calculateAverage(
+          ddData,
+          'assignmentshelpful'
+        );
+
+        const new_course_page_data: CoursePageData = {
+          title: course_data.title,
+          crs_code: course_data.code,
+          subject: course_data.subject,
+          college: course_data.college,
+          desc: course_data.description,
+          avgOverall: avg_overall,
+          avgOriganized: avg_organized,
+          avgChallanging: avg_challanging,
+          avgEffortHours: avg_effort,
+          avgAttendance: avg_attendance,
+          avgAssignments: avg_asssignments,
+        };
+
+        this.course.setCoursePageData(new_course_page_data);
+
+        console.log('COURSE PAGE DATA: ', new_course_page_data);
+        console.log('PROF TABLE DATA: ', tableData);
+      });
+    });
   }
+}
 
-  private getDrilldownFromCache(query: string) {
-    const url = AppSettings.API_ENDPOINT + 'cache/search/drilldown';
-
-    return this.api.getFromCache(query, url);
-  }
-
-  private getReviewsFromAPI(query: string) {
-    const url = AppSettings.API_ENDPOINT + 'fetch/reviews';
-
-    return this.api.getReviewsFromAPI(query, url);
-  }
-
-  private getDrilldownFromAPI(code: string, prof: string) {
-    const url = AppSettings.API_ENDPOINT + 'fetch/drilldown';
-
-    return this.api.getDrilldownFromAPI(prof, code, url);
-  }
-
-  private getProfData(id: string) {
-    const url = AppSettings.API_ENDPOINT + 'cache/search/profs';
-
-    return this.api.getSearchById(id, url);
-  }
-
-  private getCourseData(id: string) {
-    const url = AppSettings.API_ENDPOINT + 'cache/search/courses';
-
-    return this.api.getSearchById(id, url);
-  }
-
+/*
   private getProfAvgData(
     metaData: ProfData,
     revData: ReviewData[],
@@ -412,4 +679,4 @@ export class CollectDataService {
       });
     });
   }
-}
+*/
