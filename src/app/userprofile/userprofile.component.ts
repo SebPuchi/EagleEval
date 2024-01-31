@@ -9,8 +9,7 @@ import { ConfirmationService } from 'primeng/api';
 })
 export class UserprofileComponent {
 
-  constructor(private confirmationService: ConfirmationService
-    ) { }
+  constructor(private confirmationService: ConfirmationService) { }
 
 
     removeAccount() { 
@@ -22,7 +21,7 @@ export class UserprofileComponent {
 
 
 
-  } 
+    } 
 
   removeReview() { 
     this.confirmationService.confirm({ 
@@ -31,7 +30,7 @@ export class UserprofileComponent {
         icon: 'pi pi-exclamation-triangle'
     }); 
 
-} 
+  } 
 
 
 
