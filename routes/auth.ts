@@ -1,10 +1,10 @@
 // Import necessary modules
 import express, { Request, Response } from 'express';
 import passport from 'passport';
-import { ensureAuthenticated } from 'middleware/authentication';
-import { searchById, searchForId } from 'utils/mongoUtils';
-import UserModel from 'models/user';
-import CommentModel from 'models/comment';
+import { ensureAuthenticated } from '../middleware/authentication';
+import { searchById, searchForId } from '../utils/mongoUtils';
+import UserModel from '../models/user';
+import CommentModel from '../models/comment';
 
 // Create an Express router
 const router = express.Router();

@@ -42,6 +42,6 @@ export const searchById = jest.fn(
       user_id: constants.VALID_USER_ID,
     } as any; // Adjust the mock data as needed
 
-    return mockResult;
+    return id == constants.INVALID_USER_ID ? null : mockResult;
   }
 );
