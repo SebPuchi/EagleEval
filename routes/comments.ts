@@ -12,7 +12,7 @@ import rmp from '../controllers/RateMyProfessor';
 import CommentModel, { IComment } from '../models/comment';
 import CourseModel from '../models/course';
 import { createComment, deleteCommentById } from '../controllers/comments';
-import { ensureAuthenticated } from 'middleware/authentication';
+import { ensureAuthenticated } from '../middleware/authentication';
 
 const BC_SCHOOL_ID = 'U2Nob29sLTEyMg==';
 
