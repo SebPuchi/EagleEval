@@ -7,3 +7,4 @@ export const VALID_COMMENT_ID = new Types.ObjectId('04ba976dea66e78cb93dd1f2');
 export const INVALID_COMMENT_ID = new Types.ObjectId(
   'aabf9d44ef1cb292ad4ee0a8'
 );
+export const VALID_TOKEN = '123456';

@@ -38,7 +38,7 @@ describe('Comment Router Tests', () => {
       const response = await request(app)
         .post('/prof')
         .set({
-          authorization: 'validToken',
+          authorization: constants.VALID_TOKEN,
         })
         .send({
           user_id: constants.VALID_USER_ID,
@@ -58,7 +58,7 @@ describe('Comment Router Tests', () => {
       const response = await request(app)
         .post('/prof')
         .set({
-          authorization: 'validToken',
+          authorization: constants.VALID_TOKEN,
         })
         .send({
           // Invalid request body
@@ -75,7 +75,7 @@ describe('Comment Router Tests', () => {
       const response = await request(app)
         .delete(`/prof/${constants.VALID_COMMENT_ID}`)
         .set({
-          authorization: 'validToken',
+          authorization: constants.VALID_TOKEN,
         });
 
       expect(response.status).toBe(200);
@@ -88,7 +88,7 @@ describe('Comment Router Tests', () => {
       const response = await request(app)
         .delete(`/prof/${constants.INVALID_COMMENT_ID}`)
         .set({
-          authorization: 'validToken',
+          authorization: constants.VALID_TOKEN,
         });
 
       expect(response.status).toBe(404);

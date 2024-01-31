@@ -3,7 +3,7 @@ import * as constants from '../../tests/constants';
 
 export const ensureAuthenticated = jest.fn((req, res, next) => {
   // Mock implementation, you can customize it based on your needs
-  if (req.headers.authorization == 'validToken') {
+  if (req.headers.authorization == constants.VALID_TOKEN) {
     req.user = { _id: constants.VALID_USER_ID }; // Mock user object
     next(); // Call next middleware
   } else {
