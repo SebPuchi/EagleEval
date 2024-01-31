@@ -7,6 +7,6 @@ export const ensureAuthenticated = jest.fn((req, res, next) => {
     req.user = { _id: constants.VALID_USER_ID }; // Mock user object
     next(); // Call next middleware
   } else {
-    res.status(401).json({ message: 'Unauthorized' });
+    res.status(401).json({ message: 'Not Authorized' });
   }
 });

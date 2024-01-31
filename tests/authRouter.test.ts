@@ -71,11 +71,9 @@ describe('Google OAuth Signing Router Tests', () => {
   // Test GET /profile
   describe('GET /profile', () => {
     it('should return user profile data on successful authentication', async () => {
-      const response = await request(app)
-        .get(`/profile?id=${constants.VALID_USER_ID}`)
-        .set({
-          authorization: constants.VALID_TOKEN,
-        });
+      const response = await request(app).get(`/profile`).set({
+        authorization: constants.VALID_TOKEN,
+      });
       expect(response.status).toBe(200);
       expect(response.body).toEqual({
         _id: constants.VALID_USER_ID.toString(),
@@ -84,21 +82,9 @@ describe('Google OAuth Signing Router Tests', () => {
     });
 
     it('should return unauthorized if user id does not match authenticated user', async () => {
-      const response = await request(app)
-        .get(`/profile?id=${constants.INVALID_USER_ID}`)
-        .set({
-          authorization: constants.VALID_TOKEN,
-        });
+      const response = await request(app).get(`/profile`);
       expect(response.status).toBe(401);
       expect(response.body).toEqual({ message: 'Not Authorized' });
-    });
-
-    it('should return an error if no user id is provided in the query string', async () => {
-      const response = await request(app).get('/profile').set({
-        authorization: constants.VALID_TOKEN,
-      });
-      expect(response.status).toBe(200);
-      expect(response.text).toBe('Query string must include id');
     });
   });
 
@@ -117,21 +103,9 @@ describe('Google OAuth Signing Router Tests', () => {
     });
 
     it('should return unauthorized if user id does not match authenticated user', async () => {
-      const response = await request(app)
-        .get(`/comments?id=${constants.INVALID_USER_ID}`)
-        .set({
-          authorization: constants.VALID_TOKEN,
-        });
+      const response = await request(app).get(`/comments`);
       expect(response.status).toBe(401);
       expect(response.body).toEqual({ message: 'Not Authorized' });
-    });
-
-    it('should return an error if no user id is provided in the query string', async () => {
-      const response = await request(app).get('/comments').set({
-        authorization: constants.VALID_TOKEN,
-      });
-      expect(response.status).toBe(200);
-      expect(response.text).toBe('Query string must include id');
     });
   });
 });

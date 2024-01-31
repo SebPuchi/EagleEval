@@ -5,6 +5,7 @@ import { ensureAuthenticated } from '../middleware/authentication';
 import { searchById, searchForId } from '../utils/mongoUtils';
 import UserModel from '../models/user';
 import CommentModel from '../models/comment';
+import ReviewModel from '../models/review';
 
 // Create an Express router
 const router = express.Router();
@@ -30,18 +31,40 @@ router.get(
   '/profile',
   ensureAuthenticated,
   async (req: Request, res: Response) => {
-    const id = (req.query['id'] as any) || null;
+    const id = (req.user as any)._id;
 
     if (id) {
-      if ((req.user as any)._id != id) {
-        return res.status(401).json({ message: 'Not Authorized' });
-      }
-
       const user_data = await searchById(UserModel, id);
 
       return res.json(user_data);
     } else {
-      return res.send('Query string must include id');
+      return res.status(401).json({ message: 'Not Authorized' });
+    }
+  }
+);
+
+// Get users profile data
+router.delete(
+  '/profile',
+  ensureAuthenticated,
+  async (req: Request, res: Response) => {
+    const id = (req.user as any)._id;
+
+    if (id) {
+      const user_data = await UserModel.findByIdAndDelete(id);
+
+      if (user_data) {
+        console.log('Deleting all user reivews');
+        await ReviewModel.deleteMany({ user_id: id });
+
+        console.log('User DELETED: ', id);
+        return res.json(user_data);
+      } else {
+        console.log('User profile not found');
+        return res.status(404).json({ message: 'User not found' });
+      }
+    } else {
+      return res.status(401).json({ message: 'Not Authorized' });
     }
   }
 );
@@ -61,18 +84,14 @@ router.get(
   '/comments',
   ensureAuthenticated,
   async (req: Request, res: Response) => {
-    const id = (req.query['id'] as any) || null;
+    const id = (req.user as any)._id;
 
     if (id) {
-      if ((req.user as any)._id != id) {
-        return res.status(401).json({ message: 'Not Authorized' });
-      }
+      const user_comments = await searchForId(id, CommentModel, 'user_id');
 
-      const user_data = await searchForId(id, CommentModel, 'user_id');
-
-      return res.json(user_data);
+      return res.json(user_comments);
     } else {
-      return res.send('Query string must include id');
+      return res.status(401).json({ message: 'Not Authorized' });
     }
   }
 );
