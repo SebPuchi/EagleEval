@@ -1,92 +1,13 @@
 // Import necessary modules
-import express, { Request, Response, NextFunction } from 'express';
+import express, { Request, Response } from 'express';
 import passport from 'passport';
-import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
-import { config } from '../config/googleConfig';
-import session from 'express-session';
+import { ensureAuthenticated } from '../middleware/authentication';
+import { searchById, searchForId } from '../utils/mongoUtils';
 import UserModel from '../models/user';
-
-declare namespace Express {
-  interface User {
-    id?: string;
-  }
-}
-
-// Get env varialbes
-const CLIENT_ID: string | undefined = config.OAuthCreds.id;
-const CLIENT_SECRET: string | undefined = config.OAuthCreds.secret;
-const SESSION_SECRET: string | undefined = config.OAuthCreds.session;
-
-// Check if environment variables are defined
-if (
-  CLIENT_ID === undefined ||
-  CLIENT_SECRET === undefined ||
-  SESSION_SECRET === undefined
-) {
-  const undefinedVariables: string[] = [];
-  if (CLIENT_ID === undefined) undefinedVariables.push('id');
-  if (CLIENT_SECRET === undefined) undefinedVariables.push('secret');
-  if (SESSION_SECRET === undefined) undefinedVariables.push('session_secret');
-
-  throw new Error(
-    `The following Google OAuth2.0 environment variable(s) are undefined: ${undefinedVariables.join(
-      ', '
-    )}.`
-  );
-}
+import CommentModel from '../models/comment';
 
 // Create an Express router
 const router = express.Router();
-
-// Configure session middleware
-router.use(
-  session({
-    secret: SESSION_SECRET, // Change this to a secure secret key
-    resave: false,
-    saveUninitialized: true,
-  })
-);
-
-// Configure Passport for Google OAuth 2.0
-passport.use(
-  new GoogleStrategy(
-    {
-      clientID: CLIENT_ID,
-      clientSecret: CLIENT_SECRET,
-      callbackURL: 'http://localhost:80/auth/google/callback',
-    },
-    async (accessToken, refreshToken, profile, done) => {
-      const user = await UserModel.findOne({ googleId: profile.id });
-
-      // If user doesn't exist creates a new user. (similar to sign up)
-      if (!user) {
-        const newUser = await UserModel.create({
-          googleId: profile.id,
-          name: profile.displayName,
-          email: profile.emails?.[0].value,
-        });
-        if (newUser) {
-          done(null, newUser);
-        }
-      } else {
-        done(null, user);
-      }
-    }
-  )
-);
-
-passport.serializeUser((user: Express.User, done) => {
-  done(null, user.id);
-});
-
-passport.deserializeUser(async (id, done) => {
-  const user = await UserModel.findById(id);
-  done(null, user);
-});
-
-// Initialize Passport and restore authentication state, if any, from the session
-router.use(passport.initialize());
-router.use(passport.session());
 
 // Define Google authentication route
 router.get(
@@ -98,19 +19,35 @@ router.get(
 router.get(
   '/google/callback',
   passport.authenticate('google', { failureRedirect: '/' }),
-  (req, res) => {
+  (req: Request, res: Response) => {
     // Successful authentication, redirect home.
-    res.redirect('/auth/profile');
+    res.redirect('/');
   }
 );
 
-// Define a protected route
-router.get('/profile', ensureAuthenticated, (req, res) => {
-  res.send('User Profile Page');
-});
+// Get users profile data
+router.get(
+  '/profile',
+  ensureAuthenticated,
+  async (req: Request, res: Response) => {
+    const id = (req.query['id'] as any) || null;
+
+    if (id) {
+      if ((req.user as any)._id != id) {
+        return res.status(401).json({ message: 'Not Authorized' });
+      }
+
+      const user_data = await searchById(UserModel, id);
+
+      return res.json(user_data);
+    } else {
+      return res.send('Query string must include id');
+    }
+  }
+);
 
 // Logout route
-router.get('/logout', (req, res, next) => {
+router.get('/logout', (req: Request, res: Response, next) => {
   req.logout(function (err) {
     if (err) {
       return next(err);
@@ -119,12 +56,25 @@ router.get('/logout', (req, res, next) => {
   res.redirect('/');
 });
 
-// Middleware to ensure authentication
-function ensureAuthenticated(req: Request, res: Response, next: NextFunction) {
-  if (req.isAuthenticated()) {
-    return next();
+// Get users comments
+router.get(
+  '/comments',
+  ensureAuthenticated,
+  async (req: Request, res: Response) => {
+    const id = (req.query['id'] as any) || null;
+
+    if (id) {
+      if ((req.user as any)._id != id) {
+        return res.status(401).json({ message: 'Not Authorized' });
+      }
+
+      const user_data = await searchForId(id, CommentModel, 'user_id');
+
+      return res.json(user_data);
+    } else {
+      return res.send('Query string must include id');
+    }
   }
-  res.redirect('/api/auth/google');
-}
+);
 
 export { router as auth_router };
