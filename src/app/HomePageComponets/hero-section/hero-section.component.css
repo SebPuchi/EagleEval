@@ -2,17 +2,16 @@
 
 .heroSignIn{
   position: absolute;
-  top: 40px;
+  top: 20px;
 
   display: flex;
   flex-direction: row;
   justify-content: end;
   align-items: center;
   width: 100%;
-  padding-right: 40px;
+  padding-right: 20px;
   
   z-index: 2;
-
 
 
 }
