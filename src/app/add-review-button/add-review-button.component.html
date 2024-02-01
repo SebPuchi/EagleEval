@@ -21,7 +21,11 @@
             <div class="fildwidthdiv noMargin"></div>
 
             <div class="textfieldwrapper">
-                <div class="classwouldrec"></div>
+                <div class="classwouldrec">
+
+                    <p-dropdown [options]="cities" [(ngModel)]="selectedCity" optionLabel="name" [showClear]="true" placeholder="Select a City"></p-dropdown>
+
+                </div>
                 <div class="textfieldwrap">
                     <textarea rows="5" cols="30" pInputTextarea [autoResize]="true"></textarea>
                 </div>
