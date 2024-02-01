@@ -49,7 +49,7 @@ export class SearchBarComponent {
     private apiService: ApiService,
     public _pageService: PageServiceService
   ) {
-    this.overlay_class = 'hompage-autocomplete-panel';
+    this.overlay_class = 'homepage-autocomplete-panel';
   }
 
   route($event: any) {
