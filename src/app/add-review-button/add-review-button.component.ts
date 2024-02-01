@@ -12,16 +12,15 @@ export class AddReviewButtonComponent {
 
   constructor(private confirmationService: ConfirmationService) { }
 
-
-  addReview() { 
-    this.confirmationService.confirm({ 
-        message: 'Deleting account will remove all reviews and data associated with your student email', 
-        header: 'Review for '+ this.professorName,
+  addReview() {
+    this.confirmationService.confirm({
+        header: 'Review for '+this.professorName,
+     
+        rejectButtonStyleClass: 'p-button-sm',
+        acceptButtonStyleClass: 'p-button-sm',
         
-    }); 
-
-
-
-  } 
+  
+    });
+}
 
 }
