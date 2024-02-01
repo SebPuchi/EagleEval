@@ -9,7 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // Primeng angular module imports
-
+import { InputTextareaModule } from 'primeng/inputtextarea';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { TabViewModule } from 'primeng/tabview';
 import { AccordionModule } from 'primeng/accordion';
@@ -80,6 +80,7 @@ import { SignInButtonComponent } from './sign-in-button/sign-in-button.component
 		InputTextModule,
 		ProgressBarModule,
 		HttpClientModule,
+		InputTextareaModule,
 		ConfirmDialogModule,
 		KnobModule,
 		TabViewModule,
