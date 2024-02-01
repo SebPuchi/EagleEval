@@ -7,9 +7,13 @@
   padding: 0
 }
 
+.p-inputtextarea-resizable {
+  width: 100%;
+
+}
+
 
 .p-dialog .p-dialog-header {
-
 
   padding: 20px;
 }
