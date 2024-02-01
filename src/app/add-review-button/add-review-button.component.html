@@ -23,7 +23,18 @@
             <div class="textfieldwrapper">
                 <div class="classwouldrec">
 
-                    <p-dropdown [options]="cities" [(ngModel)]="selectedCity" optionLabel="name" [showClear]="true" placeholder="Select a City"></p-dropdown>
+                    <div class="dropdownholder">
+                        <i class="pi pi-book" style="font-size: 1.8rem"></i>
+                        <h1 class="dropdownlable">Class</h1>
+                        <p-dropdown [options]="cities" [(ngModel)]="selectedCity" optionLabel="name" [showClear]="true" placeholder="Select a City"></p-dropdown>
+                      </div>
+
+                      <div class="dropdownholder">
+                        <i class="pi pi-check-circle" style="font-size: 1.8rem"></i>
+                        <h1 class="dropdownlable">Would Recommend</h1>
+                        <p-dropdown [options]="cities" [(ngModel)]="selectedCity" optionLabel="name" [showClear]="true" placeholder="Select a City"></p-dropdown>
+                      </div>
+
 
                 </div>
                 <div class="textfieldwrap">
