@@ -12,3 +12,11 @@
     align-items: center;
     display: flex;
   }
+
+  .reviewforProfHeader{
+      font-family: Inter,sans-serif;
+      font-size: 30px;
+      font-weight: 700
+ 
+
+  }
