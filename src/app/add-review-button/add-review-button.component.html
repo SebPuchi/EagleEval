@@ -32,7 +32,8 @@
                       <div class="dropdownholder">
                         <i class="pi pi-check-circle" style="font-size: 1.8rem"></i>
                         <h1 class="dropdownlable">Would Recommend</h1>
-                        <p-dropdown [options]="cities" [(ngModel)]="selectedCity" optionLabel="name" [showClear]="true" placeholder="Yes"></p-dropdown>
+                        <p-selectButton [options]="stateOptions" [(ngModel)]="value" optionLabel="label" optionValue="value"></p-selectButton>
+                    
                       </div>
 
 

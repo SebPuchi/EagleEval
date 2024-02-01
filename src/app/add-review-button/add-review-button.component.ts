@@ -12,11 +12,18 @@ interface City {
 })
 export class AddReviewButtonComponent implements OnInit {
 
+  visible: boolean = false;
+
+  stateOptions: any[] = [{label: 'No', value: 'no'}, {label: 'Yes', value: 'yes'}];
+
+  value: string = 'no';
+
   cities: City[] | undefined;
 
     selectedCity: City | undefined;
 
-  visible: boolean = false;
+
+  
 
   showDialog() {
       this.visible = true;

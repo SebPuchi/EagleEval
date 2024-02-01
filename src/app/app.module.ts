@@ -9,6 +9,8 @@ import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // Primeng angular module imports
+import { SelectButtonModule } from 'primeng/selectbutton';
+import { ToggleButtonModule } from 'primeng/togglebutton';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { AvatarModule } from 'primeng/avatar';
@@ -86,10 +88,12 @@ import { AddReviewButtonComponent } from './add-review-button/add-review-button.
 		InputTextModule,
 		ProgressBarModule,
 		DropdownModule,
+		SelectButtonModule,
 		AvatarModule,
 		HttpClientModule,
 		ConfirmDialogModule,
 		AvatarGroupModule,
+		ToggleButtonModule,
 		DialogModule,
 		InputTextareaModule,
 		KnobModule,
