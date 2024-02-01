@@ -33,12 +33,6 @@ export class ApiService {
     return this.http.get<any>(url);
   }
 
-  getComment(id: string, url: string) {
-    const options = id ? { params: new HttpParams().set('id', id) } : {};
-
-    return this.http.get<any>(url, options);
-  }
-
   deleteComment(id: string, url: string): Observable<any> {
     const options = id ? { params: new HttpParams().set('id', id) } : {};
     return this.http.delete<any>(url, options);
