@@ -7,4 +7,10 @@ import { Component } from '@angular/core';
 })
 export class AddReviewButtonComponent {
 
+  visible: boolean = false;
+
+  showDialog() {
+    this.visible = true;
+}
+
 }
