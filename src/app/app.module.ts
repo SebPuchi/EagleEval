@@ -9,7 +9,9 @@ import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // Primeng angular module imports
-
+import { AvatarModule } from 'primeng/avatar';
+import { AvatarGroupModule } from 'primeng/avatargroup';
+import { DialogModule } from 'primeng/dialog';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { TabViewModule } from 'primeng/tabview';
 import { AccordionModule } from 'primeng/accordion';
@@ -81,8 +83,11 @@ import { AddReviewButtonComponent } from './add-review-button/add-review-button.
 		ImageModule,
 		InputTextModule,
 		ProgressBarModule,
+		AvatarModule,
 		HttpClientModule,
 		ConfirmDialogModule,
+		AvatarGroupModule,
+		DialogModule,
 		KnobModule,
 		TabViewModule,
 		AccordionModule,

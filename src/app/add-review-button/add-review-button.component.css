@@ -1,0 +1,14 @@
+.headerreviewwrapper {
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    display: flex;
+  }
+  
+  .avatarnamewrapper {
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    display: flex;
+  }
