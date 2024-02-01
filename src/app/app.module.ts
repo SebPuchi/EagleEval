@@ -9,7 +9,8 @@ import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // Primeng angular module imports
-
+import { ToastModule } from 'primeng/toast';
+import { DialogModule } from 'primeng/dialog';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { TabViewModule } from 'primeng/tabview';
 import { AccordionModule } from 'primeng/accordion';
@@ -82,7 +83,9 @@ import { AddReviewButtonComponent } from './add-review-button/add-review-button.
 		InputTextModule,
 		ProgressBarModule,
 		HttpClientModule,
+		ToastModule,
 		ConfirmDialogModule,
+		DialogModule,
 		KnobModule,
 		TabViewModule,
 		AccordionModule,
