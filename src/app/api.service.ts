@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { HttpParams } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -22,5 +23,28 @@ export class ApiService {
     const options = id ? { params: new HttpParams().set('id', id) } : {};
 
     return this.http.get<any>(url, options);
+  }
+
+  deleteProfile(url: string): Observable<any> {
+    return this.http.delete<any>(url);
+  }
+
+  getUserData(url: string): Observable<any> {
+    return this.http.get<any>(url);
+  }
+
+  getComment(id: string, url: string) {
+    const options = id ? { params: new HttpParams().set('id', id) } : {};
+
+    return this.http.get<any>(url, options);
+  }
+
+  deleteComment(id: string, url: string): Observable<any> {
+    const options = id ? { params: new HttpParams().set('id', id) } : {};
+    return this.http.delete<any>(url, options);
+  }
+
+  createComment(commentData: any, url: string): Observable<any> {
+    return this.http.post<any>(url, commentData);
   }
 }
