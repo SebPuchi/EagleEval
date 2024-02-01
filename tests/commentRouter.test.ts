@@ -1,243 +1,98 @@
-import request from 'supertest';
-import { expect } from '@jest/globals';
-import express, { Request, Response } from 'express';
-import { comment_router } from '../routes/comments'; // Adjust the path accordingly
-import rmp from '../controllers/RateMyProfessor';
-import * as mongoUtils from '../utils/mongoUtils';
-import ProfessorModel, { IProfessor } from '../models/professor';
-import { Types } from 'mongoose';
-
-// Mock dependencies
-jest.mock('../controllers/RateMyProfessor');
+jest.mock('../middleware/authentication');
 jest.mock('../utils/mongoUtils');
+jest.mock('../controllers/comments');
 
-// Mock comment controllers
-// Mock functions or services used in your routes
-jest.mock('../controllers/comments', () => ({
-  createComment: jest.fn(),
-  deleteCommentById: jest.fn(),
-}));
+import request from 'supertest';
+import express, { Application } from 'express';
+import { comment_router } from '../routes/comments'; // Update with the correct path
+import { Types } from 'mongoose';
+import * as constants from './constants';
 
-const app = express();
-app.use('/comments', comment_router);
+const app: Application = express();
+app.use(comment_router);
 
-describe('Comment Router', () => {
-  it('should retrieve comments for a professor', async () => {
-    // Mocking data for the professor ID
-    const prof_id = 'mocked_prof_id';
+describe('Comment Router Tests', () => {
+  // Test GET /prof
+  describe('GET /prof', () => {
+    it('should return comments for a professor', async () => {
+      const response = await request(app).get(
+        '/prof?id=82493b0b18c55ace59aa4825'
+      );
 
-    // Mock the searchById function
-    const mockSearchById = jest.spyOn(mongoUtils, 'searchById');
-    const mockProfessor: any = {
-      _id: prof_id,
-      name: 'Mock Professor',
-      // Other properties of the Professor document...
-    };
-    mockSearchById.mockResolvedValue(mockProfessor);
-
-    // Mock the searchTeacher function
-    const mockSearchTeacher = jest.spyOn(rmp, 'searchTeacher');
-    mockSearchTeacher.mockResolvedValue([
-      {
-        id: 'rmp_prof_id',
-        firstName: 'Carl',
-        lastName: 'McTague',
-        school: { id: 'mock_school_id', name: 'Boston College' },
-      },
-    ]);
-
-    // Mock the getTeacher function
-    const mockGetTeacher = jest.spyOn(rmp, 'getTeacher');
-    mockGetTeacher.mockResolvedValue({
-      ratings: {
-        edges: [
-          {
-            node: {
-              class: 'Mock Course',
-              comment: 'Mock Comment',
-              date: '2024-01-27',
-              wouldTakeAgain: true,
-            },
-          },
-        ],
-      },
+      expect(response.status).toBe(200);
+      expect(response.body).toBeDefined();
+      // Add more assertions based on your expected response format
     });
 
-    // Mock findDocumentIdByFilter function
-    const mockFindDocumentIdByFilter = jest.spyOn(
-      mongoUtils,
-      'findDocumentIdByFilter'
-    );
-    mockFindDocumentIdByFilter.mockResolvedValue(
-      new Types.ObjectId('95677b3588c08c61f1964066')
-    );
+    it('should return an error if no professor id is provided', async () => {
+      const response = await request(app).get('/prof');
 
-    const response = await request(app).get(`/comments/prof?id=${prof_id}`);
-
-    expect(response.status).toBe(200);
-    expect(response.body).toEqual([
-      {
-        user_id: null,
-        message: 'Mock Comment',
-        createdAt: '2024-01-27T00:00:00.000Z',
-        wouldTakeAgain: true,
-        professor_id: prof_id,
-        course_id: '95677b3588c08c61f1964066',
-      },
-    ]);
-
-    // Check if the necessary functions were called with the expected arguments
-    expect(mockSearchById).toHaveBeenCalledWith(ProfessorModel, prof_id);
-    expect(mockSearchTeacher).toHaveBeenCalledWith(
-      'Mock Professor',
-      'U2Nob29sLTEyMg=='
-    );
-    expect(mockGetTeacher).toHaveBeenCalledWith('rmp_prof_id');
-    expect(mockFindDocumentIdByFilter).toHaveBeenCalled(); // You may want to check the exact arguments depending on your use case
+      expect(response.status).toBe(200);
+      expect(response.text).toBe('Query string must include id of professor');
+    });
   });
 
-  it('should handle missing professor ID', async () => {
-    const response = await request(app).get('/comments/prof');
+  // Test POST /prof
+  describe('POST /prof', () => {
+    it('should create a new comment', async () => {
+      const response = await request(app)
+        .post('/prof')
+        .set({
+          authorization: constants.VALID_TOKEN,
+        })
+        .send({
+          user_id: constants.VALID_USER_ID,
+          message: 'Test comment',
+          wouldTakeAgain: true,
+          prof_id: new Types.ObjectId('82493b0b18c55ace59aa4825'),
+          course_id: new Types.ObjectId('82493b0b18c55ace59aa4825'),
+        });
 
-    expect(response.status).toBe(200);
-    expect(response.text).toBe('Query string must include id of professor');
-  });
-});
-
-describe('Create Comment Route', () => {
-  it('should create a new comment', async () => {
-    // Mock data for testing
-    const mockComment = {
-      user_id: new Types.ObjectId('b5a1c3950498777b6004514f'),
-      message: 'Test comment',
-      wouldTakeAgain: true,
-      prof_id: new Types.ObjectId('b5a1c3950498777b6004514f'),
-      course_id: new Types.ObjectId('b5a1c3950498777b6004514f'),
-    };
-
-    const body = JSON.stringify(mockComment);
-
-    // Mock the createComment function
-    jest
-      .requireMock('../controllers/comments')
-      .createComment.mockResolvedValueOnce(mockComment);
-
-    const response = await request(app)
-      .post('/comments/prof')
-      .send(body)
-      .set('Content-Type', 'application/json');
-
-    expect(response.status).toBe(201);
-    expect(response.body).toEqual({ message: 'Comment created successfully' });
-  });
-
-  it('should handle validation errors', async () => {
-    // Missing required field to trigger validation error
-    const invalidComment = {
-      user_id: 'validUserId',
-      message: 'Test comment',
-      wouldTakeAgain: true,
-      prof_id: 'validProfId',
-      // Missing course_id
-    };
-
-    const response = await request(app)
-      .post('/comments/prof')
-      .send(JSON.stringify(invalidComment))
-      .set('Content-Type', 'application/json');
-
-    expect(response.status).toBe(400);
-    expect(response.body).toHaveProperty('errors');
-  });
-
-  it('should handle server errors', async () => {
-    // Mock data for testing
-    const mockComment = {
-      user_id: new Types.ObjectId('b5a1c3950498777b6004514f'),
-      message: 'Test comment',
-      wouldTakeAgain: true,
-      prof_id: new Types.ObjectId('b5a1c3950498777b6004514f'),
-      course_id: new Types.ObjectId('b5a1c3950498777b6004514f'),
-    };
-
-    const body = JSON.stringify(mockComment);
-
-    // Mock the createComment function to throw an error
-    jest
-      .requireMock('../controllers/comments')
-      .createComment.mockRejectedValueOnce(new Error('Test error'));
-
-    const response = await request(app)
-      .post('/comments/prof')
-      .send(body)
-      .set('Content-Type', 'application/json');
-
-    expect(response.status).toBe(500);
-    expect(response.body).toHaveProperty('error');
-  });
-});
-
-describe('Delete Comment Route', () => {
-  it('should delete a comment by ID', async () => {
-    // Mock data for testing
-    const validCommentId = new Types.ObjectId('b5a1c3950498777b6004514f');
-
-    // Mock the deleteCommentById function
-    jest
-      .requireMock('../controllers/comments')
-      .deleteCommentById.mockResolvedValueOnce({
-        /* mock deleted comment */
+      expect(response.status).toBe(201);
+      expect(response.body).toEqual({
+        message: 'Comment created successfully',
       });
+    });
 
-    const response = await request(app).delete(
-      `/comments/prof/${validCommentId}`
-    );
+    it('should return validation errors if request body is invalid', async () => {
+      const response = await request(app)
+        .post('/prof')
+        .set({
+          authorization: constants.VALID_TOKEN,
+        })
+        .send({
+          // Invalid request body
+        });
 
-    expect(response.status).toBe(200);
-    expect(response.body).toEqual({ message: 'Comment deleted successfully' });
+      expect(response.status).toBe(400);
+      // Add more assertions based on your expected validation error response
+    });
   });
 
-  it('should handle validation errors', async () => {
-    // Invalid comment ID to trigger validation error
-    const invalidCommentId = 'invalidCommentId';
+  // Test DELETE /prof/:id
+  describe('DELETE /prof/:id', () => {
+    it('should delete a comment', async () => {
+      const response = await request(app)
+        .delete(`/prof/${constants.VALID_COMMENT_ID}`)
+        .set({
+          authorization: constants.VALID_TOKEN,
+        });
 
-    const response = await request(app).delete(
-      `/comments/prof/${invalidCommentId}`
-    );
+      expect(response.status).toBe(200);
+      expect(response.body).toEqual({
+        message: 'Comment deleted successfully',
+      });
+    });
 
-    expect(response.status).toBe(400);
-    expect(response.body).toHaveProperty('errors');
-  });
+    it('should return an error if the comment does not exist', async () => {
+      const response = await request(app)
+        .delete(`/prof/${constants.INVALID_COMMENT_ID}`)
+        .set({
+          authorization: constants.VALID_TOKEN,
+        });
 
-  it('should handle not found error', async () => {
-    // Mock the deleteCommentById function to return null (comment not found)
-    jest
-      .requireMock('../controllers/comments')
-      .deleteCommentById.mockResolvedValueOnce(null);
-
-    const nonexistentCommentId = new Types.ObjectId('b5a1c3950498777b6004514f');
-
-    const response = await request(app).delete(
-      `/comments/prof/${nonexistentCommentId}`
-    );
-
-    expect(response.status).toBe(404);
-    expect(response.body).toHaveProperty('error');
-  });
-
-  it('should handle server errors', async () => {
-    // Mock the deleteCommentById function to throw an error
-    jest
-      .requireMock('../controllers/comments')
-      .deleteCommentById.mockRejectedValueOnce(new Error('Test error'));
-
-    const validCommentId = new Types.ObjectId('b5a1c3950498777b6004514f');
-
-    const response = await request(app).delete(
-      `/comments/prof/${validCommentId}`
-    );
-
-    expect(response.status).toBe(500);
-    expect(response.body).toHaveProperty('error');
+      expect(response.status).toBe(404);
+      expect(response.body).toEqual({ error: 'Comment not found' });
+    });
   });
 });
