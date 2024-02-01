@@ -82,13 +82,27 @@ a {
 }
 
 /* Custom search by panel style */
-.autocomplete-panel {
+.homepage-autocomplete-panel {
   width: 35vw;
+  min-width: 100%;
+  max-width: 100%;
 }
 
 @media screen and (max-width: 450px) {
-  .autocomplete-panel {
+  .homepage-autocomplete-panel {
     width: 90vw;
+  }
+}
+
+.homebar-autocomplete-panel {
+  min-width: 100%;
+  max-width: 100%;
+}
+
+@media screen and (max-width: 990px) {
+  .homebar-autocomplete-panel {
+    width: 100%;
+    max-width: 70vw;
   }
 }
 

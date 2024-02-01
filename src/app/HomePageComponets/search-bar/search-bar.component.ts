@@ -1,4 +1,10 @@
-import { Component, ViewChild, NgZone, AfterViewChecked } from '@angular/core';
+import {
+  Component,
+  ViewChild,
+  NgZone,
+  AfterViewChecked,
+  Input,
+} from '@angular/core';
 import { ApiService } from 'src/app/api.service';
 import { AppSettings } from '../../appSettings';
 import { forkJoin, map } from 'rxjs';
@@ -36,10 +42,15 @@ export class SearchBarComponent {
   courses: CourseData[] = [];
   placeHolder: string = 'Professor or Class name';
 
+  @Input()
+  overlay_class: string;
+
   constructor(
     private apiService: ApiService,
     public _pageService: PageServiceService
-  ) {}
+  ) {
+    this.overlay_class = 'hompage-autocomplete-panel';
+  }
 
   route($event: any) {
     const regex = /\(([^)]+)\)$/; // This regex matches text inside parentheses at the end of the string
