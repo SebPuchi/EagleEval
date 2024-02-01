@@ -6,6 +6,11 @@
     display: flex;
   }
   
+  .noMargin{
+
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
   .avatarnamewrapper {
     flex-direction: row;
     justify-content: flex-start;
@@ -19,4 +24,25 @@
       font-weight: 700
  
 
+  }
+
+  .textfieldwrapper {
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+  }
+  
+  .classwouldrec {
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 20px;
+    display: flex;
+  }
+  
+  .textfieldwrap {
+    width: 100%;
+    margin-bottom: 20px;
   }

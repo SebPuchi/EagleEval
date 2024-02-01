@@ -8,6 +8,12 @@
 }
 
 
+.p-dialog .p-dialog-header {
+
+
+  padding: 20px;
+}
+
 /* Links / Sign in global */
 .signIn {
   text-align: center;
