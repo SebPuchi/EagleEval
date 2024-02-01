@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { ConfirmationService } from 'primeng/api';
-import { PrimeNGConfig } from 'primeng/api';
 
 @Component({
   selector: 'app-userprofile',
@@ -9,8 +8,7 @@ import { PrimeNGConfig } from 'primeng/api';
 })
 export class UserprofileComponent {
 
-  constructor(private confirmationService: ConfirmationService, 
-    private primengConfig: PrimeNGConfig) { }
+  constructor(private confirmationService: ConfirmationService) { }
 
 
     removeAccount() { 
