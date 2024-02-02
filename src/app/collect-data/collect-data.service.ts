@@ -452,9 +452,6 @@ export class CollectDataService {
         };
 
         this.course.setCoursePageData(new_course_page_data);
-
-        console.log('COURSE PAGE DATA: ', new_course_page_data);
-        console.log('PROF TABLE DATA: ', tableData);
       });
     });
   }

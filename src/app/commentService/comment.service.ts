@@ -26,8 +26,8 @@ export class CommentService {
   createComment(commentData: Comment): void {
     const url = API_ENDPOINT + 'comment/prof';
     this.api.createComment(commentData, url).subscribe({
-      next: (v) => console.log(v),
-      error: (e) => console.error(e),
+      next: (v) => this.reviewStatusSubject.next('success'),
+      error: (e) => this.reviewStatusSubject.next('error'),
       complete: () => console.info('complete'),
     });
   }
@@ -35,8 +35,8 @@ export class CommentService {
   deleteComment(id: string): void {
     const url = API_ENDPOINT + 'comment/prof';
     this.api.deleteComment(id, url).subscribe({
-      next: (v) => console.log(v),
-      error: (e) => console.error(e),
+      next: (v) => this.reviewStatusSubject.next('success'),
+      error: (e) => this.reviewStatusSubject.next('error'),
       complete: () => console.info('complete'),
     });
   }
