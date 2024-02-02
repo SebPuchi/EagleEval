@@ -9,11 +9,15 @@ import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // Primeng angular module imports
-
+import { SelectButtonModule } from 'primeng/selectbutton';
+import { ToggleButtonModule } from 'primeng/togglebutton';
+import { DropdownModule } from 'primeng/dropdown';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { DialogModule } from 'primeng/dialog';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { TabViewModule } from 'primeng/tabview';
 import { AccordionModule } from 'primeng/accordion';
-import { CardModule } from 'primeng/card';
+
 import { MenubarModule } from 'primeng/menubar';
 import { ButtonModule } from 'primeng/button';
 import { ImageModule } from 'primeng/image';
@@ -49,6 +53,7 @@ import { MainDataClassComponent } from './classComponents/main-data-class/main-d
 import { ProfessorTableForClasspgComponent } from './classComponents/professor-table-for-classpg/professor-table-for-classpg.component';
 import { UserprofileComponent } from './userprofile/userprofile.component';
 import { SignInButtonComponent } from './sign-in-button/sign-in-button.component';
+import { AddReviewButtonComponent } from './add-review-button/add-review-button.component';
 
 @NgModule({
 	declarations: [
@@ -68,7 +73,8 @@ import { SignInButtonComponent } from './sign-in-button/sign-in-button.component
   MainDataClassComponent,
   ProfessorTableForClasspgComponent,
   UserprofileComponent,
-  SignInButtonComponent
+  SignInButtonComponent,
+  AddReviewButtonComponent
 	],
 	imports: [
 		BrowserModule,
@@ -79,8 +85,13 @@ import { SignInButtonComponent } from './sign-in-button/sign-in-button.component
 		ImageModule,
 		InputTextModule,
 		ProgressBarModule,
+		DropdownModule,
+		SelectButtonModule,
 		HttpClientModule,
 		ConfirmDialogModule,
+		ToggleButtonModule,
+		DialogModule,
+		InputTextareaModule,
 		KnobModule,
 		TabViewModule,
 		AccordionModule,

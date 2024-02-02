@@ -8,6 +8,8 @@
 }
 
 
+
+
 /* Links / Sign in global */
 .signIn {
   text-align: center;
@@ -55,6 +57,34 @@ a {
 
 
 /* Primeng Styles */
+
+.p-selectbutton .p-button.p-highlight {
+
+  background: #6d1f22;
+  border: #6d1f22;
+
+}
+
+
+.p-selectbutton .p-button.p-highlight:hover {
+
+  background: #6d1f22;
+  border: #6d1f22;
+
+}
+
+
+
+.p-inputtextarea-resizable {
+  width: 100%;
+
+}
+
+
+.p-dialog .p-dialog-header {
+
+  padding: 20px;
+}
 
 
 .p-button.p-button-icon-only{
