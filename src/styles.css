@@ -106,6 +106,17 @@ a {
   }
 }
 
+/* Search dropdown colors */
+.p-autocomplete-panel .p-autocomplete-items .p-autocomplete-item.p-highlight {
+  color: #ffffff;
+  background-color: #6d1f22;
+}
+
+.p-inputtext:enabled:focus {
+  box-shadow: 0px 0px 0px 0.2rem #6c757d;
+  border-color: #000000;
+}
+
 /* *************** */
 
 .reviewaccordian {
