@@ -13,8 +13,10 @@ import {
   ProfTableData,
   ClassService,
 } from '../PageDataService/class.service';
+import { ProfileService } from '../PageDataService/profile.service';
 
 const API_ENDPOINT = AppSettings.API_ENDPOINT;
+const AUTH_ENDPOINT = AppSettings.AUTH_ENDPOINT;
 
 interface ProfData {
   _id: string;
@@ -77,6 +79,13 @@ interface Comment {
   course_id?: string;
 }
 
+interface ProfileData {
+  _id: string;
+  __v: number;
+  name: string;
+  email: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -84,7 +93,8 @@ export class CollectDataService {
   constructor(
     private api: ApiService,
     private prof: ProfessorService,
-    private course: ClassService
+    private course: ClassService,
+    private profile: ProfileService
   ) {}
 
   /**
@@ -182,6 +192,24 @@ export class CollectDataService {
   private getProfComments(id: string): Observable<Comment[]> {
     const url = API_ENDPOINT + 'comments/prof';
     return this.api.getSearchById(id, url);
+  }
+
+  /**
+   * Retrives profile data for user
+   * @returns An observable containing profile data
+   */
+  private getProfileData(): Observable<ProfileData> {
+    const url = AUTH_ENDPOINT + 'profile';
+    return this.api.getUserData(url);
+  }
+
+  /**
+   * Retrives all reviews written by logged in user
+   * @returns An observable containing comments
+   */
+  private getUsersComments(): Observable<Comment[]> {
+    const url = AUTH_ENDPOINT + 'comments';
+    return this.api.getUserData(url);
   }
 
   /**
@@ -428,6 +456,23 @@ export class CollectDataService {
         console.log('COURSE PAGE DATA: ', new_course_page_data);
         console.log('PROF TABLE DATA: ', tableData);
       });
+    });
+  }
+
+  /**
+   * Retrieves professor page data by ID, processes it, and updates the Professor Service.
+   * @param id - The ID of the professor.
+   */
+  getProfilePageData() {
+    this.getProfileData().subscribe((profile_data) => {
+      if (profile_data) {
+        this.profile.setProfilePageData(profile_data);
+        this.getUsersComments().subscribe((user_comments) => {
+          if (user_comments) {
+            this.profile.setComments(user_comments);
+          }
+        });
+      }
     });
   }
 }
