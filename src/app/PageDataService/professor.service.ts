@@ -33,7 +33,7 @@ export interface CourseTableData {
   school: string;
   subject: string;
   description?: string;
-  course_overall: number;
+  course_overall?: number;
 }
 
 @Injectable({

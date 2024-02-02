@@ -1,0 +1,21 @@
+.nodata{
+
+    font-family: Inter,sans-serif;
+    font-size: 40px;
+    font-weight: 700;
+    margin-top:15px; 
+    color: rgb(108, 117, 125);
+    
+
+}
+
+
+
+@media screen and (max-width:991px) {
+
+    .nodata{
+
+        font-size: 30px;
+    }
+
+}

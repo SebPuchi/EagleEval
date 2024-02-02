@@ -54,6 +54,7 @@ import { ProfessorTableForClasspgComponent } from './classComponents/professor-t
 import { UserprofileComponent } from './userprofile/userprofile.component';
 import { SignInButtonComponent } from './sign-in-button/sign-in-button.component';
 import { AddReviewButtonComponent } from './add-review-button/add-review-button.component';
+import { NoDataComponent } from './Skeletons/no-data/no-data.component';
 
 @NgModule({
 	declarations: [
@@ -74,7 +75,8 @@ import { AddReviewButtonComponent } from './add-review-button/add-review-button.
   ProfessorTableForClasspgComponent,
   UserprofileComponent,
   SignInButtonComponent,
-  AddReviewButtonComponent
+  AddReviewButtonComponent,
+  NoDataComponent
 	],
 	imports: [
 		BrowserModule,
