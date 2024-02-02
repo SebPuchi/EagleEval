@@ -44,22 +44,28 @@ function cleanAndCheckComment(userComment: string): string | undefined {
  * @param course_id - The ObjectId of the course associated with the comment.
  * @returns A Promise resolving to the created comment or null if there was an error.
  */
-export function createComment(
+export async function createComment(
   user_id: Types.ObjectId,
   message: string,
   wouldTakeAgain: boolean,
   prof_id: Types.ObjectId,
   course_id: Types.ObjectId
 ): Promise<IComment | null> {
-  const new_comment: IComment = <any>{
-    user_id: user_id,
-    message: cleanAndCheckComment(message),
-    wouldTakeAgain: wouldTakeAgain,
-    professor_id: prof_id,
-    course_id: course_id,
-  };
+  const clean_comment = cleanAndCheckComment(message);
 
-  return CommentModel.create(new_comment);
+  if (clean_comment) {
+    const new_comment: IComment = <any>{
+      user_id: user_id,
+      message: clean_comment,
+      wouldTakeAgain: wouldTakeAgain,
+      professor_id: prof_id,
+      course_id: course_id,
+    };
+
+    return CommentModel.create(new_comment);
+  } else {
+    return null;
+  }
 }
 
 /**
