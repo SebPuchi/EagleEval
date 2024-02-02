@@ -301,6 +301,23 @@ export class CollectDataService {
           'stimulatedinterestinthesubjectmatter'
         );
 
+        const new_prof_page_data: ProfPageData = {
+          name: prof_data.name,
+          education: prof_data.education,
+          email: prof_data.email,
+          title: prof_data.title,
+          office: prof_data.office,
+          profileImage: prof_data.photoLink,
+          avgOverall: avg_overall,
+          avgPrepared: avg_prepared,
+          avgExplains: avg_explains,
+          avgAvailable: avg_available,
+          avgEnthusiastic: avg_enthusiastic,
+          comments: undefined,
+        };
+
+        this.prof.setProfPageData(new_prof_page_data);
+
         this.getProfComments(id).subscribe((prof_comments: Comment[]) => {
           let commentDict: { [course: string]: Comment[] } = {};
           if (prof_comments) {
@@ -354,6 +371,19 @@ export class CollectDataService {
       let tableData: ProfTableData[] = [];
       let ddData: DrilldownData[] = [];
 
+      // Iterate over reviews to get drilldown data
+      reviewData.forEach((review: ReviewData) => {
+        const review_id: string = review._id;
+
+        this.getDrilldown(review_id).subscribe(
+          (dd_data: DrilldownData[] | null) => {
+            if (dd_data && dd_data[0]) {
+              ddData.push(dd_data[0]);
+            }
+          }
+        );
+      });
+
       // Collect prof ids
       reviewData.forEach((review: ReviewData) => {
         if (review.professor_id) {
@@ -366,51 +396,6 @@ export class CollectDataService {
             profDict[prof_id].push(review);
           }
         }
-      });
-
-      // Iterate over unique professor IDs and fetch course data
-      Object.keys(profDict).forEach((prof_id: string) => {
-        this.getProfData(prof_id).subscribe((prof_data: ProfData | null) => {
-          if (prof_data) {
-            this.getProfComments(prof_data._id).subscribe(
-              (prof_comments: Comment[]) => {
-                const filtered_comments = prof_comments?.filter(
-                  (obj) => obj.course_id == null || obj.course_id == id
-                );
-                const avg_overall = this.calculateAverage(
-                  profDict[prof_id],
-                  'instructor_overall'
-                );
-
-                const new_table_entry: ProfTableData = {
-                  id: prof_data._id,
-                  name: prof_data.name,
-                  prof_overall: avg_overall,
-                  profile_image: prof_data.photoLink,
-                  comments: filtered_comments,
-                };
-
-                tableData.push(new_table_entry);
-              }
-            );
-          }
-        });
-      });
-
-      // Set prof table data in course service
-      this.course.setprofTableData(tableData);
-
-      // Iterate over reviews to get drilldown data
-      reviewData.forEach((review: ReviewData) => {
-        const review_id: string = review._id;
-
-        this.getDrilldown(review_id).subscribe(
-          (dd_data: DrilldownData[] | null) => {
-            if (dd_data && dd_data[0]) {
-              ddData.push(dd_data[0]);
-            }
-          }
-        );
       });
 
       // Fill course page data
@@ -453,6 +438,38 @@ export class CollectDataService {
         };
 
         this.course.setCoursePageData(new_course_page_data);
+
+        // Iterate over unique professor IDs and fetch course data
+        Object.keys(profDict).forEach((prof_id: string) => {
+          this.getProfData(prof_id).subscribe((prof_data: ProfData | null) => {
+            if (prof_data) {
+              this.getProfComments(prof_data._id).subscribe(
+                (prof_comments: Comment[]) => {
+                  const filtered_comments = prof_comments?.filter(
+                    (obj) => obj.course_id == null || obj.course_id == id
+                  );
+                  const avg_overall = this.calculateAverage(
+                    profDict[prof_id],
+                    'instructor_overall'
+                  );
+
+                  const new_table_entry: ProfTableData = {
+                    id: prof_data._id,
+                    name: prof_data.name,
+                    prof_overall: avg_overall,
+                    profile_image: prof_data.photoLink,
+                    comments: filtered_comments,
+                  };
+
+                  tableData.push(new_table_entry);
+                }
+              );
+            }
+          });
+        });
+
+        // Set prof table data in course service
+        this.course.setprofTableData(tableData);
 
         console.log('COURSE PAGE DATA: ', new_course_page_data);
         console.log('PROF TABLE DATA: ', tableData);
