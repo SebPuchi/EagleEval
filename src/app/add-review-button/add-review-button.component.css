@@ -6,11 +6,9 @@
     display: flex;
   }
   
-
   .togglewrapper{
 
     width: 135px;
-
 
   }
   .noMargin{
@@ -80,8 +78,24 @@
 
       font-size: 20px;
 
- 
 
+     }
+
+     .dropdownlable{
+
+      font-size: 15px;
+
+     }
+
+  .classwouldrec {
+
+    flex-direction: column;
+
+  }
+
+  .dropdownholder {
+
+    padding: 10px;
   }
 
 
