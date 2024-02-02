@@ -48,7 +48,8 @@ export async function searchForId<T extends Document, P extends keyof T>(
   try {
     // Verify if the provided ID is a valid ObjectId
     if (!Types.ObjectId.isValid(id)) {
-      throw new Error('Invalid ObjectId');
+      console.error('Invalid ObjectId');
+      return null;
     }
 
     // Find documents in the database that match the provided ID in the specified parameter field
