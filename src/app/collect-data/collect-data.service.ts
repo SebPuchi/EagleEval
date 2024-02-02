@@ -271,7 +271,7 @@ export class CollectDataService {
 
         this.getDrilldown(review_id).subscribe(
           (dd_data: DrilldownData[] | null) => {
-            if (dd_data) {
+            if (dd_data && dd_data[0]) {
               ddData.push(dd_data[0]);
             }
           }
@@ -406,7 +406,7 @@ export class CollectDataService {
 
         this.getDrilldown(review_id).subscribe(
           (dd_data: DrilldownData[] | null) => {
-            if (dd_data) {
+            if (dd_data && dd_data[0]) {
               ddData.push(dd_data[0]);
             }
           }
@@ -446,7 +446,8 @@ export class CollectDataService {
           avgOverall: avg_overall,
           avgOriganized: avg_organized,
           avgChallanging: avg_challanging,
-          avgEffortHours: avg_effort,
+          avgEffortHours:
+            avg_effort >= 0 ? Math.round((avg_effort / 10) * 2) / 2 : undefined,
           avgAttendance: avg_attendance,
           avgAssignments: avg_asssignments,
         };
