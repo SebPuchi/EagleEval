@@ -1,38 +1,31 @@
 @import "primeng/resources/themes/lara-light-blue/theme.css";
 @import "primeng/resources/primeng.css";
-@import '~primeicons/primeicons.css';
+@import "~primeicons/primeicons.css";
 
 * {
   margin: 0;
-  padding: 0
+  padding: 0;
 }
-
-
-
 
 /* Links / Sign in global */
 .signIn {
   text-align: center;
-  font-family: Inter,sans-serif;
+  font-family: Inter, sans-serif;
   font-size: 20px;
   font-weight: 700;
-  padding:10px;
+  padding: 10px;
   text-decoration: none;
-  color:#ffffff;
-  border: 2.5px solid white; 
+  color: #ffffff;
+  border: 2.5px solid white;
   border-radius: 10px;
-  width:100px;
-  
+  width: 100px;
 }
-
-
 
 a {
   text-decoration: none;
 }
 
 /* ************* */
-
 
 .review {
   display: flex;
@@ -49,112 +42,124 @@ a {
 }
 
 .reviewinfo {
-  font-family: Inter,sans-serif;
+  font-family: Inter, sans-serif;
   font-size: 16px;
   font-weight: 700;
 }
 
-
-
 /* Primeng Styles */
 
-.p-selectbutton .p-button.p-highlight {
-
-  background: #6d1f22;
-  border: #6d1f22;
-
+.p-button.p-button-icon-only {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
 }
 
+.p-selectbutton .p-button.p-highlight {
+  background: #6d1f22;
+  border: #6d1f22;
+}
 
 .p-selectbutton .p-button.p-highlight:hover {
-
   background: #6d1f22;
   border: #6d1f22;
-
 }
-
-
 
 .p-inputtextarea-resizable {
   width: 100%;
-
 }
 
-
 .p-dialog .p-dialog-header {
-
   padding: 20px;
 }
 
-
-.p-button.p-button-icon-only{
-
-width:2.5rem;
-height: 2.5rem;
-border-radius: 50%;
-
+.p-button.p-button-icon-only {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
 }
 
-
 .p-button {
-
-
   background: #6d1f22;
   border: #6d1f22;
 }
 
 .p-button:enabled:hover {
-
   background: #983a3d;
-
 }
 
-
 .p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
-color: #000000;
-border-color:#6d1f22
-
+  color: #000000;
+  border-color: #6d1f22;
 }
 
 .p-tabview .p-tabview-nav li .p-tabview-nav-link:not(.p-disabled):focus {
-
-  box-shadow:none;
+  box-shadow: none;
 }
 
 .p-tabview .p-tabview-panels {
-
-
-  color:black;
+  color: black;
 }
 
 .p-tabview .p-tabview-nav {
-
   background: transparent;
+}
 
+/* Custom search by panel style */
+.homepage-autocomplete-panel {
+  width: 35vw;
+  min-width: 100%;
+  max-width: 100%;
+}
+
+@media screen and (max-width: 450px) {
+  .homepage-autocomplete-panel {
+    width: 90vw;
+  }
+}
+
+.homebar-autocomplete-panel {
+  min-width: 100%;
+  max-width: 100%;
+}
+
+@media screen and (max-width: 990px) {
+  .homebar-autocomplete-panel {
+    width: 100%;
+    max-width: 70vw;
+  }
+}
+
+/* Search dropdown colors */
+.p-autocomplete-panel .p-autocomplete-items .p-autocomplete-item.p-highlight {
+  color: #ffffff;
+  background-color: #6d1f22;
+}
+
+.p-inputtext:enabled:focus {
+  box-shadow: 0px 0px 0px 0.2rem #6c757d;
+  border-color: #000000;
 }
 
 /* *************** */
 
 .reviewaccordian {
   width: 100%;
-  margin-top:20px;
+  margin-top: 20px;
 }
-
 
 .veritcal-divider {
   width: 2px;
   height: 75%;
-  background-color: rgba(172, 172, 172, .52);
+  background-color: rgba(172, 172, 172, 0.52);
   margin-left: 10px;
   margin-right: 10px;
 }
 
-
 .crsdesct {
-  font-family: Inter,sans-serif;
-  line-height: 25px
+  font-family: Inter, sans-serif;
+  line-height: 25px;
 }
-
 
 .classnameprof {
   margin-top: 0;
@@ -172,7 +177,6 @@ border-color:#6d1f22
   padding: 20px;
   display: flex;
 }
-
 
 .class.whitecard {
   width: auto;
@@ -193,14 +197,12 @@ border-color:#6d1f22
   display: flex;
 }
 
-
 .nameandstatheader {
   margin-top: 0;
   margin-bottom: 0;
   font-size: 40px;
-  font-family: Inter,sans-serif;
+  font-family: Inter, sans-serif;
 }
-
 
 .contact {
   width: auto;
@@ -216,9 +218,8 @@ border-color:#6d1f22
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  display: flex
+  display: flex;
 }
-
 
 .profimgdatawrapper {
   width: auto;
@@ -226,45 +227,39 @@ border-color:#6d1f22
   justify-content: center;
   align-items: center;
   padding: 20px;
-  display: flex
+  display: flex;
 }
-
 
 .professordividerbtm {
   width: 75%;
   height: 2px;
-  background-color: rgba(172,172,172,.52);
+  background-color: rgba(172, 172, 172, 0.52);
   margin-top: 20px;
-  margin-bottom: 20px
+  margin-bottom: 20px;
 }
-
 
 .professordividertop {
   width: 75%;
   height: 2px;
-  background-color: rgba(172,172,172,.52);
-  margin-bottom: 20px
+  background-color: rgba(172, 172, 172, 0.52);
+  margin-bottom: 20px;
 }
-
-
 
 .whitecard.whitecontact {
-  width: 100%
+  width: 100%;
 }
-
 
 .card {
   background-color: #eee;
   border: 1px solid #e6e9f1;
   border-radius: 12px;
-  box-shadow: 2px 3px 7px 2px rgba(20,20,43,.09)
+  box-shadow: 2px 3px 7px 2px rgba(20, 20, 43, 0.09);
 }
-
 
 .contentwrapper {
   padding-bottom: 0;
   padding-left: 20px;
-  padding-right: 20px
+  padding-right: 20px;
 }
 
 .professorscorebarwrapper {
@@ -272,39 +267,35 @@ border-color:#6d1f22
   flex-direction: row;
   justify-content: center;
   padding: 20px;
-  display: flex
+  display: flex;
 }
-
 
 .profscoreknobdiv {
   width: 40%;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  display: flex
+  display: flex;
 }
 
 .knobdataholderdiv {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  display: flex
+  display: flex;
 }
-
 
 .description1 {
   text-align: center;
-  font-family: Inter,sans-serif;
-  display: flex
+  font-family: Inter, sans-serif;
+  display: flex;
 }
-
 
 .quaddatadiv {
   width: 60%;
   flex-wrap: wrap;
-  display: flex
+  display: flex;
 }
-
 
 .silderdatadiv {
   width: 50%;
@@ -312,45 +303,42 @@ border-color:#6d1f22
   justify-content: space-between;
   align-items: center;
   padding: 0;
-  display: flex
+  display: flex;
 }
 
 .silderscore {
-  font-family: Inter,sans-serif;
+  font-family: Inter, sans-serif;
   font-size: 55px;
   font-weight: 700;
-  margin-top:15px; 
- 
+  margin-top: 15px;
 }
 
 .sliderdatatext {
   text-align: center;
-  font-family: Inter,sans-serif;
+  font-family: Inter, sans-serif;
   font-size: 17px;
   font-weight: 700;
-  
 }
-
 
 .smlldiv {
   width: 45px;
   height: 2px;
-  background-color: rgba(172,172,172,.52);
+  background-color: rgba(172, 172, 172, 0.52);
   margin-top: 10px;
-  margin-bottom: 10px
+  margin-bottom: 10px;
 }
 .contact-edutextheader {
-  font-family: Inter,sans-serif;
+  font-family: Inter, sans-serif;
   font-size: 20px;
-  font-weight: 700
+  font-weight: 700;
 }
 
 .fildwidthdiv {
   width: 100%;
   height: 2px;
-  background-color: rgba(172,172,172,.52);
+  background-color: rgba(172, 172, 172, 0.52);
   margin-top: 10px;
-  margin-bottom: 10px
+  margin-bottom: 10px;
 }
 
 .w-layout-grid {
@@ -359,13 +347,13 @@ border-color:#6d1f22
   grid-template-rows: auto auto;
   grid-template-columns: 1fr 1fr;
   grid-auto-columns: 1fr;
-  display: grid
+  display: grid;
 }
 
 .grid {
   width: 100%;
   grid-column-gap: 20px;
-  grid-row-gap: 20px
+  grid-row-gap: 20px;
 }
 
 .whitecard {
@@ -374,87 +362,62 @@ border-color:#6d1f22
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  box-shadow: 2px 2px 7px 2px rgba(0,0,0,.2)
+  box-shadow: 2px 2px 7px 2px rgba(0, 0, 0, 0.2);
 }
 
-
-
-@media screen and (max-width:991px) {
-
+@media screen and (max-width: 991px) {
   .signIn {
-  
     font-size: 15px;
-   
-    
   }
   .contentwrapper {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    display: flex
+    display: flex;
   }
 
   .silderscore {
-    font-size: 35px
+    font-size: 35px;
   }
 
   .reviewinfo {
-    
     font-size: 13px;
-    
   }
-
 }
 
-
-@media screen and (max-width:767px) {
-
-
+@media screen and (max-width: 767px) {
   .classnameprof {
     font-size: 20px;
   }
-
 
   .nameandstatheader {
     font-size: 30px;
   }
 
   .professorscorebarwrapper {
-      height: auto;
-      flex-direction: column;
-      align-items: center
-    }
+    height: auto;
+    flex-direction: column;
+    align-items: center;
+  }
 
-    .quaddatadiv {
-      margin-top: 26px
-    }
+  .quaddatadiv {
+    margin-top: 26px;
+  }
 
-    .silderdatadiv {
-      margin-top: 15px;
-      margin-bottom: 15px
-    }
+  .silderdatadiv {
+    margin-top: 15px;
+    margin-bottom: 15px;
+  }
 
-
-  
-
-    .card {
-      box-shadow: 0 2px 12px rgba(20,20,43,.04)
-    }
-
-
-
-
-
+  .card {
+    box-shadow: 0 2px 12px rgba(20, 20, 43, 0.04);
+  }
 }
 
-
-
-@media screen and (max-width:479px) {
-
+@media screen and (max-width: 479px) {
   .veritcal-divider {
     display: none;
   }
-
 
   .classnameprof {
     font-size: 20px;
@@ -466,39 +429,34 @@ border-color:#6d1f22
 
   .contentwrapper {
     padding-left: 0;
-    padding-right: 0
+    padding-right: 0;
   }
 
   .grid {
-    grid-template-columns: 1fr
+    grid-template-columns: 1fr;
   }
 
   .professorscorebarwrapper {
     height: auto;
     flex-direction: column;
-    align-items: center
+    align-items: center;
   }
 
   .profscoreknobdiv {
     width: auto;
-    margin-bottom: 20px
+    margin-bottom: 20px;
   }
 
   .quaddatadiv {
     width: auto;
     flex-direction: column;
     justify-content: center;
-    align-items: center
+    align-items: center;
   }
 
   .silderdatadiv {
     width: auto;
     margin-top: 20px;
-    margin-bottom: 20px
+    margin-bottom: 20px;
   }
-
-
-
-
-
 }
