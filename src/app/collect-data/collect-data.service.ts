@@ -432,7 +432,9 @@ export class CollectDataService {
           avgOriganized: avg_organized,
           avgChallanging: avg_challanging,
           avgEffortHours:
-            avg_effort >= 0 ? Math.round((avg_effort / 10) * 2) / 2 : undefined,
+            avg_effort && avg_effort >= 0
+              ? Math.round((avg_effort / 10) * 2) / 2
+              : undefined,
           avgAttendance: avg_attendance,
           avgAssignments: avg_asssignments,
         };
