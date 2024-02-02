@@ -1,65 +1,59 @@
-
 <div class="professorscorebarwrapper">
-    <div class="profscoreknobdiv">
-      <div class="profscoreknob">
-
-        <p-knob
+  <div class="profscoreknobdiv">
+    <div class="profscoreknob">
+      <p-knob
         [(ngModel)]="professorOvl"
-        [size] = "185"
-        [readonly] = "true"
+        [size]="185"
+        [readonly]="true"
         [strokeWidth]="12.5"
         [valueColor]="strokeColor"
       ></p-knob>
-
-
-      </div>
-      <div class="knobdataholderdiv">
-        <div class="contact-edutextheader">Professor Overall</div>
-        <div class="smlldiv"></div>
-        <div class="description1">Weighted avg. of class scores Professor teaches</div>
-      </div>
     </div>
-    <div class="quaddatadiv">
-      <div class="silderdatadiv">
-
-         <!-- If else logic for value  -->
-        <div *ngIf="isValueNaN(instructorPrepared); else elseBlock1"><app-no-data></app-no-data></div>
-        <ng-template #elseBlock1> <div class="silderscore">{{instructorPrepared}}</div> </ng-template>
-
-    
-      
-        <div class="smlldiv"></div>
-        <div class="sliderdatatext">Instructor Prepared</div>
-      </div>
-      <div class="silderdatadiv">
-
-         <!-- If else logic for value  -->
-        <div *ngIf="isValueNaN(clearMaterial); else elseBlock2"><app-no-data></app-no-data></div>
-        <ng-template #elseBlock2> <div class="silderscore">{{clearMaterial}}</div> </ng-template>
-
-        <div class="smlldiv"></div>
-        <div class="sliderdatatext">Clearly Explains Material</div>
-      </div>
-      <div class="silderdatadiv">
-
-         <!-- If else logic for value  -->
-        <div *ngIf="isValueNaN(outsideClass); else elseBlock3"><app-no-data></app-no-data></div>
-        <ng-template #elseBlock3> <div class="silderscore">{{outsideClass}}</div> </ng-template>
-
-
-        <div class="smlldiv"></div>
-        <div class="sliderdatatext">Available Outside of Class</div>
-      </div>
-      <div class="silderdatadiv">
-        
-          <!-- If else logic for value  -->
-        <div *ngIf="isValueNaN(enthusiastic); else elseBlock4"><app-no-data></app-no-data></div>
-        <ng-template #elseBlock4> <div class="silderscore">{{enthusiastic}}</div> </ng-template>
-        
-
-
-        <div class="smlldiv"></div>
-        <div class="sliderdatatext">Enthusiastic About Course</div>
-      </div>
+    <div class="knobdataholderdiv">
+      <div class="contact-edutextheader">Professor Overall</div>
+      <div class="smlldiv"></div>
+      <div class="description1">Weighted avg. of all professor ratings</div>
     </div>
   </div>
+  <div class="quaddatadiv">
+    <ng-template #noDataBlock>
+      <app-no-data></app-no-data>
+    </ng-template>
+    <div class="silderdatadiv">
+      <!-- If else logic for value  -->
+      <div *ngIf="instructorPrepared; else noDataBlock">
+        <div class="silderscore">{{ instructorPrepared }}</div>
+      </div>
+
+      <div class="smlldiv"></div>
+      <div class="sliderdatatext">Instructor Prepared</div>
+    </div>
+    <div class="silderdatadiv">
+      <!-- If else logic for value  -->
+      <div *ngIf="clearMaterial; else noDataBlock">
+        <div class="silderscore">{{ clearMaterial }}</div>
+      </div>
+
+      <div class="smlldiv"></div>
+      <div class="sliderdatatext">Clearly Explains Material</div>
+    </div>
+    <div class="silderdatadiv">
+      <!-- If else logic for value  -->
+      <div *ngIf="outsideClass; else noDataBlock">
+        <div class="silderscore">{{ outsideClass }}</div>
+      </div>
+
+      <div class="smlldiv"></div>
+      <div class="sliderdatatext">Available Outside of Class</div>
+    </div>
+    <div class="silderdatadiv">
+      <!-- If else logic for value  -->
+      <div *ngIf="enthusiastic; else noDataBlock">
+        <div class="silderscore">{{ enthusiastic }}</div>
+      </div>
+
+      <div class="smlldiv"></div>
+      <div class="sliderdatatext">Enthusiastic About Course</div>
+    </div>
+  </div>
+</div>
