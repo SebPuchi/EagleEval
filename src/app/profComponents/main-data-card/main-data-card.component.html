@@ -21,7 +21,13 @@
     </div>
     <div class="quaddatadiv">
       <div class="silderdatadiv">
-        <div class="silderscore">{{instructorPrepared}}</div>
+
+
+        <div *ngIf="isValueNaN(instructorPrepared); else elseBlock"><app-no-data></app-no-data></div>
+        <ng-template #elseBlock> <div class="silderscore">{{instructorPrepared}}</div> </ng-template>
+
+    
+      
         <div class="smlldiv"></div>
         <div class="sliderdatatext">Instructor Prepared</div>
       </div>

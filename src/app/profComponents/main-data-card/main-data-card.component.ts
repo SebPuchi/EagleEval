@@ -11,10 +11,10 @@ export class MainDataCardComponent implements OnInit {
 
   professorOvl: number | undefined = NaN;
   strokeColor: string = '#6d1f22';
-  instructorPrepared: number | undefined = NaN;
-  clearMaterial: number | undefined = NaN;
-  outsideClass: number | undefined = NaN;
-  enthusiastic: number | undefined = NaN;
+  instructorPrepared: number = NaN;
+  clearMaterial: number = NaN;
+  outsideClass: number = NaN;
+  enthusiastic: number = NaN;
 
 
 
@@ -27,41 +27,42 @@ export class MainDataCardComponent implements OnInit {
         //Sets Knob
         if (data.avgOverall && data.avgOverall > 0) {
           this.professorOvl = data.avgOverall;
-        } else {
-          this.professorOvl = NaN;
-        }
+        } 
         //Sets instructorPrepared
         if (data.avgPrepared && data.avgPrepared > 0) {
           this.instructorPrepared = data.avgPrepared;
-        } else {
+        } else{
           this.instructorPrepared = NaN;
+
         }
         //Sets clearMaterial
         if (data.avgExplains && data.avgExplains > 0) {
           this.clearMaterial = data.avgExplains;
-        } else {
+        } else{
           this.clearMaterial = NaN;
+
         }
         //Sets outsideClass
         if (data.avgAvailable && data.avgAvailable > 0) {
           this.outsideClass = data.avgAvailable;
-        } else {
+        } else{
           this.outsideClass = NaN;
+
         }
         //Sets enthusiastic
         if (data.avgEnthusiastic && data.avgEnthusiastic > 0) {
           this.enthusiastic = data.avgEnthusiastic;
-        } else {
+        } else{
           this.enthusiastic = NaN;
+
         }
       }
     });
   }
 
-
-
-
-
+  isValueNaN(value: number): boolean {
+    return isNaN(value);
+  }
 
 
 
