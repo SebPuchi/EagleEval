@@ -6,6 +6,13 @@
     display: flex;
   }
   
+
+  .togglewrapper{
+
+    width: 135px;
+
+
+  }
   .noMargin{
 
     margin-top: 0px;

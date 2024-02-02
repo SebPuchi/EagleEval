@@ -13,13 +13,11 @@ import { SelectButtonModule } from 'primeng/selectbutton';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputTextareaModule } from 'primeng/inputtextarea';
-import { AvatarModule } from 'primeng/avatar';
-import { AvatarGroupModule } from 'primeng/avatargroup';
 import { DialogModule } from 'primeng/dialog';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { TabViewModule } from 'primeng/tabview';
 import { AccordionModule } from 'primeng/accordion';
-import { CardModule } from 'primeng/card';
+
 import { MenubarModule } from 'primeng/menubar';
 import { ButtonModule } from 'primeng/button';
 import { ImageModule } from 'primeng/image';
@@ -89,10 +87,8 @@ import { AddReviewButtonComponent } from './add-review-button/add-review-button.
 		ProgressBarModule,
 		DropdownModule,
 		SelectButtonModule,
-		AvatarModule,
 		HttpClientModule,
 		ConfirmDialogModule,
-		AvatarGroupModule,
 		ToggleButtonModule,
 		DialogModule,
 		InputTextareaModule,

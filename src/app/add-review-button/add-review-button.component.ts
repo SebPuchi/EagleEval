@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
-interface City {
+interface Class {
   name: string;
-  code: string;
 }
 
 @Component({
@@ -18,25 +17,24 @@ export class AddReviewButtonComponent implements OnInit {
 
   value: string = 'no';
 
-  cities: City[] | undefined;
+  classes: Class[] | undefined;
 
-    selectedCity: City | undefined;
+  selectedCity: Class | undefined;
 
 
-  
-
+  //logic for display 
   showDialog() {
       this.visible = true;
   }
 
 
   ngOnInit() {
-    this.cities = [
-        { name: 'New York', code: 'NY' },
-        { name: 'Rome', code: 'RM' },
-        { name: 'London', code: 'LDN' },
-        { name: 'Istanbul', code: 'IST' },
-        { name: 'Paris', code: 'PRS' }
+    this.classes = [
+        { name: 'CSCI1101'},
+        { name: 'CSCI1102'},
+        { name: 'CSCI2271'},
+        { name: 'CSCI3401'},
+        { name: 'CSCI1101'}
     ];
 }
 }
