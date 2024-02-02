@@ -1,9 +1,5 @@
-
 <div class="heroSignIn">
   <app-sign-in-button></app-sign-in-button>
-
-
-
 </div>
 <div class="herosection">
   <video
@@ -32,7 +28,9 @@
       class="image"
     />
     <div class="navsearch">
-        <app-search-bar></app-search-bar>
+      <app-search-bar
+        [overlay_class]="'homepage-autocomplete-panel'"
+      ></app-search-bar>
     </div>
   </div>
   <div class="herosectionunderlay"></div>
