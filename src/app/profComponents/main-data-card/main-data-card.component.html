@@ -22,9 +22,9 @@
     <div class="quaddatadiv">
       <div class="silderdatadiv">
 
-
-        <div *ngIf="isValueNaN(instructorPrepared); else elseBlock"><app-no-data></app-no-data></div>
-        <ng-template #elseBlock> <div class="silderscore">{{instructorPrepared}}</div> </ng-template>
+         <!-- If else logic for value  -->
+        <div *ngIf="isValueNaN(instructorPrepared); else elseBlock1"><app-no-data></app-no-data></div>
+        <ng-template #elseBlock1> <div class="silderscore">{{instructorPrepared}}</div> </ng-template>
 
     
       
@@ -32,17 +32,32 @@
         <div class="sliderdatatext">Instructor Prepared</div>
       </div>
       <div class="silderdatadiv">
-        <div class="silderscore">{{clearMaterial}}</div>
+
+         <!-- If else logic for value  -->
+        <div *ngIf="isValueNaN(clearMaterial); else elseBlock2"><app-no-data></app-no-data></div>
+        <ng-template #elseBlock2> <div class="silderscore">{{clearMaterial}}</div> </ng-template>
+
         <div class="smlldiv"></div>
         <div class="sliderdatatext">Clearly Explains Material</div>
       </div>
       <div class="silderdatadiv">
-        <div class="silderscore">{{outsideClass}}</div>
+
+         <!-- If else logic for value  -->
+        <div *ngIf="isValueNaN(outsideClass); else elseBlock3"><app-no-data></app-no-data></div>
+        <ng-template #elseBlock3> <div class="silderscore">{{outsideClass}}</div> </ng-template>
+
+
         <div class="smlldiv"></div>
         <div class="sliderdatatext">Available Outside of Class</div>
       </div>
       <div class="silderdatadiv">
-        <div class="silderscore">{{enthusiastic}}</div>
+        
+          <!-- If else logic for value  -->
+        <div *ngIf="isValueNaN(enthusiastic); else elseBlock4"><app-no-data></app-no-data></div>
+        <ng-template #elseBlock4> <div class="silderscore">{{enthusiastic}}</div> </ng-template>
+        
+
+
         <div class="smlldiv"></div>
         <div class="sliderdatatext">Enthusiastic About Course</div>
       </div>
