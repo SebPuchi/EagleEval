@@ -23,7 +23,7 @@ export class CommentService {
   private reviewStatusSubject = new Subject<string>();
   reviewStatus$: Observable<string> = this.reviewStatusSubject.asObservable();
 
-  createComment(commentData: any): void {
+  createComment(commentData: Comment): void {
     const url = API_ENDPOINT + 'comment/prof';
     this.api.createComment(commentData, url).subscribe({
       next: (v) => console.log(v),
