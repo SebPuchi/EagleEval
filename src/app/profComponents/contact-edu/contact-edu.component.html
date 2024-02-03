@@ -1,14 +1,19 @@
 <div class="contact">
     <div class="contact-edutextheader">{{professorName}}</div>
     <div class="smlldiv"></div>
+
+    <ng-container *ngIf="professorTitle">
+
+      <div class="contactinfowrapper">
+        <div class="title">{{professorTitle[0]}}</div>
+      </div>
+      <div class="fildwidthdiv"></div>
+    </ng-container>
+    
     <div class="contactinfowrapper">
-      <div class="title">Head of philosopy and theology department </div>
-    </div>
-    <div class="fildwidthdiv"></div>
-    <div class="contactinfowrapper">
-      <div *ngIf="office"><div class="data">{{office}}</div></div>
-      <div *ngIf="email"><div class="data">{{email}}</div></div>
-      <div *ngIf="phone"><div class="data">{{phone}}</div></div>
+      <ng-container *ngIf="office"><div class="data">{{office}}</div></ng-container>
+      <ng-container *ngIf="email"><div class="data">{{email}}</div></ng-container>
+      <ng-container *ngIf="phone"><div class="data">{{phone}}</div></ng-container>
       
     </div>
   </div>
