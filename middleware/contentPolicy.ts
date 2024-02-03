@@ -23,6 +23,7 @@ export default function contentSecurityPolicy() {
         ].concat(trusted),
         objectSrc: ["'none'"],
         upgradeInsecureRequests: [],
+        imgSrc: ['https://bc.edu:*', 'https://www.bc.edu:*'].concat(trusted),
       },
     },
   });
