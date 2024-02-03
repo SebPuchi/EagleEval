@@ -9,7 +9,6 @@ export const handleCors = (
   res.header('Access-Control-Allow-Origin', [
     'https://www.eagleeval.com',
     'https://eagleeval.com',
-    
   ]);
   res.header(
     'Access-Control-Allow-Headers',
