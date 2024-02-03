@@ -1,6 +1,9 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ProfessorService, ProfPageData } from 'src/app/PageDataService/professor.service';
+import {
+  ProfessorService,
+  ProfPageData,
+} from 'src/app/PageDataService/professor.service';
 import { CollectDataService } from '../collect-data/collect-data.service';
 import { Injectable } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
@@ -34,19 +37,14 @@ export class ProfessorPageEntryComponent {
       this.data.getProfPageData(id);
     });
 
-    this.professorService.getProfPageData().subscribe((data: ProfPageData | null) => {
-
-      if(data){
-        if (data.profileImage) {
-          this.professorImgURL = encodeURI(data.profileImage);
+    this.professorService
+      .getProfPageData()
+      .subscribe((data: ProfPageData | null) => {
+        if (data) {
+          if (data.profileImage) {
+            this.professorImgURL = encodeURI(decodeURI(data.profileImage));
+          }
         }
-
-      }
-      
-    });
-
-    
-  
-
+      });
   }
 }
