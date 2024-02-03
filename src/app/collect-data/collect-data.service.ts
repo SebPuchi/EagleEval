@@ -272,7 +272,6 @@ export class CollectDataService {
         const review_id: string = review._id;
         observables.push(this.getDrilldown(review_id));
       });
-
       // Use forkJoin to combine all observables and subscribe to the result
       forkJoin(observables).subscribe(
         (ddDataArray: DrilldownData[][] | null) => {
