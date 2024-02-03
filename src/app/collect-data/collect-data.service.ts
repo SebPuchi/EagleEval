@@ -371,20 +371,6 @@ export class CollectDataService {
     this.getReviewsForCourse(id).subscribe((reviewData: ReviewData[]) => {
       const profDict: { [id: string]: ReviewData[] } = {};
       let tableData: ProfTableData[] = [];
-      let ddData: DrilldownData[] = [];
-
-      // Iterate over reviews to get drilldown data
-      reviewData.forEach((review: ReviewData) => {
-        const review_id: string = review._id;
-
-        this.getDrilldown(review_id).subscribe(
-          (dd_data: DrilldownData[] | null) => {
-            if (dd_data && dd_data[0]) {
-              ddData.push(dd_data[0]);
-            }
-          }
-        );
-      });
 
       // Collect prof ids
       reviewData.forEach((review: ReviewData) => {
@@ -400,84 +386,99 @@ export class CollectDataService {
         }
       });
 
-      // Fill course page data
-      this.getCourseData(id).subscribe((course_data: CourseData) => {
-        const avg_overall = this.calculateAverage(reviewData, 'course_overall');
-        const avg_organized = this.calculateAverage(
-          ddData,
-          'coursewellorganized'
-        );
-        const avg_challanging = this.calculateAverage(
-          ddData,
-          'courseintellectuallychallenging'
-        );
-        const avg_effort = this.calculateAverage(
-          ddData,
-          'effortavghoursweekly'
-        );
-        const avg_attendance = this.calculateAverage(
-          ddData,
-          'attendancenecessary'
-        );
-        const avg_asssignments = this.calculateAverage(
-          ddData,
-          'assignmentshelpful'
-        );
+      // Iterate over unique professor IDs and fetch course data
+      Object.keys(profDict).forEach((prof_id: string) => {
+        this.getProfData(prof_id).subscribe((prof_data: ProfData | null) => {
+          if (prof_data) {
+            this.getProfComments(prof_data._id).subscribe(
+              (prof_comments: Comment[]) => {
+                const filtered_comments = prof_comments?.filter(
+                  (obj) => obj.course_id == null || obj.course_id == id
+                );
+                const avg_overall = this.calculateAverage(
+                  profDict[prof_id],
+                  'instructor_overall'
+                );
 
-        const new_course_page_data: CoursePageData = {
-          title: course_data.title,
-          crs_code: course_data.code,
-          subject: course_data.subject,
-          college: course_data.college,
-          desc: course_data.description,
-          avgOverall: avg_overall,
-          avgOriganized: avg_organized,
-          avgChallanging: avg_challanging,
-          avgEffortHours:
-            avg_effort && avg_effort >= 0
-              ? Math.round((avg_effort / 10) * 2) / 2
-              : undefined,
-          avgAttendance: avg_attendance,
-          avgAssignments: avg_asssignments,
-        };
+                const new_table_entry: ProfTableData = {
+                  id: prof_data._id,
+                  name: prof_data.name,
+                  prof_overall: avg_overall,
+                  profile_image: prof_data.photoLink,
+                  comments: filtered_comments,
+                };
 
-        this.course.setCoursePageData(new_course_page_data);
-
-        // Iterate over unique professor IDs and fetch course data
-        Object.keys(profDict).forEach((prof_id: string) => {
-          this.getProfData(prof_id).subscribe((prof_data: ProfData | null) => {
-            if (prof_data) {
-              this.getProfComments(prof_data._id).subscribe(
-                (prof_comments: Comment[]) => {
-                  const filtered_comments = prof_comments?.filter(
-                    (obj) => obj.course_id == null || obj.course_id == id
-                  );
-                  const avg_overall = this.calculateAverage(
-                    profDict[prof_id],
-                    'instructor_overall'
-                  );
-
-                  const new_table_entry: ProfTableData = {
-                    id: prof_data._id,
-                    name: prof_data.name,
-                    prof_overall: avg_overall,
-                    profile_image: prof_data.photoLink,
-                    comments: filtered_comments,
-                  };
-
-                  tableData.push(new_table_entry);
-                }
-              );
-            }
-          });
+                tableData.push(new_table_entry);
+                // Set prof table data in course service
+                this.course.setprofTableData(tableData);
+              }
+            );
+          }
         });
-
-        // Set prof table data in course service
-        this.course.setprofTableData(tableData);
-
-        console.log('COURSE PAGE DATA: ', new_course_page_data);
-        console.log('PROF TABLE DATA: ', tableData);
       });
+
+      // Create an array to store all the observables
+      const observables: Observable<DrilldownData[]>[] = [];
+
+      // Iterate over reviews to create observables for each getDrilldown call
+      reviewData.forEach((review: ReviewData) => {
+        const review_id: string = review._id;
+        observables.push(this.getDrilldown(review_id));
+      });
+
+      // Use forkJoin to combine all observables and subscribe to the result
+      forkJoin(observables).subscribe(
+        (ddDataArray: DrilldownData[][] | null) => {
+          const ddData = ddDataArray?.flat() || [];
+
+          // Fill course page data
+          this.getCourseData(id).subscribe((course_data: CourseData) => {
+            const avg_overall = this.calculateAverage(
+              reviewData,
+              'course_overall'
+            );
+            const avg_organized = this.calculateAverage(
+              ddData,
+              'coursewellorganized'
+            );
+            const avg_challanging = this.calculateAverage(
+              ddData,
+              'courseintellectuallychallenging'
+            );
+            const avg_effort = this.calculateAverage(
+              ddData,
+              'effortavghoursweekly'
+            );
+            const avg_attendance = this.calculateAverage(
+              ddData,
+              'attendancenecessary'
+            );
+            const avg_asssignments = this.calculateAverage(
+              ddData,
+              'assignmentshelpful'
+            );
+
+            const new_course_page_data: CoursePageData = {
+              title: course_data.title,
+              crs_code: course_data.code,
+              subject: course_data.subject,
+              college: course_data.college,
+              desc: course_data.description,
+              avgOverall: avg_overall,
+              avgOriganized: avg_organized,
+              avgChallanging: avg_challanging,
+              avgEffortHours:
+                avg_effort && avg_effort >= 0
+                  ? Math.round((avg_effort / 10) * 2) / 2
+                  : undefined,
+              avgAttendance: avg_attendance,
+              avgAssignments: avg_asssignments,
+            };
+
+            this.course.setCoursePageData(new_course_page_data);
+          });
+        }
+      );
     });
   }
 
