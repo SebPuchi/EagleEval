@@ -1,6 +1,6 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ProfessorService } from 'src/app/PageDataService/professor.service';
+import { ProfessorService, ProfPageData } from 'src/app/PageDataService/professor.service';
 import { CollectDataService } from '../collect-data/collect-data.service';
 import { Injectable } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
@@ -11,7 +11,7 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./professor-page-entry.component.css'],
 })
 export class ProfessorPageEntryComponent {
-  //Professor image will now load in with basic html
+  //Professor image will now load in with this component
   professorImgURL: string = '';
 
   constructor(
@@ -33,5 +33,20 @@ export class ProfessorPageEntryComponent {
       // Populate prof data
       this.data.getProfPageData(id);
     });
+
+    this.professorService.getProfPageData().subscribe((data: ProfPageData | null) => {
+
+      if(data){
+        if (data.profileImage) {
+          this.professorImgURL = encodeURI(data.profileImage);
+        }
+
+      }
+      
+    });
+
+    
+  
+
   }
 }

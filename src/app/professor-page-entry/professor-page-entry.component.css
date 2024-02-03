@@ -3,7 +3,6 @@
 .card.professorimg {
   width: 100%;
   height: 500px;
-  background-image: url('/assets/JeremyWilkins.jpeg');
   background-position: 50% 10%;
   background-size: cover
 }
