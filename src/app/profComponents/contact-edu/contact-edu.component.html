@@ -6,9 +6,10 @@
     </div>
     <div class="fildwidthdiv"></div>
     <div class="contactinfowrapper">
-      <div class="data">{{office}}</div>
-      <div class="data">{{email}}</div>
-      <div class="data">{{phone}}</div>
+      <div *ngIf="office"><div class="data">{{office}}</div></div>
+      <div *ngIf="email"><div class="data">{{email}}</div></div>
+      <div *ngIf="phone"><div class="data">{{phone}}</div></div>
+      
     </div>
   </div>
   <div class="education">
