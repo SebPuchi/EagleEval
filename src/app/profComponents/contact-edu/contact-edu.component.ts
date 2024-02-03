@@ -17,6 +17,7 @@ export class ContactEDUComponent implements OnInit {
   office: string | undefined = undefined;
   phone: string | undefined = undefined;
   email: string | undefined = undefined;
+  education: string[] | undefined = undefined;
 
 
   constructor(private prof: ProfessorService) {}
@@ -29,6 +30,7 @@ export class ContactEDUComponent implements OnInit {
       this.office = data?.office || undefined;
       this.phone = data?.phone || undefined;
       this.email = data?.email || undefined;
+      this.education = data?.education || undefined;
     });
   }
 
